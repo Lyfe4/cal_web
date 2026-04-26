@@ -49,7 +49,7 @@ const Footer = () => {
           */}
           <div className="footer-section">
             <h3>ABN:</h3>
-            <a>15436897520</a>
+            <span>15436897520</span>
           </div>
       </div>
       

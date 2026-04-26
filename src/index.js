@@ -10,7 +10,7 @@ const rootElement = document.getElementById('root');
 
 if (rootElement.hasChildNodes()) {
   // Hydrate for react-snap prerendering
-  const root = ReactDOM.hydrateRoot(rootElement, 
+  ReactDOM.hydrateRoot(rootElement, 
     <React.StrictMode>
       <HelmetProvider>
         <App />

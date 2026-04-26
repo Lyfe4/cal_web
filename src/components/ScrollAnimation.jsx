@@ -19,13 +19,14 @@ const ScrollAnimation = ({ children, className, animation = 'fade-up' }) => {
       }
     );
 
-    if (elementRef.current) {
-      observer.observe(elementRef.current);
+    const el = elementRef.current;
+    if (el) {
+      observer.observe(el);
     }
 
     return () => {
-      if (elementRef.current) {
-        observer.unobserve(elementRef.current);
+      if (el) {
+        observer.unobserve(el);
       }
     };
   }, []);
