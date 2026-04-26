@@ -1,0 +1,103 @@
+:root {
+  --primary-color: #7E3AF2;  /* Main purple */
+  --primary-hover: #6C2BD9;  /* Darker purple for hover */
+  --secondary-color: #2D3748; /* Dark gray for text */
+  --accent-color: #B794F4;   /* Lighter purple for accents */
+  --accent-hover: #9F7AEA;   /* Slightly darker accent for hover */
+  --text-color: #4A5568;     /* Medium gray for body text */
+  --light-gray: #EDF2F7;     /* Light background */
+  --white: #ffffff;
+  --shadow-sm: 0 1px 2px rgba(126, 58, 242, 0.05);
+  --shadow-md: 0 4px 6px rgba(126, 58, 242, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(126, 58, 242, 0.1), 0 4px 6px -2px rgba(126, 58, 242, 0.05);
+  --max-width: 1280px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  margin-top: 64px; /* Height of navbar */
+  padding-bottom: 2rem;
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+.btn-primary,
+.package-button,
+.form-submit {
+  background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+  color: var(--white);
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-primary:hover,
+.package-button:hover,
+.form-submit:hover {
+  background: linear-gradient(to right, var(--primary-hover), var(--primary-color));
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Disabled state */
+.btn-primary:disabled,
+.package-button:disabled,
+.form-submit:disabled {
+  background: var(--light-gray);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Full-width variant */
+.btn-full-width {
+  width: 100%;
+}
+
+/* Secondary button style */
+.btn-secondary {
+  background: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 0.875rem 1.875rem; /* Slightly smaller to account for border */
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-secondary:hover {
+  background: var(--primary-color);
+  color: var(--white);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}

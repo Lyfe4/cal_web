@@ -1,0 +1,365 @@
+.about-header {
+    background-color: var(--light-gray);
+    background: linear-gradient(135deg, var(--light-gray) 0%, #F3EBFF 100%);
+    padding: 6rem 0 4rem;
+    text-align: center;
+    opacity: 0;
+    animation: fadeInDown 1s ease forwards;
+  }
+  
+  .about-header h1 {
+    font-size: 3rem;
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+  }
+  
+  .about-header p {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    opacity: 0;
+    animation: fadeIn 1s ease forwards 0.5s;
+  }
+  
+  .about-story {
+    padding: 4rem 0;
+  }
+  
+  .about-story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  
+  .about-image-placeholder {
+    background-color: var(--light-gray);
+    border-radius: 8px;
+    height: 450px;
+    width: 100%;
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: fadeInLeft 1s ease forwards 0.3s;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .about-image-placeholder:hover {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .about-content {
+    opacity: 0;
+    transform: translateX(20px);
+    animation: fadeInRight 1s ease forwards 0.3s;
+  }
+  
+  .about-content h2 {
+    margin-bottom: 1.5rem;
+  }
+  
+  .about-content p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+  
+  .skills-section {
+    background-color: #F9F5FF;
+    padding: 4rem 0;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+  }
+  
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  
+  .skill-card {
+    background-color: var(--white);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(126, 58, 242, 0.1); /* Very subtle purple border */
+  }
+  
+  .skill-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-color);
+  }
+  
+  .skills-grid .skill-card:nth-child(1) {
+    animation: fadeInUp 0.8s ease forwards 0.2s;
+  }
+  
+  .skills-grid .skill-card:nth-child(2) {
+    animation: fadeInUp 0.8s ease forwards 0.4s;
+  }
+  
+  .skills-grid .skill-card:nth-child(3) {
+    animation: fadeInUp 0.8s ease forwards 0.6s;
+  }
+  
+  .skill-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    transition: transform 0.3s ease;
+  }
+  
+  .skill-card:hover .skill-icon {
+    transform: scale(1.2);
+  }
+  
+  .values-section {
+    padding: 4rem 0;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+  }
+  
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  
+  .value-card {
+    padding: 2rem;
+    border: 1px solid var(--light-gray);
+    border-radius: 8px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .value-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent-color);
+  }
+  
+  .values-grid .value-card:nth-child(1) {
+    animation: fadeInUp 0.8s ease forwards 0.2s;
+  }
+  
+  .values-grid .value-card:nth-child(2) {
+    animation: fadeInUp 0.8s ease forwards 0.4s;
+  }
+  
+  .values-grid .value-card:nth-child(3) {
+    animation: fadeInUp 0.8s ease forwards 0.6s;
+  }
+  
+  .values-grid .value-card:nth-child(4) {
+    animation: fadeInUp 0.8s ease forwards 0.8s;
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  /* Add smooth scrolling to the page */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .about-story-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .skills-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .values-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .about-header h1 {
+      font-size: 2.5rem;
+    }
+  
+    /* Adjust animation delays for mobile */
+    .skills-grid .skill-card,
+    .values-grid .value-card {
+      animation-delay: 0.2s;
+    }
+  }
+  
+  /* Add a variable for larger shadows */
+  :root {
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  .scroll-animation {
+    opacity: 0;
+    transition: all 0.8s ease-out;
+  }
+  
+  /* Animation Variants */
+  .scroll-animation.fade-up {
+    transform: translateY(30px);
+  }
+  
+  .scroll-animation.fade-in-slide {
+    transform: translateY(20px);
+  }
+  
+  .scroll-animation.fade-left {
+    transform: translateX(-30px);
+  }
+  
+  .scroll-animation.fade-right {
+    transform: translateX(30px);
+  }
+  
+  /* Active State */
+  .scroll-animation.animate {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  
+  /* Delay utilities for cascading animations */
+  .delay-100 {
+    transition-delay: 100ms;
+  }
+  
+  .delay-200 {
+    transition-delay: 200ms;
+  }
+  
+  .delay-300 {
+    transition-delay: 300ms;
+  }
+  
+  /* Custom animations for specific sections */
+  .skills-grid .skill-card {
+    transition-delay: calc(var(--index, 0) * 100ms);
+  }
+  
+  .values-grid .value-card {
+    transition-delay: calc(var(--index, 0) * 100ms);
+  }
+  
+  /* Ensure smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Optional: Add a reveal animation for images */
+  .about-image-placeholder {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .scroll-animation.animate .about-image-placeholder {
+    clip-path: inset(0 0 0 0);
+  }
+  
+  /* Maintain hover effects */
+  .skill-card:hover,
+  .value-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* Ensure animations work well on mobile */
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-animation {
+      transition: none;
+      opacity: 1;
+      transform: none;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .scroll-animation {
+      transition-duration: 0.6s;
+    }
+  }
+  .about-image-placeholder {
+    background-color: var(--light-gray);
+    border-radius: 8px;
+    width: 100%;
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: fadeInLeft 1s ease forwards 0.3s;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .about-image-placeholder img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%; /* Adjust this to control vertical centering */
+  }
+  
+  /* Update responsive styles */
+  @media (max-width: 768px) {
+    .about-image-placeholder {
+      height: 400px; /* Adjust this value for mobile */
+      margin: 0 auto;
+      max-width: 100%;
+    }
+  }
