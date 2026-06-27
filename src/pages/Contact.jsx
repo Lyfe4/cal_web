@@ -175,28 +175,28 @@ const Contact = () => {
                 <div className="form-grid">
                   <div className="form-group">
                     <label className="form-label" htmlFor="firstName">First Name *</label>
-                    <input type="text" id="firstName" name="firstName" className={`form-input ${errors.firstName ? 'error' : ''}`} value={formData.firstName} onChange={handleChange} />
+                    <input type="text" id="firstName" name="firstName" autoComplete="given-name" className={`form-input ${errors.firstName ? 'error' : ''}`} value={formData.firstName} onChange={handleChange} />
                     {errors.firstName && <div className="error-message">{errors.firstName}</div>}
                     <ValidationError prefix="First Name" field="firstName" errors={formspreeState.errors} />
                   </div>
 
                   <div className="form-group">
                     <label className="form-label" htmlFor="lastName">Last Name *</label>
-                    <input type="text" id="lastName" name="lastName" className={`form-input ${errors.lastName ? 'error' : ''}`} value={formData.lastName} onChange={handleChange} />
+                    <input type="text" id="lastName" name="lastName" autoComplete="family-name" className={`form-input ${errors.lastName ? 'error' : ''}`} value={formData.lastName} onChange={handleChange} />
                     {errors.lastName && <div className="error-message">{errors.lastName}</div>}
                     <ValidationError prefix="Last Name" field="lastName" errors={formspreeState.errors} />
                   </div>
 
                   <div className="form-group">
                     <label className="form-label" htmlFor="email">Email *</label>
-                    <input type="email" id="email" name="email" className={`form-input ${errors.email ? 'error' : ''}`} value={formData.email} onChange={handleChange} />
+                    <input type="email" id="email" name="email" autoComplete="email" className={`form-input ${errors.email ? 'error' : ''}`} value={formData.email} onChange={handleChange} />
                     {errors.email && <div className="error-message">{errors.email}</div>}
                     <ValidationError prefix="Email" field="email" errors={formspreeState.errors} />
                   </div>
 
                   <div className="form-group">
                     <label className="form-label" htmlFor="phone">Phone (Optional)</label>
-                    <input type="tel" id="phone" name="phone" className={`form-input ${errors.phone ? 'error' : ''}`} value={formData.phone} onChange={handleChange} />
+                    <input type="tel" id="phone" name="phone" autoComplete="tel" className={`form-input ${errors.phone ? 'error' : ''}`} value={formData.phone} onChange={handleChange} />
                     {errors.phone && <div className="error-message">{errors.phone}</div>}
                     <ValidationError prefix="Phone" field="phone" errors={formspreeState.errors} />
                   </div>
