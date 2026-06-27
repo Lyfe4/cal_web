@@ -39,10 +39,12 @@ const grad = `<linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
   <stop offset="0" stop-color="${VIOLET}"/><stop offset="1" stop-color="${INDIGO}"/></linearGradient>`;
 
 // Square icon SVG. label = 'C' or 'CRD'. bg = fill or null (transparent).
-function iconSvg(S, label, bg) {
-  const hexW = S * 0.62;
+// hexFrac controls how much of the canvas the hexagon fills (favicon ~full,
+// app icons padded so the OS-rounded square has breathing room).
+function iconSvg(S, label, bg, hexFrac = 0.62) {
+  const hexW = S * hexFrac;
   const multi = label.length > 1;
-  const fontSize = multi ? hexW * 0.27 : hexW * 0.46;
+  const fontSize = multi ? hexW * 0.27 : hexW * 0.44;
   const ls = multi ? hexW * 0.015 : 0;
   return `<svg width="${S}" height="${S}" viewBox="0 0 ${S} ${S}" xmlns="http://www.w3.org/2000/svg">
   <defs>${grad}</defs>
@@ -98,14 +100,15 @@ function write(name, buf) {
 (async () => {
   console.log('Generating icons...');
 
-  // Favicons — "C", transparent
-  const favSvg = iconSvg(64, 'C', null);
+  // Favicons — "C", transparent, hexagon nearly fills the canvas so it reads
+  // clearly in a tiny browser tab.
+  const favSvg = iconSvg(64, 'C', null, 0.98);
   const fav16 = render(favSvg, 16);
   const fav32 = render(favSvg, 32);
   const fav48 = render(favSvg, 48);
   write('favicon-16.png', fav16);
   write('favicon-32.png', fav32);
-  write('favicon.svg', Buffer.from(iconSvg(64, 'C', null).replace('font-family="Space Grotesk"', 'font-family="Space Grotesk, Arial, sans-serif"')));
+  write('favicon.svg', Buffer.from(favSvg.replace('font-family="Space Grotesk"', 'font-family="Space Grotesk, Arial, sans-serif"')));
 
   // App icons — "CRD", dark bg
   const appSvg = iconSvg(512, 'CRD', DARK);
