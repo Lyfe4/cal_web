@@ -24,6 +24,7 @@
     "eject": "react-scripts eject",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "generate-sitemap": "node scripts/generate-sitemap.js",
+    "generate-icons": "node scripts/generate-icons.js",
     "optimize-images": "node scripts/optimize-images.js",
     "seo-audit": "node scripts/seo-audit.js"
   },
@@ -47,7 +48,9 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@resvg/resvg-js": "^2.6.2",
     "chalk": "^5.4.1",
+    "png-to-ico": "^3.0.1",
     "source-map-explorer": "^2.5.3"
   }
 }
