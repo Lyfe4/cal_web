@@ -38,7 +38,7 @@ const About = () => {
           jobTitle: 'Frontend Web Developer',
           description: 'Frontend web developer with over 5 years of experience creating exceptional digital solutions',
           address: { '@type': 'PostalAddress', addressLocality: 'Armidale', addressRegion: 'NSW', addressCountry: 'Australia' },
-          image: 'https://calvinrdevelopment.com/images/calvin.jpg',
+          image: 'https://calvinrdevelopment.com/calvin.jpg',
           url: 'https://calvinrdevelopment.com/about',
           sameAs: ['https://www.linkedin.com/in/calvin-reinke-24792132b/', 'https://github.com/Lyfe4'],
         }}

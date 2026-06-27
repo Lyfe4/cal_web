@@ -3,8 +3,13 @@ const path = require('path');
 
 // Configuration
 const baseUrl = 'https://calvinrdevelopment.com';
-const pagesDirectory = path.join(__dirname, '../src/pages');
-const outputPath = path.join(__dirname, '../public/sitemap.xml');
+// Write to both public/ (source, for local dev) and build/ (the deployed output).
+// This script runs as `postbuild`, after CRA has already copied public/ -> build/,
+// so writing only to public/ would leave the deployed sitemap stale.
+const outputPaths = [
+  path.join(__dirname, '../public/sitemap.xml'),
+  path.join(__dirname, '../build/sitemap.xml'),
+];
 const routes = [
   { path: '/', priority: '1.0', changefreq: 'monthly' },
   { path: '/about', priority: '0.8', changefreq: 'monthly' },
@@ -42,16 +47,17 @@ const generateSitemapXml = () => {
 // Write sitemap to file
 const writeSitemap = () => {
   const sitemapContent = generateSitemapXml();
-  
-  // Create directory if it doesn't exist
-  const directory = path.dirname(outputPath);
-  if (!fs.existsSync(directory)) {
-    fs.mkdirSync(directory, { recursive: true });
-  }
-  
-  // Write sitemap file
-  fs.writeFileSync(outputPath, sitemapContent);
-  console.log(`Sitemap generated at: ${outputPath}`);
+
+  outputPaths.forEach((outputPath) => {
+    const directory = path.dirname(outputPath);
+    // Skip build/ if it doesn't exist (e.g. running the script without a build)
+    if (!fs.existsSync(directory)) {
+      if (directory.endsWith('build')) return;
+      fs.mkdirSync(directory, { recursive: true });
+    }
+    fs.writeFileSync(outputPath, sitemapContent);
+    console.log(`Sitemap generated at: ${outputPath}`);
+  });
 };
 
 // Execute

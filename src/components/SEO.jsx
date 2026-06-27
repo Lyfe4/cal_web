@@ -36,7 +36,7 @@ const SEO = ({
     "name": "Calvin R Development",
     "description": defaultDescription,
     "url": siteUrl,
-    "logo": `${siteUrl}/logo192.png`,
+    "logo": `${siteUrl}/icon-512.png`,
     "image": defaultOgImage,
     "address": {
       "@type": "PostalAddress",
@@ -50,8 +50,8 @@ const SEO = ({
       "longitude": "151.6668"
     },
     "priceRange": "$$",
-    "telephone": "+61-XXX-XXX-XXX", // Replace with actual phone number
-    "email": "contact@calvinrdevelopment.com", // Replace with actual email
+    "telephone": "+61-447-576-460",
+    "email": "calvin@calvinrdevelopment.com",
     "sameAs": [
       "https://www.linkedin.com/in/calvin-reinke-24792132b/",
       "https://github.com/Lyfe4"
