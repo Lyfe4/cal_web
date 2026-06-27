@@ -53,8 +53,8 @@ const SEO = ({
     "telephone": "+61-XXX-XXX-XXX", // Replace with actual phone number
     "email": "contact@calvinrdevelopment.com", // Replace with actual email
     "sameAs": [
-      "https://www.linkedin.com/in/calvinrdevelopment", // Replace with actual social profiles
-      "https://github.com/calvinrdevelopment"
+      "https://www.linkedin.com/in/calvin-reinke-24792132b/",
+      "https://github.com/Lyfe4"
     ],
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",
@@ -70,8 +70,10 @@ const SEO = ({
     }
   };
   
-  // Use provided structured data or default
-  const metaStructuredData = structuredData || defaultStructuredData;
+  // Use provided structured data or default; normalize to an array
+  const structuredDataItems = []
+    .concat(structuredData || defaultStructuredData)
+    .filter(Boolean);
 
   return (
     <Helmet>
@@ -98,9 +100,11 @@ const SEO = ({
       <meta name="twitter:image" content={metaOgImage} />
       
       {/* Structured Data / JSON-LD */}
-      <script type="application/ld+json">
-        {JSON.stringify(metaStructuredData)}
-      </script>
+      {structuredDataItems.map((item, i) => (
+        <script type="application/ld+json" key={i}>
+          {JSON.stringify(item)}
+        </script>
+      ))}
     </Helmet>
   );
 };
@@ -112,7 +116,7 @@ SEO.propTypes = {
   keywords: PropTypes.string,
   ogImage: PropTypes.string,
   ogType: PropTypes.string,
-  structuredData: PropTypes.object
+  structuredData: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };
 
 export default SEO;

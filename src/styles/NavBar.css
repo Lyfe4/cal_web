@@ -1,75 +1,150 @@
 .navbar {
-  background-color: var(--white);
-  box-shadow: var(--shadow-sm);
   position: fixed;
-  width: 100%;
   top: 0;
+  width: 100%;
+  height: var(--nav-height);
   z-index: 1000;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid transparent;
+  transition: background 0.3s var(--ease), border-color 0.3s var(--ease),
+    backdrop-filter 0.3s var(--ease);
+}
+
+.navbar.scrolled {
+  background: rgba(8, 8, 12, 0.72);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border-bottom-color: var(--border);
 }
 
 .navbar-container {
   max-width: var(--max-width);
+  width: 100%;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 0 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
 }
 
+/* --- Brand --- */
 .navbar-brand {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--secondary-color);
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
   text-decoration: none;
-  z-index: 1001; /* Keep above mobile menu */
+  z-index: 1001;
 }
 
+.brand-mark {
+  display: grid;
+  place-items: center;
+  /* width:height ≈ 1.155:1 makes a regular hexagon (all 6 edges equal) */
+  width: 44px;
+  height: 38px;
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  background: var(--grad-brand);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.5px;
+  filter: drop-shadow(0 4px 12px rgba(139, 92, 246, 0.45));
+}
+
+.brand-text {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--text-high);
+  letter-spacing: -0.01em;
+}
+
+.brand-text span {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* --- Links --- */
 .nav-links {
   display: flex;
-  gap: 2rem;
+  align-items: center;
+  gap: 0.5rem;
   list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
 .nav-link {
-  color: var(--text-color);
+  position: relative;
+  color: var(--text-muted);
   text-decoration: none;
-  transition: color 0.2s ease;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius-sm);
+  transition: color 0.2s var(--ease);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0.9rem;
+  right: 0.9rem;
+  bottom: 0.15rem;
+  height: 2px;
+  background: var(--grad-brand);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease-out);
 }
 
 .nav-link:hover {
-  color: var(--primary-color);
+  color: var(--text-high);
 }
 
-/* Mobile Menu Button */
+.nav-link.active {
+  color: var(--text-high);
+}
+
+.nav-link.active::after {
+  transform: scaleX(1);
+}
+
+.nav-cta-item {
+  margin-left: 0.75rem;
+}
+
+.nav-cta {
+  padding: 0.6rem 1.25rem;
+  font-size: 0.92rem;
+}
+
+/* --- Hamburger --- */
 .mobile-menu-button {
   display: none;
   flex-direction: column;
   justify-content: space-between;
-  width: 30px;
-  height: 21px;
+  width: 28px;
+  height: 19px;
   background: transparent;
   border: none;
   cursor: pointer;
   padding: 0;
-  z-index: 1001; /* Keep above mobile menu */
+  z-index: 1001;
 }
 
 .mobile-menu-button span {
   width: 100%;
-  height: 3px;
-  background-color: var(--secondary-color);
+  height: 2px;
+  background-color: var(--text-high);
   border-radius: 3px;
-  transition: all 0.3s ease;
+  transition: all 0.3s var(--ease);
 }
 
 .mobile-menu-button.open span:first-child {
-  transform: translateY(9px) rotate(45deg);
-  background-color: var(--primary-color);
+  transform: translateY(8.5px) rotate(45deg);
+  background: var(--violet-bright);
 }
 
 .mobile-menu-button.open span:nth-child(2) {
@@ -77,63 +152,68 @@
 }
 
 .mobile-menu-button.open span:last-child {
-  transform: translateY(-9px) rotate(-45deg);
-  background-color: var(--primary-color);
+  transform: translateY(-8.5px) rotate(-45deg);
+  background: var(--violet-bright);
 }
 
-/* Mobile Styles */
-@media (max-width: 768px) {
+/* --- Mobile --- */
+@media (max-width: 820px) {
   .mobile-menu-button {
     display: flex;
   }
 
   .nav-links {
-    display: none;
-    position: absolute;
-    top: 100%;
+    position: fixed;
+    top: var(--nav-height);
     left: 0;
     right: 0;
-    background-color: var(--white);
     flex-direction: column;
-    gap: 0;
-    padding: 1rem 0;
-    box-shadow: var(--shadow-md);
-    border-top: 1px solid var(--light-gray);
+    align-items: stretch;
+    gap: 0.25rem;
+    padding: 1.25rem 1.5rem 2rem;
+    background: rgba(10, 10, 16, 0.96);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    transform: translateY(-12px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s var(--ease), transform 0.25s var(--ease-out);
   }
 
   .nav-links.open {
-    display: flex;
-    animation: slideIn 0.3s ease forwards;
-  }
-
-  .nav-links li {
-    width: 100%;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
   }
 
   .nav-link {
     display: block;
-    padding: 1rem 2rem;
-    width: 100%;
+    padding: 0.9rem 1rem;
+    font-size: 1.05rem;
+    border-radius: var(--radius-sm);
   }
 
+  .nav-link::after {
+    display: none;
+  }
+
+  .nav-link.active,
   .nav-link:hover {
-    background-color: #F9F5FF;
+    background: var(--glass);
+  }
+
+  .nav-cta-item {
+    margin: 0.75rem 0 0;
+  }
+
+  .nav-cta {
+    width: 100%;
+    padding: 0.9rem;
+    font-size: 1.05rem;
   }
 }
 
-/* Animation for mobile menu */
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Prevent scrolling when mobile menu is open */
 body.menu-open {
   overflow: hidden;
 }

@@ -1,16 +1,69 @@
+/* ===================================================================
+   Calvin R Development — Design System
+   Dark, premium, motion-ready foundation
+   =================================================================== */
+
 :root {
-  --primary-color: #7E3AF2;  /* Main purple */
-  --primary-hover: #6C2BD9;  /* Darker purple for hover */
-  --secondary-color: #2D3748; /* Dark gray for text */
-  --accent-color: #B794F4;   /* Lighter purple for accents */
-  --accent-hover: #9F7AEA;   /* Slightly darker accent for hover */
-  --text-color: #4A5568;     /* Medium gray for body text */
-  --light-gray: #EDF2F7;     /* Light background */
+  /* --- Brand / accent --- */
+  --violet: #8b5cf6;
+  --violet-bright: #a78bfa;
+  --violet-soft: #c4b5fd;
+  --indigo: #6366f1;
+  --fuchsia: #d946ef;
+
+  /* Backwards-compatible aliases (used by older class names) */
+  --primary-color: var(--violet);
+  --primary-hover: #7c3aed;
+  --accent-color: var(--violet-bright);
+  --accent-hover: var(--violet-soft);
+
+  /* --- Surfaces --- */
+  --bg: #08080c;            /* page base */
+  --bg-2: #0d0d15;          /* alt sections */
+  --surface: #12121c;       /* cards */
+  --surface-2: #16161f;
+  --glass: rgba(255, 255, 255, 0.04);
+  --glass-strong: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
   --white: #ffffff;
-  --shadow-sm: 0 1px 2px rgba(126, 58, 242, 0.05);
-  --shadow-md: 0 4px 6px rgba(126, 58, 242, 0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(126, 58, 242, 0.1), 0 4px 6px -2px rgba(126, 58, 242, 0.05);
-  --max-width: 1280px;
+  --light-gray: #1a1a24; /* legacy alias, now a dark surface */
+
+  /* --- Text --- */
+  --text-high: #f4f4f7;
+  --text: #b4b4c0;          /* body */
+  --text-color: var(--text);
+  --text-muted: #8a8a99;
+  --text-faint: #62626f;
+  --secondary-color: var(--text-high); /* legacy alias for headings */
+
+  /* --- Gradients --- */
+  --grad-brand: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+  --grad-brand-hover: linear-gradient(135deg, #9333ea 0%, #4f46e5 100%);
+  --grad-text: linear-gradient(120deg, #c4b5fd 0%, #a78bfa 40%, #818cf8 100%);
+
+  /* --- Shadows / glows --- */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 24px 60px -12px rgba(0, 0, 0, 0.6);
+  --glow: 0 0 0 1px rgba(139, 92, 246, 0.25), 0 12px 40px -8px rgba(139, 92, 246, 0.45);
+  --glow-soft: 0 10px 50px -10px rgba(139, 92, 246, 0.35);
+
+  /* --- Shape & rhythm --- */
+  --radius-sm: 10px;
+  --radius: 16px;
+  --radius-lg: 24px;
+  --radius-full: 999px;
+  --max-width: 1200px;
+  --nav-height: 72px;
+
+  /* --- Type --- */
+  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* --- Easing --- */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 * {
@@ -19,85 +72,284 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: 'Inter', sans-serif;
-  color: var(--text-color);
-  line-height: 1.5;
+  font-family: var(--font-body);
+  color: var(--text);
+  background-color: var(--bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Layered ambient background — mesh glows + subtle grain.
+   Fixed so sections share one continuous atmosphere. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(60% 50% at 15% 0%, rgba(139, 92, 246, 0.18) 0%, transparent 60%),
+    radial-gradient(50% 50% at 90% 10%, rgba(99, 102, 241, 0.14) 0%, transparent 55%),
+    radial-gradient(45% 45% at 70% 90%, rgba(217, 70, 239, 0.10) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.035;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 .app {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  position: relative;
 }
 
 .main-content {
   flex: 1;
-  margin-top: 64px; /* Height of navbar */
-  padding-bottom: 2rem;
+  margin-top: var(--nav-height);
+  /* Clip horizontal bleed from decorative glows so mobile can't scroll
+     sideways. `clip` (not hidden) avoids creating a scroll container. */
+  overflow-x: clip;
 }
 
 .container {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 1.5rem;
 }
+
+/* --- Typography --- */
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-display);
+  color: var(--text-high);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+p { color: var(--text); }
+
+a { color: inherit; }
+
+::selection {
+  background: rgba(139, 92, 246, 0.35);
+  color: #fff;
+}
+
+/* --- Reusable helpers --- */
+.gradient-text {
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--violet-soft);
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-full);
+  background: var(--glass);
+  backdrop-filter: blur(8px);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--violet-bright);
+  box-shadow: 0 0 10px 1px var(--violet-bright);
+}
+
+.section {
+  padding: 6rem 0;
+  position: relative;
+}
+
+.section-head {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 3.5rem;
+}
+
+.section-head h2 {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  margin: 1rem 0 0.75rem;
+}
+
+.section-head p {
+  font-size: 1.075rem;
+  color: var(--text-muted);
+}
+
+/* Shared inner-page hero */
+.page-hero {
+  position: relative;
+  text-align: center;
+  padding: clamp(3.5rem, 7vw, 6rem) 0 clamp(2.5rem, 4vw, 3.5rem);
+}
+
+.page-hero .eyebrow {
+  margin-bottom: 1.25rem;
+}
+
+.page-hero h1 {
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  margin-bottom: 1.25rem;
+}
+
+.page-hero > .container > p {
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  color: var(--text-muted);
+  max-width: 60ch;
+  margin: 0 auto;
+}
+
+/* Interactive cursor-follow tilt (see components/Tilt.jsx) */
+.tilt {
+  transition: transform 0.2s var(--ease-out);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.tilt-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease);
+  mix-blend-mode: soft-light;
+  z-index: 2;
+}
+
+/* Glass card base — reused across pages */
+.glass-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ===================================================================
+   Buttons
+   =================================================================== */
+.btn,
 .btn-primary,
 .package-button,
 .form-submit {
-  background: linear-gradient(to right, var(--primary-color), var(--accent-color));
-  color: var(--white);
-  padding: 1rem 2rem;
-  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.95rem 1.75rem;
+  border-radius: var(--radius-full);
   text-decoration: none;
   border: none;
   cursor: pointer;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  display: inline-block;
-  text-align: center;
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease),
+    background 0.25s var(--ease);
+  position: relative;
+  white-space: nowrap;
+}
+
+.btn-primary,
+.package-button,
+.form-submit {
+  background: var(--grad-brand);
+  color: #fff;
+  box-shadow: var(--glow-soft);
 }
 
 .btn-primary:hover,
 .package-button:hover,
 .form-submit:hover {
-  background: linear-gradient(to right, var(--primary-hover), var(--primary-color));
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--glow);
+  background: var(--grad-brand-hover);
 }
 
-/* Disabled state */
 .btn-primary:disabled,
 .package-button:disabled,
 .form-submit:disabled {
-  background: var(--light-gray);
+  background: var(--surface-2);
+  color: var(--text-faint);
+  box-shadow: none;
   cursor: not-allowed;
   transform: none;
 }
 
-/* Full-width variant */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--glass);
+  border: 1px solid var(--border-strong);
+  color: var(--text-high);
+  padding: 0.95rem 1.75rem;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  backdrop-filter: blur(8px);
+  transition: transform 0.25s var(--ease-out), border-color 0.25s var(--ease),
+    background 0.25s var(--ease);
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  border-color: var(--violet);
+  background: var(--glass-strong);
+}
+
 .btn-full-width {
   width: 100%;
 }
 
-/* Secondary button style */
-.btn-secondary {
-  background: transparent;
-  border: 2px solid var(--primary-color);
-  color: var(--primary-color);
-  padding: 0.875rem 1.875rem; /* Slightly smaller to account for border */
-  border-radius: 8px;
-  text-decoration: none;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  display: inline-block;
-  text-align: center;
+/* ===================================================================
+   Motion utilities
+   =================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
-.btn-secondary:hover {
-  background: var(--primary-color);
-  color: var(--white);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+@media (max-width: 768px) {
+  .section {
+    padding: 4rem 0;
+  }
 }

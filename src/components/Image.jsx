@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Image = ({ src, alt, height, className }) => {
+const Image = ({ src, alt = 'Image', height, className = '' }) => {
   return (
     <div 
       className={`image-container ${className || ''}`}
@@ -33,14 +33,9 @@ const Image = ({ src, alt, height, className }) => {
 
 Image.propTypes = {
   src: PropTypes.string.isRequired,
-  alt: PropTypes.string.isRequired, // Making alt text required for better SEO and accessibility
+  alt: PropTypes.string, // Descriptive alt text should be provided for SEO and accessibility
   height: PropTypes.number.isRequired,
   className: PropTypes.string
-};
-
-Image.defaultProps = {
-  className: '',
-  alt: 'Image' // Fallback alt text, though specific descriptive alt text should be provided
 };
 
 export default Image;
