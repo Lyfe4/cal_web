@@ -7,7 +7,7 @@ import { ArrowRightIcon, ExternalIcon, CheckIcon } from '../components/Icons';
 import {
   CodeAnim, ResponsiveAnim, SparkleAnim, GaugeAnim, SearchAnim, ChatAnim,
 } from '../components/ServiceIcons';
-import CodeWindow from '../components/CodeWindow';
+import BlueprintCard from '../components/BlueprintCard';
 import LivePreview from '../components/LivePreview';
 import '../styles/Home.css';
 
@@ -20,15 +20,14 @@ const services = [
   { icon: <ChatAnim />, title: 'Clear Communication', desc: 'Regular updates and a hassle-free process from first call to launch day.' },
 ];
 
-const stats = [
-  { value: '5+', label: 'Years experience' },
-  { value: '100%', label: 'Custom-built' },
-  { value: '<1.5s', label: 'Load times' },
-  { value: '7 days', label: 'Avg. turnaround' },
-  { value: 'React', label: 'Modern stack' },
-  { value: 'SEO', label: 'Built in' },
+const facts = [
+  { value: '5+', label: 'Years building for the web' },
+  { value: '< 1.5s', label: 'Typical page load' },
+  { value: '~ 7 days', label: 'Average turnaround' },
+  { value: 'React', label: 'Modern, maintainable stack' },
+  { value: 'SEO', label: 'Built in from day one' },
   { value: 'Mobile', label: 'First, always' },
-  { value: 'AU-wide', label: 'Remote service' },
+  { value: 'AU-wide', label: 'Remote across Australia' },
 ];
 
 const steps = [
@@ -42,10 +41,10 @@ const Home = () => {
   return (
     <div className="home">
       <SEO
-        title="Calvin R Development | Professional Frontend Web Development in Armidale"
-        description="Expert frontend web development services in Armidale, NSW. Creating beautiful, responsive websites with a focus on quality and communication. Remote services available Australia-wide."
+        title="Armidale Web Developer & Website Designer | Calvin R Development"
+        description="Armidale web developer and website designer building fast, custom, hand-coded websites for small businesses across the New England region and NSW. Get a quote today."
         canonicalUrl="/"
-        keywords="frontend web development, Armidale web developer, responsive design, quality web development, professional web services, React developer, NSW web development"
+        keywords="Armidale web developer, Armidale website designer, web design Armidale, website designer New England NSW, small business websites Armidale, React developer NSW, responsive web design Armidale"
       />
 
       {/* ===== Hero ===== */}
@@ -79,26 +78,27 @@ const Home = () => {
             </motion.div>
           </motion.div>
 
-          {/* Code editor visual */}
+          {/* Signature: a project-brief work order */}
           <motion.div
             className="hero-visual"
-            initial={{ opacity: 0, y: 40, rotateX: 8 }}
-            animate={{ opacity: 1, y: 0, rotateX: 0 }}
-            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, y: 32 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
           >
-            <CodeWindow />
+            <BlueprintCard />
+            <p className="marginalia hero-note">drawn to spec, then built by hand</p>
           </motion.div>
         </div>
       </section>
 
-      {/* ===== Stats marquee ===== */}
-      <section className="stats-bar" aria-label="Key facts">
+      {/* ===== At a glance (conveyor belt) ===== */}
+      <section className="stats-bar" aria-label="At a glance">
         <div className="marquee">
           <div className="marquee-track">
-            {[...stats, ...stats].map((s, i) => (
-              <div className="stat" key={i} aria-hidden={i >= stats.length}>
-                <span className="stat-value gradient-text">{s.value}</span>
-                <span className="stat-label">{s.label}</span>
+            {[...facts, ...facts].map((f, i) => (
+              <div className="stat" key={i} aria-hidden={i >= facts.length}>
+                <span className="stat-value">{f.value}</span>
+                <span className="stat-label">{f.label}</span>
               </div>
             ))}
           </div>
@@ -126,7 +126,7 @@ const Home = () => {
       </section>
 
       {/* ===== Featured work ===== */}
-      <section className="section featured">
+      <section className="section band featured">
         <div className="container">
           <Reveal className="section-head">
             <span className="eyebrow">Featured work</span>

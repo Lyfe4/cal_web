@@ -28,11 +28,11 @@ export const ServerAnim = () => (
   </svg>
 );
 
-// Tools & Deployment — rocket lifts off and settles
+// Tools & Deployment — rocket crouches, thrusts up along its axis, settles (a launch)
 export const RocketAnim = () => (
   <svg {...base} className="i-rocket">
     <g className="rocket">
-      <path d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2 0-2.7a1.9 1.9 0 0 0-3 0z" />
+      <path className="flame" d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2 0-2.7a1.9 1.9 0 0 0-3 0z" />
       <path d="M12 15l-3-3a22 22 0 0 1 8-10 22 22 0 0 1 2 10 22 22 0 0 1-10 8z" />
       <circle cx="15" cy="9" r="1.5" />
     </g>
@@ -47,7 +47,8 @@ export const ShieldAnim = () => (
   </svg>
 );
 
-// User-Centered Design — the second person pops in, the first bobs
+// User-Centered Design — the central user draws in cleanly while the
+// supporting figure fades in behind (calm, considered, user at the centre)
 export const UsersAnim = () => (
   <svg {...base} className="i-users">
     <g className="user-back">
@@ -55,8 +56,8 @@ export const UsersAnim = () => (
       <path d="M16 3.13a4 4 0 0 1 0 7.75" />
     </g>
     <g className="user-front">
-      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
+      <path className="uf-body" pathLength="1" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+      <circle className="uf-head" pathLength="1" cx="9" cy="7" r="4" />
     </g>
   </svg>
 );

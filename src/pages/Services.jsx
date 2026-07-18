@@ -70,14 +70,6 @@ const extras = [
   { name: 'Annual support', price: '$800 / yr (save 15%)' },
 ];
 
-const portfolio = [
-  {
-    title: 'Mock Example Build',
-    description: 'A demonstration site showcasing the clean, modern design, smooth interactions, and quality you can expect.',
-    videoId: 'FK2OuAzDBg8',
-  },
-];
-
 const faqs = [
   { q: 'How long does a project take?', a: 'Most Starter sites are ready in about a week, and Professional builds typically take 2–3 weeks depending on content and revisions. I\'ll give you a clear timeline upfront.' },
   { q: 'What do you need from me to get started?', a: 'Just an idea of your goals, any branding or content you have, and examples of sites you like. If you don\'t have everything ready, I\'ll guide you through it.' },
@@ -201,7 +193,7 @@ const Services = () => {
           <Reveal className="section-head">
             <span className="eyebrow">Recent work</span>
             <h2>See it in action</h2>
-            <p>A live client site, plus an early mock build that shows the design and quality you can expect.</p>
+            <p>A live client site you can visit right now — real work for a real regional business.</p>
           </Reveal>
 
           <Reveal className="live-project glass-card">
@@ -214,26 +206,6 @@ const Services = () => {
               Visit live site <ExternalIcon size={17} />
             </a>
           </Reveal>
-
-          <div className="portfolio-grid">
-            {portfolio.map((item, i) => (
-              <Reveal key={item.videoId} delay={i * 0.1} className="portfolio-item glass-card">
-                <div className="video-container">
-                  <iframe
-                    src={`https://www.youtube.com/embed/${item.videoId}`}
-                    title={item.title}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
-                </div>
-                <div className="portfolio-content">
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
         </div>
       </section>
 

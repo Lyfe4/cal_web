@@ -11,19 +11,19 @@
 
 /* ===== Info ===== */
 .contact-info h2 {
-  font-size: 1.6rem;
+  font-size: 1.55rem;
   margin-bottom: 0.5rem;
 }
 
 .contact-intro {
-  color: var(--text-muted);
+  color: var(--ink-muted);
   margin-bottom: 2rem;
 }
 
 .info-list {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
 .info-item {
@@ -32,49 +32,51 @@
   gap: 1rem;
   padding: 1.1rem 1.25rem;
   border-radius: var(--radius);
-  background: var(--glass);
-  border: 1px solid var(--border);
-  transition: border-color 0.25s var(--ease), transform 0.25s var(--ease-out),
-    box-shadow 0.25s var(--ease);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  transition: border-color 0.2s var(--ease), transform 0.2s var(--ease-out),
+    box-shadow 0.2s var(--ease);
 }
 
 .info-item:hover {
-  border-color: var(--violet);
+  border-color: var(--line-ink);
   transform: translateX(4px);
-  box-shadow: var(--glow-soft);
+  box-shadow: var(--shadow-sm);
 }
 
 .info-item-icon {
   display: grid;
   place-items: center;
-  width: 46px;
-  height: 46px;
+  width: 44px;
+  height: 44px;
   flex-shrink: 0;
-  border-radius: 12px;
-  background: var(--glass-strong);
-  border: 1px solid var(--border-strong);
-  color: var(--violet-bright);
+  border-radius: 9px;
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  color: var(--pine);
 }
 
 .info-item-content h3 {
-  font-size: 0.78rem;
-  letter-spacing: 0.1em;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--text-faint);
-  margin-bottom: 0.2rem;
+  color: var(--ink-faint);
+  margin-bottom: 0.25rem;
 }
 
 .info-item-content p,
 .info-item-content a {
-  color: var(--text-high);
+  color: var(--ink);
   text-decoration: none;
-  font-size: 0.98rem;
+  font-size: 0.96rem;
   transition: color 0.2s var(--ease);
   word-break: break-word;
 }
 
 .info-item-content a:hover {
-  color: var(--violet-bright);
+  color: var(--pine);
 }
 
 /* ===== Form ===== */
@@ -84,7 +86,7 @@
 }
 
 .contact-form h2 {
-  font-size: 1.6rem;
+  font-size: 1.55rem;
   margin-bottom: 1.5rem;
 }
 
@@ -105,9 +107,9 @@
 
 .form-label {
   margin-bottom: 0.5rem;
-  color: var(--text);
+  color: var(--ink-soft);
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
 }
 
 .form-input,
@@ -115,24 +117,24 @@
 .form-textarea {
   width: 100%;
   padding: 0.8rem 1rem;
-  background: var(--bg-2);
-  border: 1px solid var(--border-strong);
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
   border-radius: var(--radius-sm);
-  font-size: 0.98rem;
+  font-size: 0.96rem;
   font-family: var(--font-body);
-  color: var(--text-high);
-  transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  color: var(--ink);
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
 
 .form-input::placeholder,
 .form-textarea::placeholder {
-  color: var(--text-faint);
+  color: var(--ink-faint);
 }
 
 .form-select {
   appearance: none;
   cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%238a8a99' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='2 5 7 10 12 5'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%23928d80' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='2 5 7 10 12 5'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 1rem center;
   padding-right: 2.5rem;
@@ -140,15 +142,15 @@
 
 .form-select option {
   background: var(--surface);
-  color: var(--text-high);
+  color: var(--ink);
 }
 
 .form-input:focus,
 .form-select:focus,
 .form-textarea:focus {
   outline: none;
-  border-color: var(--violet);
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+  border-color: var(--pine);
+  box-shadow: 0 0 0 3px rgba(14, 75, 63, 0.14);
 }
 
 .form-textarea {
@@ -164,12 +166,12 @@
 .form-input.error,
 .form-select.error,
 .form-textarea.error {
-  border-color: #f87171;
+  border-color: #b3402e;
 }
 
 .error-message {
-  color: #f87171;
-  font-size: 0.83rem;
+  color: #b3402e;
+  font-size: 0.82rem;
   margin-top: 0.4rem;
 }
 
@@ -177,11 +179,11 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #4ade80;
+  color: var(--pine);
   padding: 0.9rem 1.1rem;
   border-radius: var(--radius-sm);
-  background: rgba(74, 222, 128, 0.1);
-  border: 1px solid rgba(74, 222, 128, 0.25);
+  background: rgba(14, 75, 63, 0.08);
+  border: 1px solid rgba(14, 75, 63, 0.25);
   margin-bottom: 1.5rem;
   font-weight: 500;
 }

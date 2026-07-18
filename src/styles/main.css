@@ -1,65 +1,83 @@
 /* ===================================================================
-   Calvin R Development — Design System
-   Dark, premium, motion-ready foundation
+   Calvin R Development — "Workshop" Design System
+   Warm paper, pine ink, clay marks. Built for a web craftsman.
+   Signature: mono marginalia + a hand-ruled clay underline.
    =================================================================== */
 
 :root {
-  /* --- Brand / accent --- */
-  --violet: #8b5cf6;
-  --violet-bright: #a78bfa;
-  --violet-soft: #c4b5fd;
-  --indigo: #6366f1;
-  --fuchsia: #d946ef;
+  /* --- Paper (surfaces) --- */
+  --paper: #fbfaf7;         /* page base */
+  --paper-2: #f3f0e8;       /* alternating bands */
+  --paper-3: #ece7db;       /* deep wash / dividers fill */
+  --surface: #fffdf9;       /* cards, sitting on paper */
 
-  /* Backwards-compatible aliases (used by older class names) */
-  --primary-color: var(--violet);
-  --primary-hover: #7c3aed;
-  --accent-color: var(--violet-bright);
-  --accent-hover: var(--violet-soft);
+  /* --- Ink (text) --- */
+  --ink: #1a1a17;           /* headings, primary */
+  --ink-soft: #55524a;      /* body */
+  --ink-muted: #6f6b60;     /* secondary body */
+  --ink-faint: #928d80;     /* captions, meta, mono labels */
 
-  /* --- Surfaces --- */
-  --bg: #08080c;            /* page base */
-  --bg-2: #0d0d15;          /* alt sections */
-  --surface: #12121c;       /* cards */
-  --surface-2: #16161f;
-  --glass: rgba(255, 255, 255, 0.04);
-  --glass-strong: rgba(255, 255, 255, 0.06);
-  --border: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.14);
+  /* --- Pine (primary accent) --- */
+  --pine: #0e4b3f;
+  --pine-deep: #0a392f;
+  --pine-bright: #17715e;
+
+  /* --- Clay (the one sparing highlight) --- */
+  --clay: #b0691a;
+  --clay-soft: #c98a3c;
+
+  /* --- Lines --- */
+  --line: rgba(26, 26, 23, 0.12);
+  --line-strong: rgba(26, 26, 23, 0.22);
+  --line-ink: rgba(26, 26, 23, 0.42);
+
+  /* --- Backwards-compatible aliases (older class names still reference these) --- */
+  --primary-color: var(--pine);
+  --primary-hover: var(--pine-deep);
+  --accent-color: var(--clay);
+  --accent-hover: var(--clay-soft);
+  --violet: var(--pine);
+  --violet-bright: var(--pine-bright);
+  --violet-soft: var(--clay);
+  --bg: var(--paper);
+  --bg-2: var(--paper-2);
+  --surface-2: var(--paper-2);
+  --glass: rgba(26, 26, 23, 0.03);
+  --glass-strong: rgba(26, 26, 23, 0.05);
+  --border: var(--line);
+  --border-strong: var(--line-strong);
   --white: #ffffff;
-  --light-gray: #1a1a24; /* legacy alias, now a dark surface */
+  --light-gray: var(--paper-2);
+  --text-high: var(--ink);
+  --text: var(--ink-soft);
+  --text-color: var(--ink-soft);
+  --text-muted: var(--ink-muted);
+  --text-faint: var(--ink-faint);
+  --secondary-color: var(--ink);
 
-  /* --- Text --- */
-  --text-high: #f4f4f7;
-  --text: #b4b4c0;          /* body */
-  --text-color: var(--text);
-  --text-muted: #8a8a99;
-  --text-faint: #62626f;
-  --secondary-color: var(--text-high); /* legacy alias for headings */
+  /* --- Gradients (kept subtle; pine buttons) --- */
+  --grad-brand: linear-gradient(180deg, #15594a 0%, #0e4b3f 100%);
+  --grad-brand-hover: linear-gradient(180deg, #0e4b3f 0%, #0a392f 100%);
 
-  /* --- Gradients --- */
-  --grad-brand: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
-  --grad-brand-hover: linear-gradient(135deg, #9333ea 0%, #4f46e5 100%);
-  --grad-text: linear-gradient(120deg, #c4b5fd 0%, #a78bfa 40%, #818cf8 100%);
-
-  /* --- Shadows / glows --- */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
-  --shadow-lg: 0 24px 60px -12px rgba(0, 0, 0, 0.6);
-  --glow: 0 0 0 1px rgba(139, 92, 246, 0.25), 0 12px 40px -8px rgba(139, 92, 246, 0.45);
-  --glow-soft: 0 10px 50px -10px rgba(139, 92, 246, 0.35);
+  /* --- Shadows (warm, soft — no neon glow) --- */
+  --shadow-sm: 0 1px 2px rgba(60, 50, 30, 0.06);
+  --shadow-md: 0 12px 30px -14px rgba(50, 42, 24, 0.22);
+  --shadow-lg: 0 34px 60px -28px rgba(40, 34, 18, 0.28);
+  --glow: var(--shadow-md);        /* legacy alias */
+  --glow-soft: var(--shadow-sm);   /* legacy alias */
 
   /* --- Shape & rhythm --- */
-  --radius-sm: 10px;
-  --radius: 16px;
-  --radius-lg: 24px;
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
   --radius-full: 999px;
-  --max-width: 1200px;
-  --nav-height: 72px;
+  --max-width: 1160px;
+  --nav-height: 76px;
 
   /* --- Type --- */
-  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Bricolage Grotesque', 'Hanken Grotesk', system-ui, sans-serif;
+  --font-body: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
   /* --- Easing --- */
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
@@ -78,36 +96,25 @@ html {
 
 body {
   font-family: var(--font-body);
-  color: var(--text);
-  background-color: var(--bg);
+  color: var(--ink-soft);
+  background-color: var(--paper);
   line-height: 1.6;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
-/* Layered ambient background — mesh glows + subtle grain.
-   Fixed so sections share one continuous atmosphere. */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  background:
-    radial-gradient(60% 50% at 15% 0%, rgba(139, 92, 246, 0.18) 0%, transparent 60%),
-    radial-gradient(50% 50% at 90% 10%, rgba(99, 102, 241, 0.14) 0%, transparent 55%),
-    radial-gradient(45% 45% at 70% 90%, rgba(217, 70, 239, 0.10) 0%, transparent 60%);
-  pointer-events: none;
-}
-
+/* Faint paper grain only — no mesh glows. Keeps the page feeling like
+   stock rather than a flat digital fill. */
 body::after {
   content: '';
   position: fixed;
   inset: 0;
   z-index: -1;
-  opacity: 0.035;
+  opacity: 0.028;
   pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 .app {
@@ -120,96 +127,142 @@ body::after {
 .main-content {
   flex: 1;
   margin-top: var(--nav-height);
-  /* Clip horizontal bleed from decorative glows so mobile can't scroll
-     sideways. `clip` (not hidden) avoids creating a scroll container. */
   overflow-x: clip;
 }
 
 .container {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 1.75rem;
 }
 
 /* --- Typography --- */
 h1, h2, h3, h4, h5 {
   font-family: var(--font-display);
-  color: var(--text-high);
-  line-height: 1.1;
+  color: var(--ink);
+  line-height: 1.06;
   letter-spacing: -0.02em;
-  font-weight: 600;
+  font-weight: 700;
 }
 
-p { color: var(--text); }
+p { color: var(--ink-soft); }
 
 a { color: inherit; }
 
 ::selection {
-  background: rgba(139, 92, 246, 0.35);
-  color: #fff;
+  background: rgba(14, 75, 63, 0.16);
+  color: var(--ink);
 }
 
-/* --- Reusable helpers --- */
+/* Keyboard focus — visible, on-brand */
+:focus-visible {
+  outline: 2px solid var(--clay);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* ===================================================================
+   Signature 1 — hand-ruled clay underline on a marked word
+   Applied via the existing .gradient-text hook so page markup is untouched.
+   =================================================================== */
 .gradient-text {
-  background: var(--grad-text);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  position: relative;
+  color: var(--ink);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 16' preserveAspectRatio='none'%3E%3Cpath d='M3 11 C 46 5, 96 13, 140 8 S 191 6, 197 10' fill='none' stroke='%23b0691a' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: left 100%;
+  background-size: 100% 0.3em; /* base = fully drawn (reduced-motion / fallback) */
+  padding-bottom: 0.06em;
 }
 
+/* Draw the clay underline in on page load, left to right (the pen sweep).
+   Layered as enhancement only — the base rule above keeps it always visible. */
+@keyframes underline-draw {
+  from { background-size: 0% 0.3em; }
+  to { background-size: 100% 0.3em; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .gradient-text {
+    background-size: 0% 0.3em;
+    animation: underline-draw 0.7s var(--ease-out) 0.55s forwards;
+  }
+}
+
+/* ===================================================================
+   Signature 2 — mono marginalia (a craftsman's note / code comment)
+   =================================================================== */
+.marginalia {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--ink-faint);
+  letter-spacing: -0.01em;
+}
+
+.marginalia::before {
+  content: '// ';
+  color: var(--clay);
+}
+
+/* --- Eyebrow → drafting label (mono, with a clay tick) --- */
 .eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  font-family: var(--font-body);
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--violet-soft);
-  padding: 0.4rem 0.9rem;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-full);
-  background: var(--glass);
-  backdrop-filter: blur(8px);
+  color: var(--ink-faint);
 }
 
 .eyebrow::before {
   content: '';
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--violet-bright);
-  box-shadow: 0 0 10px 1px var(--violet-bright);
+  width: 18px;
+  height: 2px;
+  background: var(--clay);
+  flex-shrink: 0;
 }
 
+/* --- Sections & bands --- */
 .section {
   padding: 6rem 0;
   position: relative;
 }
 
+/* alternating warm band */
+.section.band {
+  background: var(--paper-2);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
 .section-head {
-  text-align: center;
-  max-width: 640px;
-  margin: 0 auto 3.5rem;
+  max-width: 620px;
+  margin: 0 0 3.25rem;
+}
+
+.section-head .eyebrow {
+  margin-bottom: 1.1rem;
 }
 
 .section-head h2 {
-  font-size: clamp(2rem, 4vw, 2.75rem);
-  margin: 1rem 0 0.75rem;
+  font-size: clamp(1.9rem, 3.6vw, 2.6rem);
+  margin: 0 0 0.85rem;
 }
 
 .section-head p {
-  font-size: 1.075rem;
-  color: var(--text-muted);
+  font-size: 1.05rem;
+  color: var(--ink-muted);
+  max-width: 54ch;
 }
 
 /* Shared inner-page hero */
 .page-hero {
   position: relative;
-  text-align: center;
-  padding: clamp(3.5rem, 7vw, 6rem) 0 clamp(2.5rem, 4vw, 3.5rem);
+  padding: clamp(3rem, 6vw, 5rem) 0 clamp(2rem, 3.5vw, 3rem);
 }
 
 .page-hero .eyebrow {
@@ -218,14 +271,14 @@ a { color: inherit; }
 
 .page-hero h1 {
   font-size: clamp(2.25rem, 5vw, 3.5rem);
+  max-width: 16ch;
   margin-bottom: 1.25rem;
 }
 
 .page-hero > .container > p {
   font-size: clamp(1.05rem, 1.6vw, 1.2rem);
-  color: var(--text-muted);
-  max-width: 60ch;
-  margin: 0 auto;
+  color: var(--ink-muted);
+  max-width: 58ch;
 }
 
 /* Interactive cursor-follow tilt (see components/Tilt.jsx) */
@@ -246,10 +299,10 @@ a { color: inherit; }
   z-index: 2;
 }
 
-/* Glass card base — reused across pages */
+/* --- Card base (reused across pages via legacy .glass-card hook) --- */
 .glass-card {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1px solid var(--line);
   border-radius: var(--radius);
   position: relative;
   overflow: hidden;
@@ -265,17 +318,18 @@ a { color: inherit; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.55rem;
   font-family: var(--font-body);
   font-weight: 600;
-  font-size: 1rem;
-  padding: 0.95rem 1.75rem;
-  border-radius: var(--radius-full);
+  font-size: 0.98rem;
+  letter-spacing: 0.01em;
+  padding: 0.85rem 1.6rem;
+  border-radius: var(--radius-sm);
   text-decoration: none;
   border: none;
   cursor: pointer;
-  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease),
-    background 0.25s var(--ease);
+  transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease),
+    background 0.2s var(--ease);
   position: relative;
   white-space: nowrap;
 }
@@ -284,23 +338,34 @@ a { color: inherit; }
 .package-button,
 .form-submit {
   background: var(--grad-brand);
-  color: #fff;
-  box-shadow: var(--glow-soft);
+  color: #f6f4ee;
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-primary:hover,
 .package-button:hover,
 .form-submit:hover {
   transform: translateY(-2px);
-  box-shadow: var(--glow);
+  box-shadow: var(--shadow-md);
   background: var(--grad-brand-hover);
+}
+
+.btn-primary svg,
+.package-button svg,
+.form-submit svg {
+  transition: transform 0.2s var(--ease-out);
+}
+
+.btn-primary:hover svg,
+.package-button:hover svg {
+  transform: translateX(3px);
 }
 
 .btn-primary:disabled,
 .package-button:disabled,
 .form-submit:disabled {
-  background: var(--surface-2);
-  color: var(--text-faint);
+  background: var(--paper-3);
+  color: var(--ink-faint);
   box-shadow: none;
   cursor: not-allowed;
   transform: none;
@@ -310,27 +375,30 @@ a { color: inherit; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  background: var(--glass);
-  border: 1px solid var(--border-strong);
-  color: var(--text-high);
-  padding: 0.95rem 1.75rem;
-  border-radius: var(--radius-full);
+  gap: 0.55rem;
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+  padding: 0.85rem 1.6rem;
+  border-radius: var(--radius-sm);
   text-decoration: none;
   cursor: pointer;
   font-weight: 600;
   font-family: var(--font-body);
-  font-size: 1rem;
-  backdrop-filter: blur(8px);
-  transition: transform 0.25s var(--ease-out), border-color 0.25s var(--ease),
-    background 0.25s var(--ease);
+  font-size: 0.98rem;
+  transition: transform 0.2s var(--ease-out), border-color 0.2s var(--ease),
+    background 0.2s var(--ease);
 }
+
+.btn-secondary svg { transition: transform 0.2s var(--ease-out); }
 
 .btn-secondary:hover {
   transform: translateY(-2px);
-  border-color: var(--violet);
-  background: var(--glass-strong);
+  border-color: var(--line-ink);
+  background: rgba(26, 26, 23, 0.03);
 }
+
+.btn-secondary:hover svg { transform: translateX(3px); }
 
 .btn-full-width {
   width: 100%;
@@ -350,6 +418,9 @@ a { color: inherit; }
 
 @media (max-width: 768px) {
   .section {
-    padding: 4rem 0;
+    padding: 4.25rem 0;
+  }
+  .container {
+    padding: 0 1.25rem;
   }
 }
