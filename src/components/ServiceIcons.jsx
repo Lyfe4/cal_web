@@ -27,12 +27,15 @@ export const CodeAnim = () => (
   </svg>
 );
 
-// Responsive Design — the screen squashes and stretches (responsive resize)
+// Responsive Design — the monitor reflows into a phone and back (adapts to any screen)
 export const ResponsiveAnim = () => (
   <svg {...base} className="i-responsive">
     <rect className="screen" x="3" y="5" width="18" height="11" rx="2" />
-    <line x1="9" y1="20" x2="15" y2="20" />
-    <line x1="12" y1="16" x2="12" y2="20" />
+    <g className="stand">
+      <line x1="9" y1="20" x2="15" y2="20" />
+      <line x1="12" y1="16" x2="12" y2="20" />
+    </g>
+    <circle className="home-btn" cx="12" cy="18" r="0.85" fill="currentColor" stroke="none" />
   </svg>
 );
 

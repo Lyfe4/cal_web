@@ -17,24 +17,28 @@
 .about-image-frame {
   position: relative;
   z-index: 1;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius);
   padding: 8px;
-  background: var(--glass-strong);
-  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
   box-shadow: var(--shadow-lg);
   overflow: hidden;
 }
 
 .about-image-frame .image-container {
-  border-radius: var(--radius) !important;
+  border-radius: var(--radius-sm) !important;
 }
 
+/* A quiet clay corner-tick instead of a purple glow */
 .about-image-glow {
   position: absolute;
-  inset: -20% -15% -25% -15%;
+  left: -14px;
+  bottom: -14px;
+  width: 64px;
+  height: 64px;
   z-index: 0;
-  background: radial-gradient(50% 50% at 50% 50%, rgba(139, 92, 246, 0.35), transparent 70%);
-  filter: blur(30px);
+  border-left: 2px solid var(--clay);
+  border-bottom: 2px solid var(--clay);
   opacity: 0.7;
 }
 
@@ -48,7 +52,7 @@
 }
 
 .about-content p {
-  color: var(--text-muted);
+  color: var(--ink-muted);
   margin-bottom: 1rem;
   line-height: 1.7;
 }
@@ -61,42 +65,40 @@
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .skill-card {
   padding: 2rem;
-  text-align: center;
-  transition: transform 0.3s var(--ease-out), border-color 0.3s var(--ease),
-    box-shadow 0.3s var(--ease);
+  transition: transform 0.25s var(--ease-out), border-color 0.25s var(--ease),
+    box-shadow 0.25s var(--ease);
 }
 
 .skill-card:hover {
-  transform: translateY(-6px) scale(1.02);
-  border-color: var(--violet);
-  box-shadow: var(--glow-soft);
+  transform: translateY(-4px);
+  border-color: var(--line-ink);
+  box-shadow: var(--shadow-md);
 }
 
 .skill-icon {
   display: grid;
   place-items: center;
-  width: 60px;
-  height: 60px;
-  margin: 0 auto 1.25rem;
-  border-radius: 16px;
-  background: var(--grad-brand);
-  color: #fff;
-  box-shadow: var(--glow-soft);
+  width: 48px;
+  height: 48px;
+  margin: 0 0 1.25rem;
+  border-radius: 9px;
+  background: var(--pine);
+  color: #f4efe4;
 }
 
 .skill-card h3 {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   margin-bottom: 0.75rem;
 }
 
 .skill-card p {
-  color: var(--text-muted);
-  font-size: 0.93rem;
+  color: var(--ink-muted);
+  font-size: 0.92rem;
   line-height: 1.7;
 }
 
@@ -104,52 +106,52 @@
 .values-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .value-card {
   display: flex;
   gap: 1.25rem;
   padding: 1.75rem;
-  transition: transform 0.3s var(--ease-out), border-color 0.3s var(--ease),
-    box-shadow 0.3s var(--ease);
+  transition: transform 0.25s var(--ease-out), border-color 0.25s var(--ease),
+    box-shadow 0.25s var(--ease);
 }
 
 .value-card:hover {
-  transform: translateY(-4px) scale(1.015);
-  border-color: var(--violet);
-  box-shadow: var(--glow-soft);
+  transform: translateY(-4px);
+  border-color: var(--line-ink);
+  box-shadow: var(--shadow-md);
 }
 
 .value-icon {
   display: grid;
   place-items: center;
-  width: 48px;
-  height: 48px;
+  width: 46px;
+  height: 46px;
   flex-shrink: 0;
-  border-radius: 13px;
-  background: var(--glass-strong);
-  border: 1px solid var(--border-strong);
-  color: var(--violet-bright);
+  border-radius: 9px;
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  color: var(--pine);
 }
 
 .value-card h3 {
-  font-size: 1.15rem;
+  font-size: 1.12rem;
   margin-bottom: 0.4rem;
 }
 
 .value-card p {
-  color: var(--text-muted);
-  font-size: 0.93rem;
+  color: var(--ink-muted);
+  font-size: 0.92rem;
 }
 
 /* ===================================================================
    Animated icons (skills + values) — play once on card hover, return to rest
+   Keyframes code-open-*, sp-twinkle, ch-dot live in Home.css.
    =================================================================== */
 .skill-icon svg,
 .value-icon svg { overflow: visible; }
 
-/* --- Reused animations (keyframes defined in Home.css) --- */
 /* Frontend Development -> code brackets open + slash blink */
 .skill-card:hover .i-code .br-left { animation: code-open-l 0.9s var(--ease-out); }
 .skill-card:hover .i-code .br-right { animation: code-open-r 0.9s var(--ease-out); }
@@ -171,20 +173,35 @@
   50% { opacity: 1; }
 }
 
-/* --- Tools: rocket lifts off and settles --- */
+/* --- Tools & Deployment: the rocket crouches, thrusts up its axis, settles ---
+   A deliberate launch: anticipation dip → directional thrust up-right along the
+   rocket's diagonal → gentle overshoot → rest. The exhaust flares on thrust. */
 .i-rocket .rocket {
   transform-box: fill-box;
   transform-origin: center;
 }
-.skill-card:hover .i-rocket .rocket { animation: rk-launch 0.9s ease-in-out; }
+.skill-card:hover .i-rocket .rocket { animation: rk-launch 1.4s var(--ease-out); }
 @keyframes rk-launch {
-  0%, 100% { transform: translate(0, 0); }
-  40% { transform: translate(1px, -3px); }
+  0%   { transform: translate(0, 0) scale(1); }
+  16%  { transform: translate(-0.4px, 1.1px) scale(0.95); }  /* crouch */
+  50%  { transform: translate(2.6px, -4.6px) scale(1.05); }  /* thrust up-right */
+  74%  { transform: translate(0.7px, -1px) scale(1); }       /* settle */
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+.i-rocket .flame {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.skill-card:hover .i-rocket .flame { animation: rk-flame 1.4s ease-in-out; }
+@keyframes rk-flame {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  16%      { opacity: 0.45; transform: scaleY(0.7); }   /* tucked before launch */
+  46%      { opacity: 1; transform: scale(1.4); }       /* flare on thrust */
+  70%      { transform: scale(1.1); }
 }
 
 /* --- Quality: shield check draws in --- */
-/* dasharray matches the checkmark's real length (~8.5u) so the whole
-   duration is spent drawing, not snapping at the end. */
 .i-shield .check {
   stroke-dasharray: 9;
   stroke-dashoffset: 0;
@@ -195,27 +212,29 @@
   100% { stroke-dashoffset: 0; }
 }
 
-/* --- User-centered: second person pops, first bobs --- */
-.i-users .user-back,
-.i-users .user-front {
-  transform-box: fill-box;
-  transform-origin: center;
+/* --- User-Centered Design: the central user draws in (body then head) while
+       the supporting figure fades in behind. Rest state = fully drawn. --- */
+.i-users .uf-body,
+.i-users .uf-head {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
 }
-.value-card:hover .i-users .user-back { animation: us-pop 0.8s ease-in-out; }
-.value-card:hover .i-users .user-front { animation: us-bob 0.8s ease-in-out; }
-@keyframes us-pop {
-  0%, 100% { transform: scale(1); }
-  45% { transform: scale(1.18); }
+.value-card:hover .i-users .uf-body { animation: uc-draw 0.7s var(--ease-out) 0.1s both; }
+.value-card:hover .i-users .uf-head { animation: uc-draw 0.7s var(--ease-out) 0.3s both; }
+.value-card:hover .i-users .user-back { animation: uc-fade 0.6s var(--ease-out) both; }
+@keyframes uc-draw {
+  from { stroke-dashoffset: 1; opacity: 0; }
+  to   { stroke-dashoffset: 0; opacity: 1; }
 }
-@keyframes us-bob {
-  0%, 100% { transform: translateY(0); }
-  45% { transform: translateY(-1.5px); }
+@keyframes uc-fade {
+  from { opacity: 0.2; }
+  to   { opacity: 1; }
 }
 
 /* ===== Responsive ===== */
 @media (max-width: 860px) {
   .about-story-grid { grid-template-columns: 1fr; gap: 2.5rem; }
   .about-image-wrap { max-width: 420px; }
-  .skills-grid { grid-template-columns: 1fr; max-width: 460px; margin: 0 auto; }
+  .skills-grid { grid-template-columns: 1fr; max-width: 460px; }
   .values-grid { grid-template-columns: 1fr; }
 }
