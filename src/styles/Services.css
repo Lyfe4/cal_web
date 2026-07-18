@@ -236,53 +236,6 @@
   max-width: 60ch;
 }
 
-.portfolio-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 760px);
-  justify-content: start;
-  gap: 1.5rem;
-}
-
-.portfolio-item {
-  overflow: hidden;
-  transition: transform 0.25s var(--ease-out), border-color 0.25s var(--ease),
-    box-shadow 0.25s var(--ease);
-}
-
-.portfolio-item:hover {
-  transform: translateY(-4px);
-  border-color: var(--line-ink);
-  box-shadow: var(--shadow-md);
-}
-
-.video-container {
-  position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
-  background: var(--paper-3);
-}
-
-.video-container iframe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.portfolio-content {
-  padding: 1.5rem;
-}
-
-.portfolio-content h3 {
-  font-size: 1.18rem;
-  margin-bottom: 0.5rem;
-}
-
-.portfolio-content p {
-  color: var(--ink-muted);
-  font-size: 0.93rem;
-}
-
 /* ===== FAQ ===== */
 .faq-container {
   max-width: 800px;
@@ -356,7 +309,6 @@
 @media (max-width: 900px) {
   .packages-grid { grid-template-columns: 1fr; max-width: 460px; }
   .extras-grid { grid-template-columns: repeat(2, 1fr); }
-  .portfolio-grid { grid-template-columns: 1fr; }
   .live-project { flex-direction: column; align-items: flex-start; }
 }
 
