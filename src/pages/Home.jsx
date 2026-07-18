@@ -41,10 +41,10 @@ const Home = () => {
   return (
     <div className="home">
       <SEO
-        title="Calvin R Development | Professional Frontend Web Development in Armidale"
-        description="Expert frontend web development services in Armidale, NSW. Creating beautiful, responsive websites with a focus on quality and communication. Remote services available Australia-wide."
+        title="Armidale Web Developer & Website Designer | Calvin R Development"
+        description="Armidale web developer and website designer building fast, custom, hand-coded websites for small businesses across the New England region and NSW. Get a quote today."
         canonicalUrl="/"
-        keywords="frontend web development, Armidale web developer, responsive design, quality web development, professional web services, React developer, NSW web development"
+        keywords="Armidale web developer, Armidale website designer, web design Armidale, website designer New England NSW, small business websites Armidale, React developer NSW, responsive web design Armidale"
       />
 
       {/* ===== Hero ===== */}
