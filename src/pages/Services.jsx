@@ -10,17 +10,17 @@ const packages = [
     key: 'starter',
     name: 'Starter',
     price: '$600',
-    tagline: 'A single-page site to get you online',
+    tagline: 'A compact site to get you online properly',
     bestFor: 'New businesses & sole traders',
-    description: 'A polished one-page website that gives you a credible, professional presence — fast.',
+    description: 'A polished two-page website that gets you a credible, professional presence online quickly.',
     features: [
-      'One-page website',
-      'Mobile-first responsive design',
-      'Contact form',
-      'Foundational SEO',
-      'Social media links',
+      'A two-page site designed around your business',
+      'Built to work on mobile, tablet and desktop',
+      'Enquiry form delivered straight to your inbox',
+      'Search foundations so Google can find you',
+      'Hosting set up and launched',
       '1 round of revisions',
-      '2 weeks of support',
+      '2 weeks of support after launch',
     ],
     featured: false,
   },
@@ -33,13 +33,14 @@ const packages = [
     description: 'A full multi-page website with the design polish to help you stand out and win more customers.',
     features: [
       'Everything in Starter, plus:',
-      'Up to 7 pages',
-      'Custom design & animations',
-      'Enhanced UI/UX',
-      'Google Business Profile setup',
-      'Testimonials section',
+      'Up to 7 pages of content',
+      'A design built around your brand, not a template',
+      'Considered layout, navigation and interaction detail',
+      'Custom features built for you, like photo galleries or project filters',
+      'Google Business Profile set up for local search',
+      'Room to show your work, services and reviews',
       '3 rounds of revisions',
-      '3 months of priority support',
+      '2 months of priority support',
     ],
     featured: true,
   },
@@ -48,16 +49,16 @@ const packages = [
     name: 'Custom',
     price: "Let's talk",
     isQuote: true,
-    tagline: 'For bigger or bespoke projects',
-    bestFor: 'Advanced or large projects',
-    description: 'Need bookings, e-commerce, or custom integrations? Tell me your vision and I\'ll scope a tailored solution.',
+    tagline: 'Larger builds and ongoing work',
+    bestFor: 'Teams & complex projects',
+    description: 'For work that goes past a marketing site. A web app, an internal tool, or front-end capacity for a product you already have.',
     features: [
-      'Unlimited pages',
-      'Bespoke features & functionality',
-      'Booking & enquiry systems',
-      'E-commerce & integrations',
-      'Ongoing partnership',
-      'Fully quoted to your needs',
+      'Web apps, new features and internal tools',
+      'Content management and admin interfaces',
+      'API and third-party integrations',
+      'Front-end work on an existing product or codebase',
+      'Contract development by the day, sprint or project',
+      'Fully scoped and quoted to your needs',
     ],
     featured: false,
   },
@@ -71,9 +72,10 @@ const extras = [
 ];
 
 const faqs = [
-  { q: 'How long does a project take?', a: 'Most Starter sites are ready in about a week, and Professional builds typically take 2–3 weeks depending on content and revisions. I\'ll give you a clear timeline upfront.' },
+  { q: 'How long does a project take?', a: 'Most Starter sites are ready in about a week, and Professional builds typically take 2–3 weeks depending on content and revisions. Custom builds and contract work are scoped individually. Either way you get a clear timeline upfront.' },
+  { q: 'Do you take on contract or ongoing development work?', a: 'Yes. Alongside the website packages I work with teams that need front-end capacity, building features in an existing product or picking up a slice of a larger project. That work is quoted by the day, the sprint or the project, depending on what suits you.' },
   { q: 'What do you need from me to get started?', a: 'Just an idea of your goals, any branding or content you have, and examples of sites you like. If you don\'t have everything ready, I\'ll guide you through it.' },
-  { q: 'Do you handle hosting and domains?', a: 'Yes — I can set up hosting and connect your domain so your site goes live without any technical headaches on your end.' },
+  { q: 'Do you handle hosting and domains?', a: 'Yes. I can set up hosting and connect your domain so your site goes live without any technical headaches on your end.' },
   { q: 'What happens after launch?', a: 'Every package includes a support period for tweaks and fixes. After that, you can extend support monthly or annually, or reach out any time for updates.' },
   { q: 'How does payment work?', a: 'Typically a deposit to begin and the balance on completion before launch. We\'ll agree on everything in writing before any work starts.' },
 ];
@@ -95,9 +97,9 @@ const Services = () => {
     },
     areaServed: { '@type': 'Country', name: 'Australia' },
     description:
-      'Professional frontend web development services including responsive website design, custom web applications, and UI/UX optimization with a focus on quality and communication.',
+      'Front-end web development services including responsive website design, custom web applications, API integrations, and contract front-end development for existing products.',
     offers: [
-      { '@type': 'Offer', name: 'Starter Package', price: '600', priceCurrency: 'AUD', description: 'A polished single-page website for new businesses and sole traders' },
+      { '@type': 'Offer', name: 'Starter Package', price: '600', priceCurrency: 'AUD', description: 'A polished two-page website for new businesses and sole traders' },
       { '@type': 'Offer', name: 'Professional Package', price: '1125', priceCurrency: 'AUD', description: 'A complete multi-page website for established businesses that want to stand out' },
     ],
   };
@@ -116,7 +118,7 @@ const Services = () => {
     <div className="services-page">
       <SEO
         title="Web Development Services & Pricing | Calvin R Development Armidale"
-        description="Professional frontend web development in Armidale. Custom, responsive websites with clear packages from $600. Starter, Professional, and fully custom builds."
+        description="Front-end web development in Armidale, NSW. Fixed-price website packages from $600, plus custom web apps and contract development for larger projects."
         canonicalUrl="/services"
         keywords="web development services, Armidale web developer, frontend development packages, responsive website design, web design pricing, UI/UX optimization"
         structuredData={[servicesStructuredData, faqStructuredData]}
@@ -128,8 +130,9 @@ const Services = () => {
           <Reveal as="span" className="eyebrow">Services &amp; Pricing</Reveal>
           <Reveal as="h1" delay={0.05}>Simple packages, <span className="gradient-text">serious results</span></Reveal>
           <Reveal as="p" delay={0.1}>
-            Transparent pricing and a clear scope — so you know exactly what you're getting.
-            Every site is hand-built, responsive, and made to grow your business.
+            Transparent pricing and a clear scope, so you know exactly what you're getting.
+            Two fixed-price packages for websites, plus custom pricing for larger builds
+            and ongoing development work.
           </Reveal>
         </div>
       </section>
@@ -164,7 +167,7 @@ const Services = () => {
                   to={`/contact?package=${pkg.key}`}
                   className={pkg.featured ? 'package-button' : 'btn-secondary btn-full-width'}
                 >
-                  {pkg.isQuote ? 'Request a quote' : 'Get started'}
+                  {pkg.isQuote ? 'Get in touch' : 'Get started'}
                   <ArrowRightIcon size={17} />
                 </Link>
               </Reveal>
@@ -182,7 +185,7 @@ const Services = () => {
                 </div>
               ))}
             </div>
-            <p className="extras-note">Need something not listed here? Just ask — I'm happy to quote custom work.</p>
+            <p className="extras-note">Need something not listed here? Just ask. I'm happy to quote custom work.</p>
           </Reveal>
         </div>
       </section>
@@ -193,13 +196,13 @@ const Services = () => {
           <Reveal className="section-head">
             <span className="eyebrow">Recent work</span>
             <h2>See it in action</h2>
-            <p>A live client site you can visit right now — real work for a real regional business.</p>
+            <p>A live client site you can visit right now. Real work for a real regional business.</p>
           </Reveal>
 
           <Reveal className="live-project glass-card">
             <div className="live-project-content">
               <span className="case-label">Live client site</span>
-              <h3>LenBuild — Custom Home Builder</h3>
+              <h3>LenBuild: Custom Home Builder</h3>
               <p>A fast, mobile-first website for a regional builder in Guyra, NSW, designed to showcase their work and convert local searches into enquiries.</p>
             </div>
             <a href="https://lenbuild.com" target="_blank" rel="noopener noreferrer" className="btn-primary">

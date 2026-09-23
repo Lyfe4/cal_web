@@ -9,7 +9,7 @@ import '../styles/Contact.css';
 const PACKAGE_SUBJECTS = {
   starter: 'Starter Package Inquiry',
   professional: 'Professional Package Inquiry',
-  custom: 'Custom Project Inquiry',
+  custom: 'Custom Project or Contract Work',
 };
 
 const Contact = () => {
@@ -207,7 +207,7 @@ const Contact = () => {
                       <option value="">Select a subject</option>
                       <option value="Starter Package Inquiry">Starter Package Inquiry</option>
                       <option value="Professional Package Inquiry">Professional Package Inquiry</option>
-                      <option value="Custom Project Inquiry">Custom Project Inquiry</option>
+                      <option value="Custom Project or Contract Work">Custom Project or Contract Work</option>
                       <option value="General Question">General Question</option>
                     </select>
                     {errors.subject && <div className="error-message">{errors.subject}</div>}

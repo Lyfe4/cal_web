@@ -69,6 +69,8 @@
 }
 
 .skill-card {
+  display: flex;
+  flex-direction: column;
   padding: 2rem;
   transition: transform 0.25s var(--ease-out), border-color 0.25s var(--ease),
     box-shadow 0.25s var(--ease);
@@ -100,6 +102,50 @@
   color: var(--ink-muted);
   font-size: 0.92rem;
   line-height: 1.7;
+}
+
+.skill-card .skill-note {
+  margin-top: auto;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.78rem;
+  line-height: 1.6;
+  min-height: calc(0.85rem + 3.2em);
+  box-sizing: border-box;
+}
+
+/* ===== Side project ===== */
+.side-project.glass-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding: 2rem 2.25rem;
+  background:
+    linear-gradient(180deg, rgba(14, 75, 63, 0.04), transparent 60%),
+    var(--surface);
+}
+
+.side-project .case-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--clay);
+  font-weight: 500;
+}
+
+.side-project h3 {
+  font-size: 1.32rem;
+  margin: 0.4rem 0 0.5rem;
+}
+
+.side-project p {
+  color: var(--ink-muted);
+  font-size: 0.95rem;
+  max-width: 62ch;
+  margin: 0;
 }
 
 /* ===== Values ===== */
@@ -237,4 +283,5 @@
   .about-image-wrap { max-width: 420px; }
   .skills-grid { grid-template-columns: 1fr; max-width: 460px; }
   .values-grid { grid-template-columns: 1fr; }
+  .side-project.glass-card { flex-direction: column; align-items: flex-start; }
 }

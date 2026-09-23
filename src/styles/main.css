@@ -228,7 +228,7 @@ a { color: inherit; }
 
 /* --- Sections & bands --- */
 .section {
-  padding: 6rem 0;
+  padding: clamp(3.25rem, 6.5vw, 4.75rem) 0;
   position: relative;
 }
 
@@ -241,11 +241,11 @@ a { color: inherit; }
 
 .section-head {
   max-width: 620px;
-  margin: 0 0 3.25rem;
+  margin: 0 0 clamp(1.9rem, 3.4vw, 2.5rem);
 }
 
 .section-head .eyebrow {
-  margin-bottom: 1.1rem;
+  margin-bottom: 0.9rem;
 }
 
 .section-head h2 {
@@ -262,7 +262,7 @@ a { color: inherit; }
 /* Shared inner-page hero */
 .page-hero {
   position: relative;
-  padding: clamp(3rem, 6vw, 5rem) 0 clamp(2rem, 3.5vw, 3rem);
+  padding: clamp(2.5rem, 5vw, 4rem) 0 clamp(1.5rem, 3vw, 2.5rem);
 }
 
 .page-hero .eyebrow {
@@ -417,9 +417,6 @@ a { color: inherit; }
 }
 
 @media (max-width: 768px) {
-  .section {
-    padding: 4.25rem 0;
-  }
   .container {
     padding: 0 1.25rem;
   }

@@ -15,7 +15,7 @@ const siteUrl = 'https://calvinrdevelopment.com';
 
 const defaultTitle = 'Armidale Web Developer & Website Designer | Calvin R Development';
 const defaultDescription =
-  'Armidale web developer and website designer building fast, custom, hand-coded websites for small businesses across the New England region and NSW.';
+  'Armidale web developer and website designer building fast, custom websites for small businesses across the New England region and NSW.';
 const defaultKeywords =
   'Armidale web developer, Armidale website designer, web design Armidale, website designer New England NSW, small business websites, React developer NSW';
 const defaultOgImage = `${siteUrl}/og-image.png`;
@@ -79,9 +79,9 @@ const SEO = ({
     '@type': 'ProfessionalService',
     '@id': `${siteUrl}/#business`,
     name: 'Calvin R Development',
-    alternateName: 'Calvin R Development — Armidale Web Developer',
+    alternateName: 'Calvin R Development, Armidale Web Developer',
     description: defaultDescription,
-    slogan: 'Modern, hand-built websites for small businesses.',
+    slogan: 'Modern, custom-built websites for small businesses.',
     url: siteUrl,
     logo: `${siteUrl}/icon-512.png`,
     image: defaultOgImage,
@@ -95,8 +95,11 @@ const SEO = ({
       'Website design',
       'Responsive design',
       'React',
+      'TypeScript',
+      'Web application development',
       'Search engine optimisation',
       'Small business websites',
+      'Contract front-end development',
     ],
     address: {
       '@type': 'PostalAddress',
@@ -122,10 +125,7 @@ const SEO = ({
     priceRange: '$$',
     telephone: '+61-447-576-460',
     email: 'calvin@calvinrdevelopment.com',
-    sameAs: [
-      'https://www.linkedin.com/in/calvin-reinke-24792132b/',
-      'https://github.com/Lyfe4',
-    ],
+    sameAs: ['https://github.com/Lyfe4'],
     openingHoursSpecification: {
       '@type': 'OpeningHoursSpecification',
       dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],

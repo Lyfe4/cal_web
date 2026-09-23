@@ -14,6 +14,37 @@
   overflow: visible;
 }
 
+/* Three-up only: put all three cards on shared rows so the tagline, price,
+   description, best-for line, hairline and button line up across the cards
+   however the copy happens to wrap at a given width. Falls back to the plain
+   flex column below, which is what single-column mode uses anyway. */
+@media (min-width: 901px) {
+  @supports (grid-template-rows: subgrid) {
+    .packages-grid {
+      grid-template-rows: auto auto auto auto auto 1fr auto;
+      row-gap: 0;
+    }
+
+    .package-card.glass-card {
+      display: grid;
+      grid-template-rows: subgrid;
+      grid-row: span 7;
+    }
+
+    /* The header's children become items of the card grid, so the hairline it
+       used to draw moves down to the last of them. */
+    .package-header {
+      display: contents;
+    }
+
+    .package-bestfor {
+      padding-bottom: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--line);
+    }
+  }
+}
+
 .package-card {
   display: flex;
   flex-direction: column;

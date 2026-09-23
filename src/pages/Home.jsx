@@ -12,7 +12,7 @@ import LivePreview from '../components/LivePreview';
 import '../styles/Home.css';
 
 const services = [
-  { icon: <CodeAnim />, title: 'Custom Front-End Development', desc: 'Tailor-made websites built with React and modern tooling — fast, maintainable, and uniquely yours.' },
+  { icon: <CodeAnim />, title: 'Custom Front-End Development', desc: 'Websites and web apps built with React and modern tooling. Fast, maintainable, and uniquely yours.' },
   { icon: <ResponsiveAnim />, title: 'Responsive Design', desc: 'Pixel-perfect on every screen, from a 5-inch phone to an ultrawide monitor.' },
   { icon: <SparkleAnim />, title: 'UI / UX Design', desc: 'Intuitive interfaces and smooth interactions that turn visitors into customers.' },
   { icon: <GaugeAnim />, title: 'Performance', desc: 'Lightning-fast load times and Core Web Vitals tuned to keep visitors engaged.' },
@@ -21,7 +21,7 @@ const services = [
 ];
 
 const facts = [
-  { value: '5+', label: 'Years building for the web' },
+  { value: 'Industry', label: 'Front-end dev at UNE by day' },
   { value: '< 1.5s', label: 'Typical page load' },
   { value: '~ 7 days', label: 'Average turnaround' },
   { value: 'React', label: 'Modern, maintainable stack' },
@@ -32,9 +32,9 @@ const facts = [
 
 const steps = [
   { n: '01', title: 'Discover', desc: 'We talk through your goals, audience, and what success looks like for your business.' },
-  { n: '02', title: 'Design', desc: 'I craft a clean, modern design tailored to your brand — reviewed and refined with you.' },
-  { n: '03', title: 'Build', desc: 'Your site is hand-coded to be fast, responsive, and easy to maintain.' },
-  { n: '04', title: 'Launch', desc: 'We go live, and I make sure everything runs perfectly — plus ongoing support.' },
+  { n: '02', title: 'Design', desc: 'I craft a clean, modern design tailored to your brand, reviewed and refined with you.' },
+  { n: '03', title: 'Build', desc: 'Your site is built to be fast, responsive, and easy to maintain.' },
+  { n: '04', title: 'Launch', desc: 'We go live, I make sure everything runs perfectly, and support carries on from there.' },
 ];
 
 const Home = () => {
@@ -42,7 +42,7 @@ const Home = () => {
     <div className="home">
       <SEO
         title="Armidale Web Developer & Website Designer | Calvin R Development"
-        description="Armidale web developer and website designer building fast, custom, hand-coded websites for small businesses across the New England region and NSW. Get a quote today."
+        description="Armidale web developer and website designer building fast, custom websites for small businesses across the New England region and NSW. Get a quote today."
         canonicalUrl="/"
         keywords="Armidale web developer, Armidale website designer, web design Armidale, website designer New England NSW, small business websites Armidale, React developer NSW, responsive web design Armidale"
       />
@@ -64,7 +64,7 @@ const Home = () => {
             </motion.h1>
             <motion.p variants={fadeUp}>
               I design and build fast, modern, custom websites that help small businesses
-              stand out and win more customers — no templates, no compromises.
+              stand out and win more customers. No templates, no compromises.
             </motion.p>
             <motion.div className="hero-actions" variants={fadeUp}>
               <Link to="/contact" className="btn-primary">
@@ -74,7 +74,7 @@ const Home = () => {
             </motion.div>
             <motion.div className="hero-trust" variants={fadeUp}>
               <CheckIcon size={16} />
-              <span>Trusted by local businesses · Remote across Australia</span>
+              <span>Trusted by local businesses · Front-end developer in industry</span>
             </motion.div>
           </motion.div>
 
@@ -86,7 +86,7 @@ const Home = () => {
             transition={{ duration: 0.9, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
           >
             <BlueprintCard />
-            <p className="marginalia hero-note">drawn to spec, then built by hand</p>
+            <p className="marginalia hero-note">drawn to spec, then built to match</p>
           </motion.div>
         </div>
       </section>
@@ -111,7 +111,7 @@ const Home = () => {
           <Reveal className="section-head">
             <span className="eyebrow">What I do</span>
             <h2>Everything your site needs, done right</h2>
-            <p>One developer, end-to-end — so the design, the code, and the details all work together.</p>
+            <p>One developer, end to end, working to the same standards as the software I build in my day job.</p>
           </Reveal>
           <div className="services-grid">
             {services.map((s, i) => (
@@ -142,7 +142,7 @@ const Home = () => {
               <span className="case-label">Construction · Live site</span>
               <h3>LenBuild</h3>
               <p>
-                A clean, trustworthy website for a regional custom-home builder — built to
+                A clean, trustworthy website for a regional custom-home builder, built to
                 showcase their work and turn local searches into enquiries. Fast, mobile-first,
                 and SEO-ready.
               </p>

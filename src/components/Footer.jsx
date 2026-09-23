@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import '../styles/Footer.css';
-import { MailIcon, PhoneIcon, MapPinIcon, LinkedInIcon, GitHubIcon, ArrowRightIcon } from './Icons';
+import { MailIcon, PhoneIcon, MapPinIcon, GitHubIcon, ArrowRightIcon } from './Icons';
 
 const Footer = () => {
   const email = 'calvin@calvinrdevelopment.com';
@@ -44,9 +44,6 @@ const Footer = () => {
           </Link>
           <p>Modern, high-performing websites for businesses across Armidale, NSW and Australia-wide.</p>
           <div className="footer-socials">
-            <a href="https://www.linkedin.com/in/calvin-reinke-24792132b/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-              <LinkedInIcon size={18} />
-            </a>
             <a href="https://github.com/Lyfe4" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
               <GitHubIcon size={18} />
             </a>
