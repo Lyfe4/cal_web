@@ -22,46 +22,6 @@ const Svg = ({ children, size, ...rest }) => (
   </svg>
 );
 
-export const CodeIcon = (p) => (
-  <Svg {...p}><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></Svg>
-);
-
-export const ResponsiveIcon = (p) => (
-  <Svg {...p}><rect x="2" y="3" width="14" height="11" rx="2" /><path d="M16 18h4a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1h-2" /><line x1="8" y1="18" x2="8" y2="21" /><line x1="5" y1="21" x2="11" y2="21" /></Svg>
-);
-
-export const SparkleIcon = (p) => (
-  <Svg {...p}><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z" /><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z" /></Svg>
-);
-
-export const GaugeIcon = (p) => (
-  <Svg {...p}><path d="M12 14l4-4" /><path d="M3.34 19a10 10 0 1 1 17.32 0" /><circle cx="12" cy="14" r="1.5" /></Svg>
-);
-
-export const SearchIcon = (p) => (
-  <Svg {...p}><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></Svg>
-);
-
-export const PaletteIcon = (p) => (
-  <Svg {...p}><circle cx="13.5" cy="6.5" r="1.2" /><circle cx="17.5" cy="10.5" r="1.2" /><circle cx="8.5" cy="7.5" r="1.2" /><circle cx="6.5" cy="12.5" r="1.2" /><path d="M12 2a10 10 0 0 0 0 20c1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.3-.3-.4-.5-.8-.5-1.2 0-1 .8-1.8 1.8-1.8H16a6 6 0 0 0 6-6c0-4.4-4.5-8-10-8z" /></Svg>
-);
-
-export const ServerIcon = (p) => (
-  <Svg {...p}><rect x="3" y="4" width="18" height="6" rx="2" /><rect x="3" y="14" width="18" height="6" rx="2" /><line x1="7" y1="7" x2="7.01" y2="7" /><line x1="7" y1="17" x2="7.01" y2="17" /></Svg>
-);
-
-export const RocketIcon = (p) => (
-  <Svg {...p}><path d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2 0-2.7a1.9 1.9 0 0 0-3 0z" /><path d="M12 15l-3-3a22 22 0 0 1 8-10 22 22 0 0 1 2 10 22 22 0 0 1-10 8z" /><circle cx="15" cy="9" r="1.5" /></Svg>
-);
-
-export const ChatIcon = (p) => (
-  <Svg {...p}><path d="M21 11.5a8.38 8.38 0 0 1-9 8.4 8.5 8.5 0 0 1-3.8-.9L3 20l1.5-4.2A8.4 8.4 0 0 1 12 3a8.38 8.38 0 0 1 9 8.5z" /></Svg>
-);
-
-export const UsersIcon = (p) => (
-  <Svg {...p}><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></Svg>
-);
-
 export const CheckIcon = (p) => (
   <Svg {...p}><polyline points="20 6 9 17 4 12" /></Svg>
 );
@@ -88,10 +48,6 @@ export const PhoneIcon = (p) => (
 
 export const ClockIcon = (p) => (
   <Svg {...p}><circle cx="12" cy="12" r="9" /><polyline points="12 7 12 12 15 14" /></Svg>
-);
-
-export const ShieldIcon = (p) => (
-  <Svg {...p}><path d="M12 2 4 5v6c0 5 3.4 8.5 8 11 4.6-2.5 8-6 8-11V5z" /><polyline points="9 12 11 14 15 10" /></Svg>
 );
 
 export const GitHubIcon = (p) => (
