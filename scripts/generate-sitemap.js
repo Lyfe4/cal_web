@@ -14,7 +14,7 @@ const routes = [
   { path: '/', priority: '1.0', changefreq: 'monthly' },
   { path: '/about', priority: '0.8', changefreq: 'monthly' },
   { path: '/services', priority: '0.9', changefreq: 'monthly' },
-  { path: '/contact', priority: '0.7', changefreq: 'monthly' }
+  { path: '/contact', priority: '0.7', changefreq: 'monthly' },
 ];
 
 // Get current date in YYYY-MM-DD format
@@ -26,11 +26,11 @@ const getCurrentDate = () => {
 // Generate sitemap XML content
 const generateSitemapXml = () => {
   const currentDate = getCurrentDate();
-  
+
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
   xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
-  
-  routes.forEach(route => {
+
+  routes.forEach((route) => {
     xml += '  <url>\n';
     xml += `    <loc>${baseUrl}${route.path}</loc>\n`;
     xml += `    <lastmod>${currentDate}</lastmod>\n`;
@@ -38,9 +38,9 @@ const generateSitemapXml = () => {
     xml += `    <priority>${route.priority}</priority>\n`;
     xml += '  </url>\n';
   });
-  
+
   xml += '</urlset>';
-  
+
   return xml;
 };
 

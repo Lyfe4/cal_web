@@ -4,19 +4,48 @@ import SEO from '../components/SEO';
 import Reveal from '../components/Reveal';
 import { ArrowRightIcon, ExternalIcon, CheckIcon } from '../components/Icons';
 import {
-  CodeAnim, ResponsiveAnim, SparkleAnim, GaugeAnim, SearchAnim, ChatAnim,
+  CodeAnim,
+  ResponsiveAnim,
+  SparkleAnim,
+  GaugeAnim,
+  SearchAnim,
+  ChatAnim,
 } from '../components/ServiceIcons';
 import BlueprintCard from '../components/BlueprintCard';
 import LivePreview from '../components/LivePreview';
 import '../styles/Home.css';
 
 const services = [
-  { icon: <CodeAnim />, title: 'Custom Front-End Development', desc: 'Websites and web apps built with React and modern tooling. Fast, maintainable, and uniquely yours.' },
-  { icon: <ResponsiveAnim />, title: 'Responsive Design', desc: 'Pixel-perfect on every screen, from a 5-inch phone to an ultrawide monitor.' },
-  { icon: <SparkleAnim />, title: 'UI / UX Design', desc: 'Intuitive interfaces and smooth interactions that turn visitors into customers.' },
-  { icon: <GaugeAnim />, title: 'Performance', desc: 'Lightning-fast load times and Core Web Vitals tuned to keep visitors engaged.' },
-  { icon: <SearchAnim />, title: 'SEO Foundations', desc: 'Clean, structured markup so the right people actually find your business.' },
-  { icon: <ChatAnim />, title: 'Clear Communication', desc: 'Regular updates and a hassle-free process from first call to launch day.' },
+  {
+    icon: <CodeAnim />,
+    title: 'Custom Front-End Development',
+    desc: 'Websites and web apps built with React and modern tooling. Fast, maintainable, and uniquely yours.',
+  },
+  {
+    icon: <ResponsiveAnim />,
+    title: 'Responsive Design',
+    desc: 'Pixel-perfect on every screen, from a 5-inch phone to an ultrawide monitor.',
+  },
+  {
+    icon: <SparkleAnim />,
+    title: 'UI / UX Design',
+    desc: 'Intuitive interfaces and smooth interactions that turn visitors into customers.',
+  },
+  {
+    icon: <GaugeAnim />,
+    title: 'Performance',
+    desc: 'Lightning-fast load times and Core Web Vitals tuned to keep visitors engaged.',
+  },
+  {
+    icon: <SearchAnim />,
+    title: 'SEO Foundations',
+    desc: 'Clean, structured markup so the right people actually find your business.',
+  },
+  {
+    icon: <ChatAnim />,
+    title: 'Clear Communication',
+    desc: 'Regular updates and a hassle-free process from first call to launch day.',
+  },
 ];
 
 const facts = [
@@ -30,10 +59,26 @@ const facts = [
 ];
 
 const steps = [
-  { n: '01', title: 'Discover', desc: 'We talk through your goals, audience, and what success looks like for your business.' },
-  { n: '02', title: 'Design', desc: 'I craft a clean, modern design tailored to your brand, reviewed and refined with you.' },
-  { n: '03', title: 'Build', desc: 'Your site is built to be fast, responsive, and easy to maintain.' },
-  { n: '04', title: 'Launch', desc: 'We go live, I make sure everything runs perfectly, and support carries on from there.' },
+  {
+    n: '01',
+    title: 'Discover',
+    desc: 'We talk through your goals, audience, and what success looks like for your business.',
+  },
+  {
+    n: '02',
+    title: 'Design',
+    desc: 'I craft a clean, modern design tailored to your brand, reviewed and refined with you.',
+  },
+  {
+    n: '03',
+    title: 'Build',
+    desc: 'Your site is built to be fast, responsive, and easy to maintain.',
+  },
+  {
+    n: '04',
+    title: 'Launch',
+    desc: 'We go live, I make sure everything runs perfectly, and support carries on from there.',
+  },
 ];
 
 const Home = () => {
@@ -59,17 +104,20 @@ const Home = () => {
               Frontend Web Developer · Armidale, NSW
             </motion.span>
             <motion.h1 variants={fadeUp}>
-              Websites that make your business <span className="gradient-text">impossible to ignore</span>
+              Websites that make your business{' '}
+              <span className="gradient-text">impossible to ignore</span>
             </motion.h1>
             <motion.p variants={fadeUp}>
-              I design and build fast, modern, custom websites that help small businesses
-              stand out and win more customers. No templates, no compromises.
+              I design and build fast, modern, custom websites that help small businesses stand out
+              and win more customers. No templates, no compromises.
             </motion.p>
             <motion.div className="hero-actions" variants={fadeUp}>
               <Link to="/contact" className="btn-primary">
                 Start your project <ArrowRightIcon size={18} />
               </Link>
-              <Link to="/services" className="btn-secondary">View packages</Link>
+              <Link to="/services" className="btn-secondary">
+                View packages
+              </Link>
             </motion.div>
             <motion.div className="hero-trust" variants={fadeUp}>
               <CheckIcon size={16} />
@@ -110,7 +158,10 @@ const Home = () => {
           <Reveal className="section-head">
             <span className="eyebrow">What I do</span>
             <h2>Everything your site needs, done right</h2>
-            <p>One developer, end to end, working to the same standards as the software I build in my day job.</p>
+            <p>
+              One developer, end to end, working to the same standards as the software I build in my
+              day job.
+            </p>
           </Reveal>
           <div className="services-grid">
             {services.map((s, i) => (
@@ -141,16 +192,21 @@ const Home = () => {
               <span className="case-label">Construction · Live site</span>
               <h3>LenBuild</h3>
               <p>
-                A clean, trustworthy website for a regional custom-home builder, built to
-                showcase their work and turn local searches into enquiries. Fast, mobile-first,
-                and SEO-ready.
+                A clean, trustworthy website for a regional custom-home builder, built to showcase
+                their work and turn local searches into enquiries. Fast, mobile-first, and
+                SEO-ready.
               </p>
               <ul className="case-tags">
                 <li>Responsive design</li>
                 <li>SEO setup</li>
                 <li>Lead capture</li>
               </ul>
-              <a href="https://lenbuild.com" target="_blank" rel="noopener noreferrer" className="btn-secondary">
+              <a
+                href="https://lenbuild.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-secondary"
+              >
                 Visit live site <ExternalIcon size={17} />
               </a>
             </div>
@@ -183,7 +239,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
     </div>
   );
 };

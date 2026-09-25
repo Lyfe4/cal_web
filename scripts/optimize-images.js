@@ -17,13 +17,13 @@ const checkDependencies = () => {
   try {
     // Check if required packages are installed
     console.log('Checking dependencies...');
-    
+
     // This will throw an error if the package is not installed
     require.resolve('imagemin');
     require.resolve('imagemin-mozjpeg');
     require.resolve('imagemin-pngquant');
     require.resolve('imagemin-webp');
-    
+
     console.log('All dependencies are installed.');
     return true;
   } catch {
@@ -40,11 +40,10 @@ const optimizeImages = () => {
   }
 
   // Get all image files
-  const imageFiles = fs.readdirSync(imagesDirectory)
-    .filter(file => {
-      const ext = path.extname(file).toLowerCase();
-      return ['.jpg', '.jpeg', '.png', '.gif'].includes(ext);
-    });
+  const imageFiles = fs.readdirSync(imagesDirectory).filter((file) => {
+    const ext = path.extname(file).toLowerCase();
+    return ['.jpg', '.jpeg', '.png', '.gif'].includes(ext);
+  });
 
   if (imageFiles.length === 0) {
     console.log('No image files found to optimize.');
@@ -54,16 +53,16 @@ const optimizeImages = () => {
   console.log(`Found ${imageFiles.length} image files to optimize.`);
 
   // Process each image
-  imageFiles.forEach(file => {
+  imageFiles.forEach((file) => {
     const inputPath = path.join(imagesDirectory, file);
     const ext = path.extname(file).toLowerCase();
-    
+
     try {
       // Skip if the file is already in the optimized directory
       if (inputPath.includes('optimized')) {
         return;
       }
-      
+
       // Optimize based on file type
       if (['.jpg', '.jpeg'].includes(ext)) {
         execSync(`imagemin ${inputPath} --plugin=mozjpeg --out-dir=${optimizedDirectory}`);
@@ -75,12 +74,11 @@ const optimizeImages = () => {
         execSync(`imagemin ${inputPath} --out-dir=${optimizedDirectory}`);
         console.log(`Optimized GIF: ${file}`);
       }
-      
+
       // Also create WebP version for modern browsers
       const webpOutputPath = path.join(optimizedDirectory, `${path.basename(file, ext)}.webp`);
       execSync(`imagemin ${inputPath} --plugin=webp --out-dir=${optimizedDirectory}`);
       console.log(`Created WebP version: ${path.basename(webpOutputPath)}`);
-      
     } catch (error) {
       console.error(`Error optimizing ${file}:`, error.message);
     }

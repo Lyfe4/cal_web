@@ -65,8 +65,10 @@ function ogSvg() {
 
   // faint drafting grid
   let grid = '';
-  for (let x = 40; x < W; x += 44) grid += `<line x1="${x}" y1="0" x2="${x}" y2="${H}" stroke="${LINE}" stroke-width="1"/>`;
-  for (let y = 40; y < H; y += 44) grid += `<line x1="0" y1="${y}" x2="${W}" y2="${y}" stroke="${LINE}" stroke-width="1"/>`;
+  for (let x = 40; x < W; x += 44)
+    grid += `<line x1="${x}" y1="0" x2="${x}" y2="${H}" stroke="${LINE}" stroke-width="1"/>`;
+  for (let y = 40; y < H; y += 44)
+    grid += `<line x1="0" y1="${y}" x2="${W}" y2="${y}" stroke="${LINE}" stroke-width="1"/>`;
 
   const tileS = 104;
   const tileX = 90;

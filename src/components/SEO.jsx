@@ -56,15 +56,7 @@ function setLink(rel, href) {
   el.setAttribute('href', href);
 }
 
-const SEO = ({
-  title,
-  description,
-  canonicalUrl,
-  keywords,
-  ogImage,
-  ogType,
-  structuredData,
-}) => {
+const SEO = ({ title, description, canonicalUrl, keywords, ogImage, ogType, structuredData }) => {
   const metaTitle = title || defaultTitle;
   const metaDescription = description || defaultDescription;
   const metaKeywords = keywords || defaultKeywords;
@@ -165,7 +157,15 @@ const SEO = ({
 
     return () => injected.forEach((s) => s.remove());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [metaTitle, metaDescription, metaKeywords, metaCanonicalUrl, metaOgType, metaOgImage, itemsKey]);
+  }, [
+    metaTitle,
+    metaDescription,
+    metaKeywords,
+    metaCanonicalUrl,
+    metaOgType,
+    metaOgImage,
+    itemsKey,
+  ]);
 
   return null;
 };

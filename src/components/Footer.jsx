@@ -41,9 +41,16 @@ const Footer = () => {
             <span className="brand-mark">CRD</span>
             <span>Calvin R Development</span>
           </Link>
-          <p>Modern, high-performing websites for businesses across Armidale, NSW and Australia-wide.</p>
+          <p>
+            Modern, high-performing websites for businesses across Armidale, NSW and Australia-wide.
+          </p>
           <div className="footer-socials">
-            <a href="https://github.com/Lyfe4" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <a
+              href="https://github.com/Lyfe4"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+            >
               <GitHubIcon size={18} />
             </a>
           </div>
@@ -52,10 +59,18 @@ const Footer = () => {
         <div className="footer-section">
           <h3>Explore</h3>
           <ul className="footer-links">
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/about">About</Link></li>
-            <li><Link to="/services">Services</Link></li>
-            <li><Link to="/contact">Contact</Link></li>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/about">About</Link>
+            </li>
+            <li>
+              <Link to="/services">Services</Link>
+            </li>
+            <li>
+              <Link to="/contact">Contact</Link>
+            </li>
           </ul>
         </div>
 

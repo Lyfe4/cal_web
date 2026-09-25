@@ -20,7 +20,7 @@ const Analytics = () => {
   }, []);
 
   useEffect(() => {
-    ReactGA.send({ hitType: "pageview", page: location.pathname });
+    ReactGA.send({ hitType: 'pageview', page: location.pathname });
   }, [location]);
 
   return null;

@@ -1,4 +1,3 @@
-
 /**
  * Animated service icons for the Home services cards.
  * Each SVG has a wrapper class (i-code, i-gauge, …) and class-tagged inner
