@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import Reveal from '../components/Reveal';
 import SEO from '../components/SEO';
 import { CheckIcon, ArrowRightIcon, ExternalIcon } from '../components/Icons';

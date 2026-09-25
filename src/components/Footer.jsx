@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router';
 import '../styles/Footer.css';
 import { MailIcon, PhoneIcon, MapPinIcon, GitHubIcon, ArrowRightIcon } from './Icons';
 

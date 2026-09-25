@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useForm, ValidationError } from '@formspree/react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import Reveal from '../components/Reveal';
 import SEO from '../components/SEO';
 import { MapPinIcon, MailIcon, PhoneIcon, ClockIcon, CheckIcon } from '../components/Icons';
