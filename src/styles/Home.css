@@ -88,7 +88,9 @@
   stroke-linejoin: round;
 }
 
-.blueprint .bp-frame { stroke-width: 1.6; }
+.blueprint .bp-frame {
+  stroke-width: 1.6;
+}
 
 .blueprint .bp-accent {
   stroke: var(--clay);
@@ -96,7 +98,9 @@
   fill: none;
 }
 
-.blueprint .bp-fill { fill: rgba(14, 75, 63, 0.13); }
+.blueprint .bp-fill {
+  fill: rgba(14, 75, 63, 0.13);
+}
 
 .blueprint .bp-dim {
   stroke: var(--clay);
@@ -104,7 +108,9 @@
   fill: none;
 }
 
-.blueprint text { font-family: var(--font-mono); }
+.blueprint text {
+  font-family: var(--font-mono);
+}
 
 .blueprint .bp-dim-label {
   fill: var(--clay);
@@ -122,10 +128,26 @@
   stroke-dashoffset: 0;
 }
 
-.blueprint .bp-soft { opacity: 1; }
+.blueprint .bp-soft {
+  opacity: 1;
+}
 
-@keyframes bp-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
-@keyframes bp-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes bp-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes bp-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .blueprint .bp-stroke {
@@ -140,13 +162,21 @@
 
   /* staggered reveal per group */
   .blueprint .g-header .bp-stroke,
-  .blueprint .g-header .bp-soft { animation-delay: 0.2s; }
+  .blueprint .g-header .bp-soft {
+    animation-delay: 0.2s;
+  }
   .blueprint .g-hero .bp-stroke,
-  .blueprint .g-hero .bp-soft { animation-delay: 0.45s; }
+  .blueprint .g-hero .bp-soft {
+    animation-delay: 0.45s;
+  }
   .blueprint .g-cards .bp-stroke,
-  .blueprint .g-cards .bp-soft { animation-delay: 0.7s; }
+  .blueprint .g-cards .bp-soft {
+    animation-delay: 0.7s;
+  }
   .blueprint .g-dims .bp-stroke,
-  .blueprint .g-dims .bp-soft { animation-delay: 1s; }
+  .blueprint .g-dims .bp-soft {
+    animation-delay: 1s;
+  }
 }
 
 /* Titleblock (like a real drawing sheet) */
@@ -164,9 +194,16 @@
   text-transform: uppercase;
 }
 
-.blueprint-titleblock .tb-fig { color: var(--clay); }
-.blueprint-titleblock .tb-name { color: var(--ink); font-weight: 500; }
-.blueprint-titleblock .tb-scale { color: var(--ink-faint); }
+.blueprint-titleblock .tb-fig {
+  color: var(--clay);
+}
+.blueprint-titleblock .tb-name {
+  color: var(--ink);
+  font-weight: 500;
+}
+.blueprint-titleblock .tb-scale {
+  color: var(--ink-faint);
+}
 
 .hero-note {
   margin-top: 1rem;
@@ -199,9 +236,15 @@
   background: #ccc6b8;
 }
 
-.mockup-bar span:first-child { background: #e6a598; }
-.mockup-bar span:nth-child(2) { background: #e6cf8f; }
-.mockup-bar span:nth-child(3) { background: #a9c7a0; }
+.mockup-bar span:first-child {
+  background: #e6a598;
+}
+.mockup-bar span:nth-child(2) {
+  background: #e6cf8f;
+}
+.mockup-bar span:nth-child(3) {
+  background: #a9c7a0;
+}
 
 .mockup-url {
   margin-left: 0.6rem;
@@ -270,8 +313,12 @@
 }
 
 @keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .stat {
@@ -307,7 +354,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .marquee-track { animation: none; }
+  .marquee-track {
+    animation: none;
+  }
 }
 
 /* ===== Services ===== */
@@ -319,7 +368,9 @@
 
 .service-card {
   padding: 1.85rem;
-  transition: transform 0.25s var(--ease-out), border-color 0.25s var(--ease),
+  transition:
+    transform 0.25s var(--ease-out),
+    border-color 0.25s var(--ease),
     box-shadow 0.25s var(--ease);
 }
 
@@ -341,7 +392,9 @@
   margin-bottom: 1.25rem;
 }
 
-.service-icon svg { overflow: visible; }
+.service-icon svg {
+  overflow: visible;
+}
 
 .service-card:hover .service-icon {
   color: var(--clay);
@@ -352,35 +405,113 @@
 
 /* --- 1. Code: brackets open then close, slash blinks then stays solid --- */
 .i-code .br-left,
-.i-code .br-right { transform-box: fill-box; }
-.service-card:hover .i-code .br-left { animation: code-open-l 0.9s var(--ease-out); }
-.service-card:hover .i-code .br-right { animation: code-open-r 0.9s var(--ease-out); }
-.service-card:hover .i-code .slash { animation: code-blink 0.9s steps(1, end); }
-@keyframes code-open-l { 0%, 100% { transform: translateX(0); } 45% { transform: translateX(-1.8px); } }
-@keyframes code-open-r { 0%, 100% { transform: translateX(0); } 45% { transform: translateX(1.8px); } }
-@keyframes code-blink { 0%, 50%, 100% { opacity: 1; } 25%, 75% { opacity: 0; } }
+.i-code .br-right {
+  transform-box: fill-box;
+}
+.service-card:hover .i-code .br-left {
+  animation: code-open-l 0.9s var(--ease-out);
+}
+.service-card:hover .i-code .br-right {
+  animation: code-open-r 0.9s var(--ease-out);
+}
+.service-card:hover .i-code .slash {
+  animation: code-blink 0.9s steps(1, end);
+}
+@keyframes code-open-l {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  45% {
+    transform: translateX(-1.8px);
+  }
+}
+@keyframes code-open-r {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  45% {
+    transform: translateX(1.8px);
+  }
+}
+@keyframes code-blink {
+  0%,
+  50%,
+  100% {
+    opacity: 1;
+  }
+  25%,
+  75% {
+    opacity: 0;
+  }
+}
 
 /* --- 2. Responsive: the monitor reflows into a phone and back ---
    Animates the rect's real geometry (not transform-scale) so strokes stay
    crisp, and fades the desktop stand out while it's a phone. */
-.service-card:hover .i-responsive .screen { animation: rd-reflow 1.8s var(--ease); }
-@keyframes rd-reflow {
-  0%   { x: 3px;   y: 5px; width: 18px; height: 11px; }
-  38%  { x: 8.5px; y: 4px; width: 7px;  height: 16px; }
-  62%  { x: 8.5px; y: 4px; width: 7px;  height: 16px; }
-  100% { x: 3px;   y: 5px; width: 18px; height: 11px; }
+.service-card:hover .i-responsive .screen {
+  animation: rd-reflow 1.8s var(--ease);
 }
-.service-card:hover .i-responsive .stand { animation: rd-stand 1.8s var(--ease); }
+@keyframes rd-reflow {
+  0% {
+    x: 3px;
+    y: 5px;
+    width: 18px;
+    height: 11px;
+  }
+  38% {
+    x: 8.5px;
+    y: 4px;
+    width: 7px;
+    height: 16px;
+  }
+  62% {
+    x: 8.5px;
+    y: 4px;
+    width: 7px;
+    height: 16px;
+  }
+  100% {
+    x: 3px;
+    y: 5px;
+    width: 18px;
+    height: 11px;
+  }
+}
+.service-card:hover .i-responsive .stand {
+  animation: rd-stand 1.8s var(--ease);
+}
 @keyframes rd-stand {
-  0%, 22%, 78%, 100% { opacity: 1; }
-  38%, 62% { opacity: 0; }
+  0%,
+  22%,
+  78%,
+  100% {
+    opacity: 1;
+  }
+  38%,
+  62% {
+    opacity: 0;
+  }
 }
 /* home button only shows while it's a phone */
-.i-responsive .home-btn { opacity: 0; }
-.service-card:hover .i-responsive .home-btn { animation: rd-home 1.8s var(--ease); }
+.i-responsive .home-btn {
+  opacity: 0;
+}
+.service-card:hover .i-responsive .home-btn {
+  animation: rd-home 1.8s var(--ease);
+}
 @keyframes rd-home {
-  0%, 32%, 68%, 100% { opacity: 0; }
-  40%, 60% { opacity: 1; }
+  0%,
+  32%,
+  68%,
+  100% {
+    opacity: 0;
+  }
+  40%,
+  60% {
+    opacity: 1;
+  }
 }
 
 /* --- 3. Sparkle: stars twinkle once --- */
@@ -389,11 +520,20 @@
   transform-box: fill-box;
   transform-origin: center;
 }
-.service-card:hover .i-sparkle .star1 { animation: sp-twinkle 0.9s ease-in-out; }
-.service-card:hover .i-sparkle .star2 { animation: sp-twinkle 0.9s ease-in-out 0.2s; }
+.service-card:hover .i-sparkle .star1 {
+  animation: sp-twinkle 0.9s ease-in-out;
+}
+.service-card:hover .i-sparkle .star2 {
+  animation: sp-twinkle 0.9s ease-in-out 0.2s;
+}
 @keyframes sp-twinkle {
-  0%, 100% { transform: scale(1) rotate(0); }
-  50% { transform: scale(1.3) rotate(18deg); }
+  0%,
+  100% {
+    transform: scale(1) rotate(0);
+  }
+  50% {
+    transform: scale(1.3) rotate(18deg);
+  }
 }
 
 /* --- 4. Gauge: needle sweeps across once and returns to centre --- */
@@ -401,11 +541,20 @@
   transform-box: view-box;
   transform-origin: 12px 17px;
 }
-.service-card:hover .i-gauge .needle { animation: gg-sweep 1.4s ease-in-out; }
+.service-card:hover .i-gauge .needle {
+  animation: gg-sweep 1.4s ease-in-out;
+}
 @keyframes gg-sweep {
-  0%, 100% { transform: rotate(0); }
-  30% { transform: rotate(-66deg); }
-  70% { transform: rotate(66deg); }
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  30% {
+    transform: rotate(-66deg);
+  }
+  70% {
+    transform: rotate(66deg);
+  }
 }
 
 /* --- 5. Search: magnifier scans once and returns --- */
@@ -413,12 +562,23 @@
   transform-box: fill-box;
   transform-origin: center;
 }
-.service-card:hover .i-search .glass { animation: se-scan 1.3s ease-in-out; }
+.service-card:hover .i-search .glass {
+  animation: se-scan 1.3s ease-in-out;
+}
 @keyframes se-scan {
-  0%, 100% { transform: translate(0, 0); }
-  25% { transform: translate(-2px, -1.5px); }
-  50% { transform: translate(1.5px, -2px); }
-  75% { transform: translate(2px, 1.5px); }
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-2px, -1.5px);
+  }
+  50% {
+    transform: translate(1.5px, -2px);
+  }
+  75% {
+    transform: translate(2px, 1.5px);
+  }
 }
 
 /* --- 6. Chat: dots type in, bounce, then clear --- */
@@ -427,16 +587,36 @@
   transform-box: fill-box;
   transform-origin: center;
 }
-.service-card:hover .i-chat .d1 { animation: ch-dot 1.2s ease-in-out; }
-.service-card:hover .i-chat .d2 { animation: ch-dot 1.2s ease-in-out 0.15s; }
-.service-card:hover .i-chat .d3 { animation: ch-dot 1.2s ease-in-out 0.3s; }
+.service-card:hover .i-chat .d1 {
+  animation: ch-dot 1.2s ease-in-out;
+}
+.service-card:hover .i-chat .d2 {
+  animation: ch-dot 1.2s ease-in-out 0.15s;
+}
+.service-card:hover .i-chat .d3 {
+  animation: ch-dot 1.2s ease-in-out 0.3s;
+}
 @keyframes ch-dot {
-  0% { opacity: 0; transform: translateY(0); }
-  20% { opacity: 1; }
-  35% { transform: translateY(-2.5px); }
-  55% { transform: translateY(0); }
-  80% { opacity: 1; }
-  100% { opacity: 0; transform: translateY(0); }
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  20% {
+    opacity: 1;
+  }
+  35% {
+    transform: translateY(-2.5px);
+  }
+  55% {
+    transform: translateY(0);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
 }
 
 .service-card h3 {
@@ -458,9 +638,15 @@
   padding: 2.5rem;
 }
 
-.case-visual { position: relative; z-index: 1; }
+.case-visual {
+  position: relative;
+  z-index: 1;
+}
 
-.case-content { position: relative; z-index: 1; }
+.case-content {
+  position: relative;
+  z-index: 1;
+}
 
 .case-label {
   font-family: var(--font-mono);
@@ -513,7 +699,9 @@
   transition: gap 0.2s var(--ease);
 }
 
-.featured-link:hover { gap: 0.85rem; }
+.featured-link:hover {
+  gap: 0.85rem;
+}
 
 /* ===== Process ===== */
 .process-grid {
@@ -527,7 +715,9 @@
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  transition: transform 0.25s var(--ease-out), border-color 0.25s var(--ease),
+  transition:
+    transform 0.25s var(--ease-out),
+    border-color 0.25s var(--ease),
     box-shadow 0.25s var(--ease);
 }
 
@@ -549,22 +739,49 @@
   border-bottom: 2px solid var(--line-strong);
 }
 
-.process-step h3 { font-size: 1.12rem; margin-bottom: 0.5rem; }
-.process-step p { color: var(--ink-muted); font-size: 0.92rem; }
+.process-step h3 {
+  font-size: 1.12rem;
+  margin-bottom: 0.5rem;
+}
+.process-step p {
+  color: var(--ink-muted);
+  font-size: 0.92rem;
+}
 
 /* ===== Responsive ===== */
 @media (max-width: 900px) {
-  .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
-  .hero-visual { max-width: 460px; }
-  .blueprint-card { margin-left: 0; }
-  .hero-note { text-align: left; }
-  .services-grid { grid-template-columns: repeat(2, 1fr); }
-  .process-grid { grid-template-columns: repeat(2, 1fr); }
-  .case-study { grid-template-columns: 1fr; }
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .hero-visual {
+    max-width: 460px;
+  }
+  .blueprint-card {
+    margin-left: 0;
+  }
+  .hero-note {
+    text-align: left;
+  }
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .process-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .case-study {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 560px) {
-  .services-grid { grid-template-columns: 1fr; }
-  .process-grid { grid-template-columns: 1fr; }
-  .case-study { padding: 1.5rem; }
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+  .process-grid {
+    grid-template-columns: 1fr;
+  }
+  .case-study {
+    padding: 1.5rem;
+  }
 }

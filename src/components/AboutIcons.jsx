@@ -1,5 +1,3 @@
-import React from 'react';
-
 /**
  * Animated icons for the About page (skills + values).
  * Same approach as ServiceIcons: class-tagged inner parts, motion driven by
@@ -32,7 +30,10 @@ export const ServerAnim = () => (
 export const RocketAnim = () => (
   <svg {...base} className="i-rocket">
     <g className="rocket">
-      <path className="flame" d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2 0-2.7a1.9 1.9 0 0 0-3 0z" />
+      <path
+        className="flame"
+        d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2 0-2.7a1.9 1.9 0 0 0-3 0z"
+      />
       <path d="M12 15l-3-3a22 22 0 0 1 8-10 22 22 0 0 1 2 10 22 22 0 0 1-10 8z" />
       <circle cx="15" cy="9" r="1.5" />
     </g>

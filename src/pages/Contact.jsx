@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm, ValidationError } from '@formspree/react';
 import { useLocation } from 'react-router-dom';
 import Reveal from '../components/Reveal';
@@ -17,7 +17,8 @@ const Contact = () => {
     '@context': 'https://schema.org',
     '@type': 'ContactPage',
     name: 'Contact Calvin R Development',
-    description: 'Get in touch with Calvin R Development for professional frontend web development services in Armidale, NSW and remotely across Australia.',
+    description:
+      'Get in touch with Calvin R Development for professional frontend web development services in Armidale, NSW and remotely across Australia.',
     mainEntity: {
       '@type': 'ProfessionalService',
       name: 'Calvin R Development',
@@ -66,11 +67,13 @@ const Contact = () => {
     switch (name) {
       case 'firstName':
         if (!value.trim()) return 'First name is required';
-        if (!isValidName(value)) return 'First name must be at least 2 characters long and contain only letters';
+        if (!isValidName(value))
+          return 'First name must be at least 2 characters long and contain only letters';
         break;
       case 'lastName':
         if (!value.trim()) return 'Last name is required';
-        if (!isValidName(value)) return 'Last name must be at least 2 characters long and contain only letters';
+        if (!isValidName(value))
+          return 'Last name must be at least 2 characters long and contain only letters';
         break;
       case 'email':
         if (!value.trim()) return 'Email is required';
@@ -110,7 +113,14 @@ const Contact = () => {
     if (Object.keys(newErrors).length === 0) {
       await handleFormspreeSubmit({ ...formData, subject: formData.subject });
       if (formspreeState.succeeded) {
-        setFormData({ firstName: '', lastName: '', email: '', phone: '', subject: '', message: '' });
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: '',
+        });
         setErrors({});
       }
     }
@@ -118,8 +128,18 @@ const Contact = () => {
 
   const contactItems = [
     { icon: <MapPinIcon size={20} />, label: 'Location', value: 'Armidale, NSW 2350' },
-    { icon: <MailIcon size={20} />, label: 'Email', value: 'calvin@calvinrdevelopment.com', href: 'mailto:calvin@calvinrdevelopment.com' },
-    { icon: <PhoneIcon size={20} />, label: 'Phone', value: '+61 447 576 460', href: 'tel:+61447576460' },
+    {
+      icon: <MailIcon size={20} />,
+      label: 'Email',
+      value: 'calvin@calvinrdevelopment.com',
+      href: 'mailto:calvin@calvinrdevelopment.com',
+    },
+    {
+      icon: <PhoneIcon size={20} />,
+      label: 'Phone',
+      value: '+61 447 576 460',
+      href: 'tel:+61447576460',
+    },
     { icon: <ClockIcon size={20} />, label: 'Hours', value: 'Mon–Fri, 9am–5pm' },
   ];
 
@@ -135,10 +155,15 @@ const Contact = () => {
 
       <section className="page-hero">
         <div className="container">
-          <Reveal as="span" className="eyebrow">Get in touch</Reveal>
-          <Reveal as="h1" delay={0.05}>Let's build <span className="gradient-text">something great</span></Reveal>
+          <Reveal as="span" className="eyebrow">
+            Get in touch
+          </Reveal>
+          <Reveal as="h1" delay={0.05}>
+            Let's build <span className="gradient-text">something great</span>
+          </Reveal>
           <Reveal as="p" delay={0.1}>
-            Have a project in mind? Tell me about it and I'll get back to you within one business day.
+            Have a project in mind? Tell me about it and I'll get back to you within one business
+            day.
           </Reveal>
         </div>
       </section>
@@ -174,55 +199,135 @@ const Contact = () => {
               <form onSubmit={handleSubmit} noValidate>
                 <div className="form-grid">
                   <div className="form-group">
-                    <label className="form-label" htmlFor="firstName">First Name *</label>
-                    <input type="text" id="firstName" name="firstName" autoComplete="given-name" className={`form-input ${errors.firstName ? 'error' : ''}`} value={formData.firstName} onChange={handleChange} />
+                    <label className="form-label" htmlFor="firstName">
+                      First Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      autoComplete="given-name"
+                      className={`form-input ${errors.firstName ? 'error' : ''}`}
+                      value={formData.firstName}
+                      onChange={handleChange}
+                    />
                     {errors.firstName && <div className="error-message">{errors.firstName}</div>}
-                    <ValidationError prefix="First Name" field="firstName" errors={formspreeState.errors} />
+                    <ValidationError
+                      prefix="First Name"
+                      field="firstName"
+                      errors={formspreeState.errors}
+                    />
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label" htmlFor="lastName">Last Name *</label>
-                    <input type="text" id="lastName" name="lastName" autoComplete="family-name" className={`form-input ${errors.lastName ? 'error' : ''}`} value={formData.lastName} onChange={handleChange} />
+                    <label className="form-label" htmlFor="lastName">
+                      Last Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      autoComplete="family-name"
+                      className={`form-input ${errors.lastName ? 'error' : ''}`}
+                      value={formData.lastName}
+                      onChange={handleChange}
+                    />
                     {errors.lastName && <div className="error-message">{errors.lastName}</div>}
-                    <ValidationError prefix="Last Name" field="lastName" errors={formspreeState.errors} />
+                    <ValidationError
+                      prefix="Last Name"
+                      field="lastName"
+                      errors={formspreeState.errors}
+                    />
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label" htmlFor="email">Email *</label>
-                    <input type="email" id="email" name="email" autoComplete="email" className={`form-input ${errors.email ? 'error' : ''}`} value={formData.email} onChange={handleChange} />
+                    <label className="form-label" htmlFor="email">
+                      Email *
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      autoComplete="email"
+                      className={`form-input ${errors.email ? 'error' : ''}`}
+                      value={formData.email}
+                      onChange={handleChange}
+                    />
                     {errors.email && <div className="error-message">{errors.email}</div>}
                     <ValidationError prefix="Email" field="email" errors={formspreeState.errors} />
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label" htmlFor="phone">Phone (Optional)</label>
-                    <input type="tel" id="phone" name="phone" autoComplete="tel" className={`form-input ${errors.phone ? 'error' : ''}`} value={formData.phone} onChange={handleChange} />
+                    <label className="form-label" htmlFor="phone">
+                      Phone (Optional)
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      autoComplete="tel"
+                      className={`form-input ${errors.phone ? 'error' : ''}`}
+                      value={formData.phone}
+                      onChange={handleChange}
+                    />
                     {errors.phone && <div className="error-message">{errors.phone}</div>}
                     <ValidationError prefix="Phone" field="phone" errors={formspreeState.errors} />
                   </div>
 
                   <div className="form-group full-width">
-                    <label className="form-label" htmlFor="subject">Subject *</label>
-                    <select id="subject" name="subject" className={`form-select ${errors.subject ? 'error' : ''}`} value={formData.subject} onChange={handleChange}>
+                    <label className="form-label" htmlFor="subject">
+                      Subject *
+                    </label>
+                    <select
+                      id="subject"
+                      name="subject"
+                      className={`form-select ${errors.subject ? 'error' : ''}`}
+                      value={formData.subject}
+                      onChange={handleChange}
+                    >
                       <option value="">Select a subject</option>
                       <option value="Starter Package Inquiry">Starter Package Inquiry</option>
-                      <option value="Professional Package Inquiry">Professional Package Inquiry</option>
-                      <option value="Custom Project or Contract Work">Custom Project or Contract Work</option>
+                      <option value="Professional Package Inquiry">
+                        Professional Package Inquiry
+                      </option>
+                      <option value="Custom Project or Contract Work">
+                        Custom Project or Contract Work
+                      </option>
                       <option value="General Question">General Question</option>
                     </select>
                     {errors.subject && <div className="error-message">{errors.subject}</div>}
-                    <ValidationError prefix="Subject" field="subject" errors={formspreeState.errors} />
+                    <ValidationError
+                      prefix="Subject"
+                      field="subject"
+                      errors={formspreeState.errors}
+                    />
                   </div>
 
                   <div className="form-group full-width">
-                    <label className="form-label" htmlFor="message">Message *</label>
-                    <textarea id="message" name="message" className={`form-textarea ${errors.message ? 'error' : ''}`} value={formData.message} onChange={handleChange} />
+                    <label className="form-label" htmlFor="message">
+                      Message *
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      className={`form-textarea ${errors.message ? 'error' : ''}`}
+                      value={formData.message}
+                      onChange={handleChange}
+                    />
                     {errors.message && <div className="error-message">{errors.message}</div>}
-                    <ValidationError prefix="Message" field="message" errors={formspreeState.errors} />
+                    <ValidationError
+                      prefix="Message"
+                      field="message"
+                      errors={formspreeState.errors}
+                    />
                   </div>
                 </div>
 
-                <button type="submit" className="form-submit btn-full-width" disabled={formspreeState.submitting}>
+                <button
+                  type="submit"
+                  className="form-submit btn-full-width"
+                  disabled={formspreeState.submitting}
+                >
                   {formspreeState.submitting ? 'Sending…' : 'Send Message'}
                 </button>
               </form>

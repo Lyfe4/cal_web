@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import '../styles/NavBar.css';
 
@@ -6,11 +6,13 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const [prevLocation, setPrevLocation] = useState(location);
 
-  // Close menu when route changes
-  useEffect(() => {
+  // Close menu when route changes (adjusted during render rather than in an effect)
+  if (location !== prevLocation) {
+    setPrevLocation(location);
     setIsMenuOpen(false);
-  }, [location]);
+  }
 
   // Scroll-aware background
   useEffect(() => {
@@ -47,7 +49,9 @@ const Navbar = () => {
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="navbar-container">
         <Link to="/" className="navbar-brand">
-          <span className="brand-text">Calvin R <span>Development</span></span>
+          <span className="brand-text">
+            Calvin R <span>Development</span>
+          </span>
         </Link>
 
         <button

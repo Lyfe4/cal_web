@@ -6,16 +6,16 @@
 
 :root {
   /* --- Paper (surfaces) --- */
-  --paper: #fbfaf7;         /* page base */
-  --paper-2: #f3f0e8;       /* alternating bands */
-  --paper-3: #ece7db;       /* deep wash / dividers fill */
-  --surface: #fffdf9;       /* cards, sitting on paper */
+  --paper: #fbfaf7; /* page base */
+  --paper-2: #f3f0e8; /* alternating bands */
+  --paper-3: #ece7db; /* deep wash / dividers fill */
+  --surface: #fffdf9; /* cards, sitting on paper */
 
   /* --- Ink (text) --- */
-  --ink: #1a1a17;           /* headings, primary */
-  --ink-soft: #55524a;      /* body */
-  --ink-muted: #6f6b60;     /* secondary body */
-  --ink-faint: #928d80;     /* captions, meta, mono labels */
+  --ink: #1a1a17; /* headings, primary */
+  --ink-soft: #55524a; /* body */
+  --ink-muted: #6f6b60; /* secondary body */
+  --ink-faint: #928d80; /* captions, meta, mono labels */
 
   /* --- Pine (primary accent) --- */
   --pine: #0e4b3f;
@@ -63,8 +63,8 @@
   --shadow-sm: 0 1px 2px rgba(60, 50, 30, 0.06);
   --shadow-md: 0 12px 30px -14px rgba(50, 42, 24, 0.22);
   --shadow-lg: 0 34px 60px -28px rgba(40, 34, 18, 0.28);
-  --glow: var(--shadow-md);        /* legacy alias */
-  --glow-soft: var(--shadow-sm);   /* legacy alias */
+  --glow: var(--shadow-md); /* legacy alias */
+  --glow-soft: var(--shadow-sm); /* legacy alias */
 
   /* --- Shape & rhythm --- */
   --radius-sm: 6px;
@@ -137,7 +137,11 @@ body::after {
 }
 
 /* --- Typography --- */
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
   font-family: var(--font-display);
   color: var(--ink);
   line-height: 1.06;
@@ -145,9 +149,13 @@ h1, h2, h3, h4, h5 {
   font-weight: 700;
 }
 
-p { color: var(--ink-soft); }
+p {
+  color: var(--ink-soft);
+}
 
-a { color: inherit; }
+a {
+  color: inherit;
+}
 
 ::selection {
   background: rgba(14, 75, 63, 0.16);
@@ -178,8 +186,12 @@ a { color: inherit; }
 /* Draw the clay underline in on page load, left to right (the pen sweep).
    Layered as enhancement only — the base rule above keeps it always visible. */
 @keyframes underline-draw {
-  from { background-size: 0% 0.3em; }
-  to { background-size: 100% 0.3em; }
+  from {
+    background-size: 0% 0.3em;
+  }
+  to {
+    background-size: 100% 0.3em;
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -328,7 +340,9 @@ a { color: inherit; }
   text-decoration: none;
   border: none;
   cursor: pointer;
-  transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease),
+  transition:
+    transform 0.2s var(--ease-out),
+    box-shadow 0.2s var(--ease),
     background 0.2s var(--ease);
   position: relative;
   white-space: nowrap;
@@ -386,11 +400,15 @@ a { color: inherit; }
   font-weight: 600;
   font-family: var(--font-body);
   font-size: 0.98rem;
-  transition: transform 0.2s var(--ease-out), border-color 0.2s var(--ease),
+  transition:
+    transform 0.2s var(--ease-out),
+    border-color 0.2s var(--ease),
     background 0.2s var(--ease);
 }
 
-.btn-secondary svg { transition: transform 0.2s var(--ease-out); }
+.btn-secondary svg {
+  transition: transform 0.2s var(--ease-out);
+}
 
 .btn-secondary:hover {
   transform: translateY(-2px);
@@ -398,7 +416,9 @@ a { color: inherit; }
   background: rgba(26, 26, 23, 0.03);
 }
 
-.btn-secondary:hover svg { transform: translateX(3px); }
+.btn-secondary:hover svg {
+  transform: translateX(3px);
+}
 
 .btn-full-width {
   width: 100%;

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 
 /**
  * Interactive 3D tilt that follows the cursor.

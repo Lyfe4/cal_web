@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import Reveal from '../components/Reveal';
 import SEO from '../components/SEO';
@@ -32,10 +31,26 @@ const skills = [
 ];
 
 const values = [
-  { icon: <ShieldAnim />, title: 'Quality First', desc: 'I deliver high-quality work that stands the test of time, with no cut corners.' },
-  { icon: <ChatAnim />, title: 'Clear Communication', desc: 'Regular updates and plain language keep us on the same page throughout.' },
-  { icon: <UsersAnim />, title: 'User-Centered Design', desc: 'Your customers are at the heart of every decision I make.' },
-  { icon: <SparkleAnim />, title: 'Continuous Learning', desc: 'The web evolves constantly, and so do I, so your site stays modern.' },
+  {
+    icon: <ShieldAnim />,
+    title: 'Quality First',
+    desc: 'I deliver high-quality work that stands the test of time, with no cut corners.',
+  },
+  {
+    icon: <ChatAnim />,
+    title: 'Clear Communication',
+    desc: 'Regular updates and plain language keep us on the same page throughout.',
+  },
+  {
+    icon: <UsersAnim />,
+    title: 'User-Centered Design',
+    desc: 'Your customers are at the heart of every decision I make.',
+  },
+  {
+    icon: <SparkleAnim />,
+    title: 'Continuous Learning',
+    desc: 'The web evolves constantly, and so do I, so your site stays modern.',
+  },
 ];
 
 const About = () => {
@@ -51,10 +66,16 @@ const About = () => {
           '@type': 'Person',
           name: 'Calvin Reinke',
           jobTitle: 'Front-End Web Developer',
-          description: 'Front-end web developer in Armidale, NSW. Works on the LabNext70 team at the University of New England, and is the founder of Calvin R Development',
+          description:
+            'Front-end web developer in Armidale, NSW. Works on the LabNext70 team at the University of New England, and is the founder of Calvin R Development',
           worksFor: { '@type': 'Organization', name: 'University of New England' },
           alumniOf: { '@type': 'EducationalOrganization', name: 'Bachelor of Computer Science' },
-          address: { '@type': 'PostalAddress', addressLocality: 'Armidale', addressRegion: 'NSW', addressCountry: 'Australia' },
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: 'Armidale',
+            addressRegion: 'NSW',
+            addressCountry: 'Australia',
+          },
           image: 'https://calvinrdevelopment.com/calvin.jpg',
           url: 'https://calvinrdevelopment.com/about',
           sameAs: ['https://github.com/Lyfe4'],
@@ -64,11 +85,15 @@ const About = () => {
       {/* Hero */}
       <section className="page-hero">
         <div className="container">
-          <Reveal as="span" className="eyebrow">About me</Reveal>
-          <Reveal as="h1" delay={0.05}>The developer behind <span className="gradient-text">your website</span></Reveal>
+          <Reveal as="span" className="eyebrow">
+            About me
+          </Reveal>
+          <Reveal as="h1" delay={0.05}>
+            The developer behind <span className="gradient-text">your website</span>
+          </Reveal>
           <Reveal as="p" delay={0.1}>
-            A working front-end developer based in Armidale, building production software in industry
-            and websites and web apps for businesses across Australia.
+            A working front-end developer based in Armidale, building production software in
+            industry and websites and web apps for businesses across Australia.
           </Reveal>
         </div>
       </section>
@@ -85,11 +110,28 @@ const About = () => {
           <Reveal className="about-content" delay={0.1}>
             <span className="eyebrow">Where I work</span>
             <h2>I build software for a living</h2>
-            <p>By day I'm a front-end developer on the LabNext70 team at the University of New England, where I design and build the front end of a new platform for staff and students. I hold a Bachelor of Computer Science.</p>
-            <p>That's the background I bring to Calvin R Development: the same stack, the same review process, and the same care about accessibility, performance and code someone can still work with in a year's time.</p>
-            <p>I work with small businesses around Armidale and the New England region, and remotely Australia-wide. I also take on contract front-end work for teams that need an extra pair of hands on an existing product.</p>
-            <p>Whichever it is, it starts the same way: understanding what you actually need, then building it properly.</p>
-            <Link to="/contact" className="btn-primary about-cta">Work with me <ArrowRightIcon size={18} /></Link>
+            <p>
+              By day I'm a front-end developer on the LabNext70 team at the University of New
+              England, where I design and build the front end of a new platform for staff and
+              students. I hold a Bachelor of Computer Science.
+            </p>
+            <p>
+              That's the background I bring to Calvin R Development: the same stack, the same review
+              process, and the same care about accessibility, performance and code someone can still
+              work with in a year's time.
+            </p>
+            <p>
+              I work with small businesses around Armidale and the New England region, and remotely
+              Australia-wide. I also take on contract front-end work for teams that need an extra
+              pair of hands on an existing product.
+            </p>
+            <p>
+              Whichever it is, it starts the same way: understanding what you actually need, then
+              building it properly.
+            </p>
+            <Link to="/contact" className="btn-primary about-cta">
+              Work with me <ArrowRightIcon size={18} />
+            </Link>
           </Reveal>
         </div>
       </section>
@@ -128,8 +170,8 @@ const About = () => {
               <h3>A browser-based toolkit for developers</h3>
               <p>
                 A growing set of small client-side tools, plus a node canvas that wires them
-                together into pipelines. Everything runs in your browser and nothing is uploaded anywhere.
-                It's where I test ideas that don't belong in client work.
+                together into pipelines. Everything runs in your browser and nothing is uploaded
+                anywhere. It's where I test ideas that don't belong in client work.
               </p>
             </div>
             <a

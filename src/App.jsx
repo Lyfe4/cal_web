@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ReactGA from 'react-ga4';
 import { useEffect } from 'react';
@@ -21,7 +20,7 @@ const Analytics = () => {
   }, []);
 
   useEffect(() => {
-    ReactGA.send({ hitType: "pageview", page: location.pathname });
+    ReactGA.send({ hitType: 'pageview', page: location.pathname });
   }, [location]);
 
   return null;
