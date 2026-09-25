@@ -4,52 +4,32 @@
   "private": true,
   "dependencies": {
     "@formspree/react": "^2.5.1",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
     "framer-motion": "^11.18.2",
+    "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-ga4": "^2.1.0",
     "react-router-dom": "^6.27.0",
-    "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
     "postbuild": "node scripts/generate-sitemap.js",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "preview": "vite preview",
+    "analyze": "vite build --sourcemap && source-map-explorer 'build/static/*.js'",
     "generate-sitemap": "node scripts/generate-sitemap.js",
     "generate-icons": "node scripts/generate-icons.js",
     "optimize-images": "node scripts/optimize-images.js",
     "seo-audit": "node scripts/seo-audit.js"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@resvg/resvg-js": "^2.6.2",
+    "@vitejs/plugin-react": "^5.2.0",
     "chalk": "^5.4.1",
     "png-to-ico": "^3.0.1",
-    "source-map-explorer": "^2.5.3"
+    "source-map-explorer": "^2.5.3",
+    "vite": "^7.3.6"
   }
 }
