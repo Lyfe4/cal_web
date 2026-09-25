@@ -4,7 +4,7 @@ const path = require('path');
 // Configuration
 const baseUrl = 'https://calvinrdevelopment.com';
 // Write to both public/ (source, for local dev) and build/ (the deployed output).
-// This script runs as `postbuild`, after CRA has already copied public/ -> build/,
+// This script runs as `postbuild`, after Vite has already copied public/ -> build/,
 // so writing only to public/ would leave the deployed sitemap stale.
 const outputPaths = [
   path.join(__dirname, '../public/sitemap.xml'),
