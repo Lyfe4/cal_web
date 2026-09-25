@@ -1,4 +1,3 @@
-import React from 'react';
 
 /**
  * Animated service icons for the Home services cards.

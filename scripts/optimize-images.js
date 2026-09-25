@@ -26,7 +26,7 @@ const checkDependencies = () => {
     
     console.log('All dependencies are installed.');
     return true;
-  } catch (error) {
+  } catch {
     console.error('Missing dependencies. Please install the required packages:');
     console.error('npm install -g imagemin imagemin-mozjpeg imagemin-pngquant imagemin-webp');
     return false;
@@ -56,7 +56,6 @@ const optimizeImages = () => {
   // Process each image
   imageFiles.forEach(file => {
     const inputPath = path.join(imagesDirectory, file);
-    const outputPath = path.join(optimizedDirectory, file);
     const ext = path.extname(file).toLowerCase();
     
     try {

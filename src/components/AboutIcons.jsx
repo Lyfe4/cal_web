@@ -1,4 +1,3 @@
-import React from 'react';
 
 /**
  * Animated icons for the About page (skills + values).

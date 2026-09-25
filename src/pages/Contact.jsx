@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm, ValidationError } from '@formspree/react';
 import { useLocation } from 'react-router-dom';
 import Reveal from '../components/Reveal';

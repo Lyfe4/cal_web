@@ -12,7 +12,7 @@ const componentsDirectory = path.join(srcDirectory, 'components');
 // Check if chalk is installed
 try {
   require.resolve('chalk');
-} catch (error) {
+} catch {
   console.log('Installing chalk for colored output...');
   execSync('npm install chalk --save-dev');
   console.log('Chalk installed successfully.');

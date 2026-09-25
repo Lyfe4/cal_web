@@ -1,4 +1,3 @@
-import React from 'react';
 
 /**
  * The hero's signature object: a website drawn as an architectural blueprint.

@@ -1,4 +1,3 @@
-import React from 'react';
 
 /**
  * Lightweight inline SVG icon set (stroke-based, 24x24).
