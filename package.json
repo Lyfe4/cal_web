@@ -17,6 +17,7 @@
     "build": "vite build",
     "postbuild": "node scripts/generate-sitemap.js",
     "preview": "vite preview",
+    "test": "node --test --disable-warning=MODULE_TYPELESS_PACKAGE_JSON",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",

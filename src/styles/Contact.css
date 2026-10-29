@@ -125,6 +125,8 @@
   font-size: 0.96rem;
   font-family: var(--font-body);
   color: var(--ink);
+  /* Keep a focused field (and its label) clear of the fixed nav when scrolled to */
+  scroll-margin-top: calc(var(--nav-height) + 2.5rem);
   transition:
     border-color 0.2s var(--ease),
     box-shadow 0.2s var(--ease);
@@ -190,6 +192,21 @@
   border: 1px solid rgba(14, 75, 63, 0.25);
   margin-bottom: 1.5rem;
   font-weight: 500;
+}
+
+.form-error-message {
+  color: #b3402e;
+  padding: 0.9rem 1.1rem;
+  border-radius: var(--radius-sm);
+  background: rgba(179, 64, 46, 0.06);
+  border: 1px solid rgba(179, 64, 46, 0.3);
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.form-error-message a {
+  color: inherit;
+  text-decoration: underline;
 }
 
 /* ===== Responsive ===== */

@@ -4,6 +4,7 @@ import { useLocation } from 'react-router';
 import Reveal from '../components/Reveal';
 import SEO from '../components/SEO';
 import { MapPinIcon, MailIcon, PhoneIcon, ClockIcon, CheckIcon } from '../components/Icons';
+import { isValidName, isValidPhone } from '../utils/contactValidation';
 import '../styles/Contact.css';
 
 const PACKAGE_SUBJECTS = {
@@ -56,31 +57,24 @@ const Contact = () => {
 
   const [errors, setErrors] = useState({});
 
-  const isValidName = (name) => /^[A-Za-z\s]{2,}$/.test(name.trim());
   const isValidEmail = (email) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
-  const isValidPhone = (phone) => {
-    if (!phone) return true;
-    return /^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/.test(phone);
-  };
 
   const validateField = (name, value) => {
     switch (name) {
       case 'firstName':
         if (!value.trim()) return 'First name is required';
-        if (!isValidName(value))
-          return 'First name must be at least 2 characters long and contain only letters';
+        if (!isValidName(value)) return 'First name must be at least 2 characters long';
         break;
       case 'lastName':
         if (!value.trim()) return 'Last name is required';
-        if (!isValidName(value))
-          return 'Last name must be at least 2 characters long and contain only letters';
+        if (!isValidName(value)) return 'Last name must be at least 2 characters long';
         break;
       case 'email':
         if (!value.trim()) return 'Email is required';
         if (!isValidEmail(value)) return 'Please enter a valid email address';
         break;
       case 'phone':
-        if (value.trim() && !isValidPhone(value)) return 'Please enter a valid phone number';
+        if (!isValidPhone(value)) return 'Please enter a valid Australian phone number';
         break;
       case 'subject':
         if (!value) return 'Please select a subject';
@@ -110,21 +104,33 @@ const Contact = () => {
     });
     setErrors(newErrors);
 
+    // Fields are checked in form order, so the first error is the first field on screen
+    const firstInvalid = Object.keys(newErrors)[0];
+    if (firstInvalid) document.getElementById(firstInvalid)?.focus();
+
     if (Object.keys(newErrors).length === 0) {
       await handleFormspreeSubmit({ ...formData, subject: formData.subject });
-      if (formspreeState.succeeded) {
-        setFormData({
-          firstName: '',
-          lastName: '',
-          email: '',
-          phone: '',
-          subject: '',
-          message: '',
-        });
-        setErrors({});
-      }
     }
   };
+
+  // Clear the form once Formspree confirms the send (adjusted during render rather
+  // than in an effect). Keyed on `result` rather than `succeeded`: `succeeded` stays
+  // true after the first send, so a second message would never clear, while
+  // `result` is a new object on every successful send.
+  const [prevResult, setPrevResult] = useState(formspreeState.result);
+  if (formspreeState.result !== prevResult) {
+    setPrevResult(formspreeState.result);
+    if (formspreeState.result) {
+      setFormData({ firstName: '', lastName: '', email: '', phone: '', subject: '', message: '' });
+      setErrors({});
+    }
+  }
+
+  // Errors not tied to a field (network failure, rate limit, blocked submission)
+  const hasFormError = (formspreeState.errors?.getFormErrors().length ?? 0) > 0;
+
+  const fieldA11y = (name) =>
+    errors[name] ? { 'aria-invalid': true, 'aria-describedby': `${name}-error` } : {};
 
   const contactItems = [
     { icon: <MapPinIcon size={20} />, label: 'Location', value: 'Armidale, NSW 2350' },
@@ -191,11 +197,14 @@ const Contact = () => {
             {/* Form */}
             <Reveal className="contact-form glass-card" delay={0.1} id="contact-form">
               <h2>Send a message</h2>
-              {formspreeState.succeeded && (
-                <div className="success-message">
-                  <CheckIcon size={18} /> Thank you! I'll get back to you soon.
-                </div>
-              )}
+              {/* Always mounted so screen readers announce the message when it appears */}
+              <div role="status">
+                {formspreeState.succeeded && (
+                  <div className="success-message">
+                    <CheckIcon size={18} /> Thank you! I'll get back to you soon.
+                  </div>
+                )}
+              </div>
               <form onSubmit={handleSubmit} noValidate>
                 <div className="form-grid">
                   <div className="form-group">
@@ -210,8 +219,13 @@ const Contact = () => {
                       className={`form-input ${errors.firstName ? 'error' : ''}`}
                       value={formData.firstName}
                       onChange={handleChange}
+                      {...fieldA11y('firstName')}
                     />
-                    {errors.firstName && <div className="error-message">{errors.firstName}</div>}
+                    {errors.firstName && (
+                      <div id="firstName-error" className="error-message">
+                        {errors.firstName}
+                      </div>
+                    )}
                     <ValidationError
                       prefix="First Name"
                       field="firstName"
@@ -231,8 +245,13 @@ const Contact = () => {
                       className={`form-input ${errors.lastName ? 'error' : ''}`}
                       value={formData.lastName}
                       onChange={handleChange}
+                      {...fieldA11y('lastName')}
                     />
-                    {errors.lastName && <div className="error-message">{errors.lastName}</div>}
+                    {errors.lastName && (
+                      <div id="lastName-error" className="error-message">
+                        {errors.lastName}
+                      </div>
+                    )}
                     <ValidationError
                       prefix="Last Name"
                       field="lastName"
@@ -252,8 +271,13 @@ const Contact = () => {
                       className={`form-input ${errors.email ? 'error' : ''}`}
                       value={formData.email}
                       onChange={handleChange}
+                      {...fieldA11y('email')}
                     />
-                    {errors.email && <div className="error-message">{errors.email}</div>}
+                    {errors.email && (
+                      <div id="email-error" className="error-message">
+                        {errors.email}
+                      </div>
+                    )}
                     <ValidationError prefix="Email" field="email" errors={formspreeState.errors} />
                   </div>
 
@@ -269,8 +293,13 @@ const Contact = () => {
                       className={`form-input ${errors.phone ? 'error' : ''}`}
                       value={formData.phone}
                       onChange={handleChange}
+                      {...fieldA11y('phone')}
                     />
-                    {errors.phone && <div className="error-message">{errors.phone}</div>}
+                    {errors.phone && (
+                      <div id="phone-error" className="error-message">
+                        {errors.phone}
+                      </div>
+                    )}
                     <ValidationError prefix="Phone" field="phone" errors={formspreeState.errors} />
                   </div>
 
@@ -284,6 +313,7 @@ const Contact = () => {
                       className={`form-select ${errors.subject ? 'error' : ''}`}
                       value={formData.subject}
                       onChange={handleChange}
+                      {...fieldA11y('subject')}
                     >
                       <option value="">Select a subject</option>
                       <option value="Starter Package Inquiry">Starter Package Inquiry</option>
@@ -295,7 +325,11 @@ const Contact = () => {
                       </option>
                       <option value="General Question">General Question</option>
                     </select>
-                    {errors.subject && <div className="error-message">{errors.subject}</div>}
+                    {errors.subject && (
+                      <div id="subject-error" className="error-message">
+                        {errors.subject}
+                      </div>
+                    )}
                     <ValidationError
                       prefix="Subject"
                       field="subject"
@@ -313,8 +347,13 @@ const Contact = () => {
                       className={`form-textarea ${errors.message ? 'error' : ''}`}
                       value={formData.message}
                       onChange={handleChange}
+                      {...fieldA11y('message')}
                     />
-                    {errors.message && <div className="error-message">{errors.message}</div>}
+                    {errors.message && (
+                      <div id="message-error" className="error-message">
+                        {errors.message}
+                      </div>
+                    )}
                     <ValidationError
                       prefix="Message"
                       field="message"
@@ -330,6 +369,13 @@ const Contact = () => {
                 >
                   {formspreeState.submitting ? 'Sending…' : 'Send Message'}
                 </button>
+                {hasFormError && (
+                  <div className="form-error-message" role="alert">
+                    Sorry, your message couldn't be sent. Please try again, or email me at{' '}
+                    <a href="mailto:calvin@calvinrdevelopment.com">calvin@calvinrdevelopment.com</a>
+                    .
+                  </div>
+                )}
               </form>
             </Reveal>
           </div>
