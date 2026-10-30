@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup: Final revision</title>
+<style>
+@font-face { font-family: "Geist"; src: url("fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Geist Mono"; src: url("fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+
+:root {
+  --bg: #141210;
+  --surface: #1D1B18;
+  --rule: #2E2B27;
+  --text: #F0EDE8;
+  --text-2: #BEB8AF;
+  --text-3: #999288;
+  --mat: #2A2723;
+  --mat-edge: #3D3934;
+  --accent: #FF6B2C;
+  --on-accent: #141210;
+  --sans: "Geist", system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, monospace;
+  --gutter: clamp(16px, 3vw, 40px);
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 16px/1.55 var(--sans); }
+::selection { background: var(--accent); color: var(--on-accent); }
+a { color: inherit; }
+img { display: block; max-width: 100%; height: auto; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.wrap { max-width: 1280px; margin: 0 auto; padding: 0 var(--gutter); }
+.mono { font-family: var(--mono); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
+
+.top { border-bottom: 1px solid var(--rule); }
+.top .wrap { display: flex; justify-content: space-between; align-items: center; height: 56px; }
+.brand { font-weight: 560; letter-spacing: -.01em; text-decoration: none; }
+.brand span { color: var(--text-3); font-weight: 400; }
+nav ul { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; }
+nav a { color: var(--text-2); text-decoration: none; }
+nav a:hover { color: var(--text); }
+
+/* Hero: offer first, place as a supporting line */
+.hero { padding: clamp(48px, 8vw, 112px) 0 clamp(40px, 5vw, 64px); }
+.hero h1 { margin: 0; max-width: 16ch; font-weight: 480; font-size: clamp(42px, 6.6vw, 96px); line-height: 1; letter-spacing: -.048em; }
+.hero-row { margin-top: clamp(32px, 4vw, 48px); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 28px 64px; align-items: end; }
+.lede { margin: 0; max-width: 46ch; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.45; color: var(--text-2); }
+.lede strong { color: var(--text); font-weight: 500; }
+.ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; gap: 10px; height: 44px; padding: 0 18px; font: 500 15px var(--sans); text-decoration: none; border: 1px solid var(--rule); }
+.btn-primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.btn-ghost:hover { border-color: var(--text-3); }
+.hero-note { color: var(--text-3); margin: 16px 0 0; }
+
+.sec { border-top: 1px solid var(--rule); padding: 20px 0 72px; }
+.sec-head { display: flex; justify-content: space-between; gap: 16px; color: var(--text-3); margin-bottom: 28px; }
+.sec-head h2 { margin: 0; font-weight: 400; }
+
+/* Screenshot frame: lighter mat + browser bar so work reads as an object, not page */
+.frame { margin: 0; padding: 0 8px 8px; background: var(--mat); border: 1px solid var(--mat-edge); }
+.frame-bar { display: flex; align-items: center; gap: 12px; height: 32px; color: var(--text-2); font-size: 11px; text-transform: none; letter-spacing: .02em; }
+.frame-bar::before { content: ""; flex: none; width: 34px; height: 8px; background: radial-gradient(circle at 4px 4px, var(--mat-edge) 3.5px, transparent 4px) 0 0 / 13px 8px repeat-x; }
+.frame img { width: 100%; }
+.dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--text); margin-right: 8px; vertical-align: 1px; }
+.wip { color: var(--accent); }
+.wip .dot { background: var(--accent); }
+
+/* Featured project */
+.feature { display: grid; grid-template-columns: 2fr 1fr; gap: 32px 48px; padding-bottom: 56px; }
+.feature h3 { margin: 0 0 6px; font-size: clamp(44px, 6vw, 88px); font-weight: 500; letter-spacing: -.05em; line-height: .95; }
+.kind { color: var(--text-3); margin: 0 0 20px; }
+.feature p:not(.kind) { color: var(--text-2); margin: 0 0 20px; max-width: 40ch; }
+.feature dl { margin: 28px 0 0; border-top: 1px solid var(--rule); }
+.feature dl div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--rule); }
+.feature dt { color: var(--text-3); }
+.feature dd { margin: 0; text-align: right; }
+
+/* Other projects: large names */
+.projects { list-style: none; margin: 0; padding: 0; }
+.projects li { display: grid; grid-template-columns: 56px minmax(0, 1fr) minmax(0, 1fr); gap: 16px 40px; padding: 32px 0 40px; border-top: 1px solid var(--rule); align-items: start; }
+.projects .n { color: var(--text-3); padding-top: 14px; }
+/* All project frames fill the column so they share one width and right edge; a portrait shot centres inside */
+.projects .frame { justify-self: stretch; }
+.projects .frame.tall img { max-width: 400px; margin: 0 auto; }
+.projects h3 { margin: 0 0 20px; font-size: clamp(44px, 7vw, 104px); font-weight: 500; letter-spacing: -.055em; line-height: .92; }
+.projects h3 a { text-decoration: none; }
+.projects h3 a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .12em; }
+.projects .desc { margin: 0 0 16px; color: var(--text-2); max-width: 44ch; font-size: 17px; }
+.projects .facts { display: flex; flex-wrap: wrap; gap: 8px 24px; color: var(--text-3); margin: 0; }
+
+/* Spec sheet */
+.specs { display: grid; grid-template-columns: 1fr 1fr; gap: 0 64px; }
+.spec { margin: 0; }
+.spec div { display: flex; align-items: baseline; gap: 10px; padding: 11px 0; }
+.spec dt { color: var(--text-3); flex: none; }
+.spec .lead { flex: 1; border-bottom: 1px dotted #45413B; transform: translateY(-4px); min-width: 24px; }
+.spec dd { margin: 0; text-align: right; font-size: 15px; }
+
+footer { border-top: 1px solid var(--rule); padding: 40px 0 48px; }
+.foot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px 64px; }
+.ack { margin: 0; color: var(--text-2); max-width: 52ch; font-size: 15px; }
+.foot-meta { color: var(--text-3); display: grid; gap: 8px; justify-items: end; text-align: right; }
+
+@media (max-width: 860px) {
+  nav { display: none; }
+  .hero-row, .feature, .foot-grid, .specs { grid-template-columns: 1fr; }
+  .projects li { grid-template-columns: minmax(0, 1fr); row-gap: 12px; padding: 24px 0 32px; }
+  .projects .n { padding-top: 0; }
+  .foot-meta { justify-items: start; text-align: left; }
+  .sec-head span { display: none; }
+}
+@media (max-width: 480px) {
+  .spec div { flex-wrap: wrap; }
+  .spec .lead { display: none; }
+  .spec dd { flex-basis: 100%; text-align: left; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#">Calvin R <span>Development</span></a>
+    <nav aria-label="Main"><ul class="mono">
+      <li><a href="#work">Work</a></li><li><a href="#">Services</a></li><li><a href="#">About</a></li><li><a href="#">Contact</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <section class="hero" aria-labelledby="h1">
+      <h1 id="h1">Websites and web apps for businesses across Australia.</h1>
+      <div class="hero-row">
+        <p class="lede"><strong>I'm Calvin, a frontend developer based in Armidale, NSW.</strong> I build fast, custom websites for small businesses, and the front end of web apps and integrations for teams that need one.</p>
+        <div>
+          <div class="ctas">
+            <a class="btn btn-ghost" href="#work">See work</a>
+            <a class="btn btn-primary" href="#">Get a quote →</a>
+          </div>
+          <p class="mono hero-note">Websites from $600 · Replies within one business day</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="work" aria-labelledby="work-h">
+      <div class="sec-head mono"><h2 id="work-h" class="mono">01 / Selected work</h2><span>3 projects</span></div>
+
+      <article class="feature">
+        <figure class="frame">
+          <div class="frame-bar mono" aria-hidden="true">lenbuild.com</div>
+          <img src="img/lenbuild.webp" width="1160" height="725" alt="LenBuild's Projects and Services page: the Custom Home Building section with photos of a finished home.">
+        </figure>
+        <div>
+          <h3>LenBuild</h3>
+          <p class="mono kind">Client website · Guyra, NSW</p>
+          <p>Website for a custom home builder in Guyra, built to show their homes and turn local searches into enquiries.</p>
+          <a class="btn btn-ghost" href="#">Read the case study →</a>
+          <dl class="mono">
+            <div><dt>Client</dt><dd>LenBuild</dd></div>
+            <div><dt>Type</dt><dd>Website</dd></div>
+            <div><dt>Status</dt><dd><span class="dot"></span>Live</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <ol class="projects">
+        <li>
+          <span class="n mono">02</span>
+          <div>
+            <h3><a href="#">Fuel Finder</a></h3>
+            <p class="desc">Live NSW &amp; ACT fuel prices, cheapest first, as a list or a map, with four months of price history.</p>
+            <p class="facts mono"><span>Web app</span><span>NSW FuelCheck data</span><span class="wip"><span class="dot"></span>In progress</span></p>
+          </div>
+          <figure class="frame tall">
+            <div class="frame-bar mono" aria-hidden="true">nsw-fuel-finder.netlify.app</div>
+            <img src="img/fuel-finder.webp" width="640" height="745" loading="lazy" decoding="async" alt="Fuel Finder in its light theme: results for Armidale, eight stations listed cheapest first with prices per litre.">
+          </figure>
+        </li>
+        <li>
+          <span class="n mono">03</span>
+          <div>
+            <h3><a href="#">Patchbay</a></h3>
+            <p class="desc">A browser-based developer toolbox that runs entirely client-side.</p>
+            <p class="facts mono"><span>Developer tool</span><span>Side project</span><span><span class="dot"></span>Live</span></p>
+          </div>
+          <figure class="frame">
+            <div class="frame-bar mono" aria-hidden="true">patchbay-tools.netlify.app</div>
+            <img src="img/patchbay.webp" width="678" height="460" loading="lazy" decoding="async" alt="Patchbay start page: the headline Developer tools that cannot phone home, above a list of example pipelines.">
+          </figure>
+        </li>
+      </ol>
+    </section>
+
+    <section class="sec" aria-labelledby="spec-h">
+      <div class="sec-head mono"><h2 id="spec-h" class="mono">02 / Details</h2><span>Prices in AUD</span></div>
+      <div class="specs">
+        <dl class="spec" aria-label="Prices">
+          <div><dt class="mono">Starter website</dt><span class="lead"></span><dd>from $600</dd></div>
+          <div><dt class="mono">Professional website</dt><span class="lead"></span><dd>from $1,125</dd></div>
+          <div><dt class="mono">Apps &amp; integrations</dt><span class="lead"></span><dd>Quoted per project</dd></div>
+          <div><dt class="mono">Extra pages</dt><span class="lead"></span><dd>$150 each</dd></div>
+          <div><dt class="mono">Support</dt><span class="lead"></span><dd>$80/mo or $800/yr</dd></div>
+        </dl>
+        <dl class="spec" aria-label="How I work">
+          <div><dt class="mono">Replies</dt><span class="lead"></span><dd>Within one business day</dd></div>
+          <div><dt class="mono">In person</dt><span class="lead"></span><dd>Armidale &amp; New England</dd></div>
+          <div><dt class="mono">Remote</dt><span class="lead"></span><dd>Australia-wide</dd></div>
+          <div><dt class="mono">Stack</dt><span class="lead"></span><dd>TypeScript · React · CSS</dd></div>
+          <div><dt class="mono">Email</dt><span class="lead"></span><dd><a href="mailto:calvin@calvinrdevelopment.com">calvin@calvinrdevelopment.com</a></dd></div>
+        </dl>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot-grid">
+    <p class="ack">I live and work in Armidale on Aboriginal land. I acknowledge the Traditional Custodians of the New England region and pay my respects to Elders past and present.</p>
+    <div class="foot-meta mono">
+      <span>Calvin R Development · Armidale, NSW</span>
+      <a href="mailto:calvin@calvinrdevelopment.com">calvin@calvinrdevelopment.com</a>
+      <span>ABN 15 436 897 520</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup A: Engineer's notebook</title>
+<style>
+@font-face { font-family: "Geist"; src: url("fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Geist Mono"; src: url("fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+
+:root {
+  --bg: #0E0F11;
+  --surface: #15171A;
+  --rule: #26292E;
+  --text: #EDEEF0;
+  --text-2: #B3B8C0;
+  --text-3: #8E939C;
+  --accent: #FF6B2C;
+  --on-accent: #0E0F11;
+  --sans: "Geist", system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, monospace;
+  --gutter: clamp(16px, 3vw, 40px);
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 16px/1.55 var(--sans); }
+::selection { background: var(--accent); color: var(--on-accent); }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.wrap { max-width: 1280px; margin: 0 auto; padding: 0 var(--gutter); }
+.mono { font-family: var(--mono); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
+
+/* Header */
+.top { border-bottom: 1px solid var(--rule); }
+.top .wrap { display: flex; justify-content: space-between; align-items: center; height: 56px; }
+.brand { font-weight: 560; letter-spacing: -.01em; text-decoration: none; }
+.brand span { color: var(--text-3); font-weight: 400; }
+nav ul { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; }
+nav a { color: var(--text-2); text-decoration: none; }
+nav a:hover { color: var(--text); }
+
+/* Metadata strip */
+.meta { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--rule); }
+.meta div { padding: 14px 0 14px 16px; border-left: 1px solid var(--rule); }
+.meta div:first-child { border-left: 0; padding-left: 0; }
+.meta dt { color: var(--text-3); margin-bottom: 4px; }
+.meta dd { margin: 0; font-size: 14px; color: var(--text); }
+
+/* Hero */
+.hero { padding: clamp(56px, 10vw, 128px) 0 clamp(48px, 7vw, 96px); }
+.hero h1 { margin: 0; max-width: 18ch; font-weight: 450; font-size: clamp(38px, 6.2vw, 88px); line-height: 1.02; letter-spacing: -.045em; }
+.hero h1 span { color: var(--text-3); }
+.hero-foot { margin-top: 48px; display: flex; flex-wrap: wrap; gap: 24px 40px; align-items: center; }
+.btn { display: inline-flex; align-items: center; gap: 10px; height: 44px; padding: 0 18px; font: 500 15px var(--sans); text-decoration: none; border: 1px solid var(--rule); }
+.btn-primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.btn-ghost { color: var(--text); }
+.btn-ghost:hover { border-color: var(--text-3); }
+.hero-note { color: var(--text-3); }
+
+/* Section heads */
+.sec { border-top: 1px solid var(--rule); padding: 20px 0 72px; }
+.sec-head { display: flex; justify-content: space-between; gap: 16px; color: var(--text-3); margin-bottom: 32px; }
+
+/* Work table */
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; font-weight: 400; color: var(--text-3); padding: 0 16px 10px 0; border-bottom: 1px solid var(--rule); }
+td { padding: 20px 16px 20px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+td.n { color: var(--text-3); width: 56px; }
+td.name { font-size: 24px; letter-spacing: -.02em; font-weight: 500; width: 22%; }
+td.name a { text-decoration: none; }
+td.name a:hover { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+td.type { color: var(--text-2); width: 18%; }
+td.desc { color: var(--text-2); }
+td.status { width: 130px; white-space: nowrap; }
+.dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--text-3); margin-right: 8px; vertical-align: 1px; }
+.dot.live { background: var(--text); }
+.status-wip { color: var(--accent); }
+.status-wip .dot { background: var(--accent); }
+td.shot { width: 200px; padding-right: 0; }
+.ph { display: grid; place-items: center; aspect-ratio: 16 / 10; background: var(--surface); border: 1px solid var(--rule); color: var(--text-3); font-family: var(--mono); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; text-align: center; padding: 8px; }
+
+/* Spec sheet */
+.spec { display: grid; grid-template-columns: 1fr 1fr; gap: 0 64px; margin: 0; }
+.spec div { display: flex; align-items: baseline; gap: 10px; padding: 11px 0; }
+.spec dt { color: var(--text-3); flex: none; }
+.spec .lead { flex: 1; border-bottom: 1px dotted #3A3E45; transform: translateY(-4px); min-width: 24px; }
+.spec dd { margin: 0; text-align: right; color: var(--text); font-size: 15px; }
+
+@media (max-width: 860px) {
+  nav { display: none; }
+  .meta { grid-template-columns: 1fr 1fr; }
+  .meta div:nth-child(3) { border-left: 0; padding-left: 0; }
+  .meta div:nth-child(n+3) { border-top: 1px solid var(--rule); }
+  .spec { grid-template-columns: 1fr; }
+  thead { display: none; }
+  table, tbody, tr, td { display: block; width: auto !important; }
+  tr { display: grid; grid-template-columns: 36px 1fr; padding: 20px 0; border-bottom: 1px solid var(--rule); column-gap: 8px; }
+  td { border: 0; padding: 0 0 6px; }
+  td.n { grid-row: 1; }
+  td.name { grid-column: 2; font-size: 22px; }
+  td.type, td.desc, td.status, td.shot { grid-column: 2; }
+  td.shot { margin-top: 10px; }
+  .sec-head span:last-child { display: none; }
+}
+@media (max-width: 480px) {
+  .spec div { flex-wrap: wrap; }
+  .spec .lead { display: none; }
+  .spec dd { flex-basis: 100%; text-align: left; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#">Calvin R <span>Development</span></a>
+    <nav aria-label="Main"><ul class="mono">
+      <li><a href="#work">Work</a></li><li><a href="#">Services</a></li><li><a href="#">About</a></li><li><a href="#">Contact</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <dl class="meta">
+      <div><dt class="mono">Location</dt><dd>Armidale, NSW</dd></div>
+      <div><dt class="mono">Works with</dt><dd>Businesses Australia-wide</dd></div>
+      <div><dt class="mono">Offers</dt><dd>Websites · Apps &amp; integrations</dd></div>
+      <div><dt class="mono">Replies</dt><dd>Within one business day</dd></div>
+    </dl>
+
+    <section class="hero" aria-labelledby="h1">
+      <h1 id="h1">Frontend developer in Armidale <span>building fast websites and web apps for businesses across Australia.</span></h1>
+      <div class="hero-foot">
+        <a class="btn btn-ghost" href="#work">See work</a>
+        <a class="btn btn-primary" href="#">Get a quote →</a>
+        <p class="mono hero-note">Websites from $600 · Apps quoted</p>
+      </div>
+    </section>
+
+    <section class="sec" id="work" aria-labelledby="work-h">
+      <div class="sec-head mono"><h2 id="work-h" class="mono" style="margin:0;font-weight:400">01 / Selected work</h2><span>3 projects</span></div>
+      <table>
+        <thead class="mono"><tr><th>No.</th><th>Project</th><th>Type</th><th>What it is</th><th>Status</th><th>Screenshot</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="n mono">01</td>
+            <td class="name"><a href="#">LenBuild</a></td>
+            <td class="type">Client website</td>
+            <td class="desc">Website for a custom home builder in Guyra, NSW.</td>
+            <td class="status mono"><span class="dot live"></span>Live</td>
+            <td class="shot"><div class="ph">LenBuild</div></td>
+          </tr>
+          <tr>
+            <td class="n mono">02</td>
+            <td class="name"><a href="#">Fuel Finder</a></td>
+            <td class="type">Web app</td>
+            <td class="desc">Live NSW &amp; ACT fuel prices, cheapest first, as a list or a map, with four months of price history.</td>
+            <td class="status mono status-wip"><span class="dot"></span>In progress</td>
+            <td class="shot"><div class="ph">Fuel Finder</div></td>
+          </tr>
+          <tr>
+            <td class="n mono">03</td>
+            <td class="name"><a href="#">Patchbay</a></td>
+            <td class="type">Developer tool</td>
+            <td class="desc">A browser-based developer toolbox that runs entirely client-side.</td>
+            <td class="status mono"><span class="dot live"></span>Live</td>
+            <td class="shot"><div class="ph">Patchbay</div></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="sec" aria-labelledby="spec-h">
+      <div class="sec-head mono"><h2 id="spec-h" class="mono" style="margin:0;font-weight:400">02 / Spec sheet</h2><span>Calvin R Development</span></div>
+      <dl class="spec">
+        <div><dt class="mono">Based in</dt><span class="lead"></span><dd>Armidale, NSW</dd></div>
+        <div><dt class="mono">Websites</dt><span class="lead"></span><dd>Starter from $600 · Professional from $1,125</dd></div>
+        <div><dt class="mono">In person</dt><span class="lead"></span><dd>Armidale &amp; New England</dd></div>
+        <div><dt class="mono">Apps &amp; integrations</dt><span class="lead"></span><dd>Quoted per project</dd></div>
+        <div><dt class="mono">Remote</dt><span class="lead"></span><dd>Australia-wide</dd></div>
+        <div><dt class="mono">Support</dt><span class="lead"></span><dd>$80/mo or $800/yr</dd></div>
+        <div><dt class="mono">Day job</dt><span class="lead"></span><dd>Front-end developer, UNE</dd></div>
+        <div><dt class="mono">Stack</dt><span class="lead"></span><dd>TypeScript · React · CSS</dd></div>
+        <div><dt class="mono">Replies</dt><span class="lead"></span><dd>Within one business day</dd></div>
+        <div><dt class="mono">Email</dt><span class="lead"></span><dd><a href="mailto:calvin@calvinrdevelopment.com">calvin@calvinrdevelopment.com</a></dd></div>
+      </dl>
+    </section>
+  </div>
+</main>
+</body>
+</html>
