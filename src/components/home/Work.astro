@@ -1,0 +1,224 @@
+---
+import Frame from '../Frame.astro';
+import Status from '../Status.astro';
+import { displayHost, projectPath, type Project } from '../../data/projects';
+
+export interface Props {
+  projects: Project[];
+}
+
+const [featured, ...rest] = Astro.props.projects;
+---
+
+{featured && (
+  <article class="feature" aria-labelledby={`p-${featured.data.slug}`}>
+    <Frame
+      url={featured.data.url}
+      image={featured.data.screenshot.src}
+      alt={featured.data.screenshot.alt}
+      sizes="(max-width: 860px) calc(100vw - 2 * clamp(16px, 3vw, 40px) - 18px), (max-width: 1280px) 58vw, 750px"
+      eager
+    />
+    <div>
+      <h3 id={`p-${featured.data.slug}`}>{featured.data.name}</h3>
+      <p class="mono kind">{[featured.data.type, ...featured.data.tags].join(' · ')}</p>
+      <p class="desc">{featured.data.summary}</p>
+      <a class="btn btn-ghost" href={projectPath(featured)}>
+        Read the case study <span class="visually-hidden">about {featured.data.name}</span>
+        <span aria-hidden="true">→</span>
+      </a>
+      <dl class="mono">
+        {featured.data.client && (
+          <div>
+            <dt>Client</dt>
+            <dd>{featured.data.client}</dd>
+          </div>
+        )}
+        <div>
+          <dt>Live site</dt>
+          <dd class="url">
+            <a href={featured.data.url}>{displayHost(featured.data.url)}</a>
+          </dd>
+        </div>
+        <div>
+          <dt>Status</dt>
+          <dd>
+            <Status status={featured.data.status} />
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </article>
+)}
+
+<ol class="projects">
+  {rest.map((project) => (
+    <li>
+      <span class="n mono" aria-hidden="true">
+        {String(project.data.order).padStart(2, '0')}
+      </span>
+      <div>
+        <h3 id={`p-${project.data.slug}`}>
+          <a href={projectPath(project)}>{project.data.name}</a>
+        </h3>
+        <p class="desc">{project.data.summary}</p>
+        <p class="facts mono">
+          <span>{project.data.type}</span>
+          {project.data.tags.map((tag) => (
+            <span>{tag}</span>
+          ))}
+          <Status status={project.data.status} />
+        </p>
+        <p class="live mono">
+          <a href={project.data.url}>{displayHost(project.data.url)}</a>
+        </p>
+      </div>
+      <Frame
+        url={project.data.url}
+        image={project.data.screenshot.src}
+        alt={project.data.screenshot.alt}
+        sizes="(max-width: 860px) calc(100vw - 2 * clamp(16px, 3vw, 40px) - 18px), (max-width: 1280px) 38vw, 514px"
+      />
+    </li>
+  ))}
+</ol>
+
+<style>
+  /* Featured project: framed screenshot, then name, kind, description and spec */
+  .feature {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-32) var(--space-48);
+    padding-bottom: var(--space-56);
+  }
+
+  .feature h3 {
+    margin: 0 0 6px;
+    font-size: var(--text-feature);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-feature);
+    letter-spacing: var(--tracking-feature);
+  }
+
+  .kind {
+    margin: 0 0 var(--space-20);
+    color: var(--text-3);
+  }
+
+  .feature .desc {
+    margin: 0 0 var(--space-20);
+    max-width: 40ch;
+    color: var(--text-2);
+  }
+
+  .feature dl {
+    margin: var(--space-28) 0 0;
+    border-top: var(--border);
+  }
+
+  .feature dl div {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-12);
+    padding: 10px 0;
+    border-bottom: var(--border);
+  }
+
+  .feature dt {
+    color: var(--text-3);
+  }
+
+  .feature dd {
+    margin: 0;
+    text-align: right;
+  }
+
+  /* URLs stay lowercase, like the frame bar */
+  .url,
+  .live {
+    text-transform: none;
+  }
+
+  /* Other projects: large names */
+  .projects {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .projects li {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-16) var(--space-40);
+    align-items: start;
+    padding: var(--space-32) 0 var(--space-40);
+    border-top: var(--border);
+  }
+
+  .n {
+    padding-top: 14px;
+    color: var(--text-3);
+  }
+
+  .projects h3 {
+    margin: 0 0 var(--space-20);
+    font-size: var(--text-project);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-project);
+    letter-spacing: var(--tracking-project);
+  }
+
+  .projects h3 a {
+    text-decoration: none;
+  }
+
+  .projects h3 a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.12em;
+  }
+
+  .projects .desc {
+    margin: 0 0 var(--space-16);
+    max-width: 44ch;
+    color: var(--text-2);
+    font-size: var(--text-desc);
+  }
+
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8) var(--space-24);
+    margin: 0;
+    color: var(--text-3);
+  }
+
+  .live {
+    margin: var(--space-12) 0 0;
+  }
+
+  .live a {
+    color: var(--text-2);
+    text-underline-offset: 0.2em;
+  }
+
+  .live a:hover {
+    color: var(--text);
+  }
+
+  @media (max-width: 860px) {
+    .feature {
+      grid-template-columns: 1fr;
+    }
+
+    .projects li {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--space-12);
+      padding: var(--space-24) 0 var(--space-32);
+    }
+
+    .n {
+      padding-top: 0;
+    }
+  }
+</style>

@@ -1,0 +1,82 @@
+---
+import { formatPrice, person, pricing, replyPromise, shortLocation } from '../../data/site';
+---
+
+<section class="hero" aria-labelledby="hero-h">
+  <h1 id="hero-h">Websites and web apps for businesses across Australia.</h1>
+  <div class="hero-row">
+    <p class="lede">
+      <strong>
+        I'm {person.firstName}, a frontend developer based in {shortLocation}.
+      </strong>{' '}
+      I build fast, custom websites for small businesses, and the front end of web apps and
+      integrations for teams that need one.
+    </p>
+    <div>
+      <div class="ctas">
+        <a class="btn btn-ghost" href="#work">
+          See work
+        </a>
+        <a class="btn btn-primary" href="/contact">
+          Get a quote <span aria-hidden="true">→</span>
+        </a>
+      </div>
+      <p class="mono note">
+        Websites from {formatPrice(pricing.starter.from)} · Replies {replyPromise}
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: var(--space-hero-top) 0 var(--space-hero-bottom);
+  }
+
+  h1 {
+    margin: 0;
+    max-width: 16ch;
+    font-size: var(--text-hero);
+    font-weight: var(--weight-hero);
+    line-height: var(--leading-hero);
+    letter-spacing: var(--tracking-hero);
+  }
+
+  .hero-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-28) var(--space-64);
+    align-items: end;
+    margin-top: var(--space-lede-top);
+  }
+
+  .lede {
+    margin: 0;
+    max-width: 46ch;
+    color: var(--text-2);
+    font-size: var(--text-lede);
+    line-height: var(--leading-lede);
+  }
+
+  .lede strong {
+    color: var(--text);
+    font-weight: var(--weight-medium);
+  }
+
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-12);
+  }
+
+  .note {
+    margin: var(--space-16) 0 0;
+    color: var(--text-3);
+  }
+
+  @media (max-width: 860px) {
+    .hero-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,59 @@
+---
+import type { Testimonial } from '../../data/testimonials';
+
+export interface Props {
+  testimonials: Testimonial[];
+}
+
+const { testimonials } = Astro.props;
+---
+
+<ul class="quotes">
+  {testimonials.map(({ quote, name, role, project }) => (
+    <li>
+      <figure>
+        <blockquote>
+          <p>{quote}</p>
+        </blockquote>
+        <figcaption class="mono">
+          {name} · {role}
+          {project && (
+            <>
+              {' · '}
+              <a href={`/work/${project}`}>See the project</a>
+            </>
+          )}
+        </figcaption>
+      </figure>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .quotes {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li + li {
+    margin-top: var(--space-40);
+  }
+
+  figure,
+  blockquote {
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+    max-width: 46ch;
+    font-size: var(--text-lede);
+    line-height: var(--leading-lede);
+  }
+
+  figcaption {
+    margin-top: var(--space-16);
+    color: var(--text-3);
+  }
+</style>

@@ -1,0 +1,45 @@
+---
+import SpecList from '../SpecList.astro';
+import { business, formatPrice, pricing, replyPromise, serviceAreas } from '../../data/site';
+
+const sentence = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
+
+// Two separate lists, never interleaved: prices first, then how the work runs.
+const prices = [
+  { label: pricing.starter.label, value: `from ${formatPrice(pricing.starter.from)}` },
+  { label: pricing.professional.label, value: `from ${formatPrice(pricing.professional.from)}` },
+  { label: pricing.apps.label, value: pricing.apps.note },
+  { label: pricing.extraPage.label, value: `${formatPrice(pricing.extraPage.each)} each` },
+  {
+    label: pricing.support.label,
+    value: `${formatPrice(pricing.support.monthly)}/mo or ${formatPrice(pricing.support.yearly)}/yr`,
+  },
+];
+
+const logistics = [
+  { label: 'Replies', value: sentence(replyPromise) },
+  { label: 'In person', value: serviceAreas.inPerson },
+  { label: 'Remote', value: serviceAreas.remote },
+  { label: 'Stack', value: 'TypeScript · React · CSS' },
+  { label: 'Email', value: business.email, href: `mailto:${business.email}` },
+];
+---
+
+<div class="specs">
+  <SpecList label="Prices" rows={prices} />
+  <SpecList label="How I work" rows={logistics} />
+</div>
+
+<style>
+  .specs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 var(--space-64);
+  }
+
+  @media (max-width: 860px) {
+    .specs {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

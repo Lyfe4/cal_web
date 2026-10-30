@@ -1,0 +1,46 @@
+---
+import { person } from '../../data/site';
+---
+
+<div class="about">
+  <p>
+    <strong>I'm {person.firstName}.</strong> By day I'm a frontend developer in the LabNext70 team
+    at UNE in Armidale, and I take on client work alongside it. You deal with me from the first call
+    to launch and after, with no agency in between.
+  </p>
+  <a class="btn btn-ghost" href="/about">
+    More about me <span aria-hidden="true">→</span>
+  </a>
+</div>
+
+<style>
+  .about {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-28) var(--space-64);
+    align-items: end;
+  }
+
+  p {
+    margin: 0;
+    max-width: 46ch;
+    color: var(--text-2);
+    font-size: var(--text-lede);
+    line-height: var(--leading-lede);
+  }
+
+  strong {
+    color: var(--text);
+    font-weight: var(--weight-medium);
+  }
+
+  @media (max-width: 860px) {
+    .about {
+      grid-template-columns: 1fr;
+    }
+
+    .btn {
+      justify-self: start;
+    }
+  }
+</style>

@@ -51,7 +51,13 @@ const { name, type, status, url, summary, tags, screenshot } = project.data;
       <strong>{summary}</strong> The full case study is a placeholder while the site is rebuilt.
     </p>
     <div class="shot">
-      <Frame url={url} image={screenshot.src} alt={screenshot.alt} eager />
+      <Frame
+        url={url}
+        image={screenshot.src}
+        alt={screenshot.alt}
+        sizes="(max-width: 860px) calc(100vw - 2 * clamp(16px, 3vw, 40px) - 18px), 842px"
+        eager
+      />
     </div>
   </article>
 </BaseLayout>

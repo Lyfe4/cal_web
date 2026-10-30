@@ -13,7 +13,9 @@ import { business, formattedAddress } from '../data/site';
         {business.name} · {formattedAddress}
       </span>
       <a href={business.phone.href}>{business.phone.display}</a>
-      <a href={`mailto:${business.email}`}>{business.email}</a>
+      <a class="email" href={`mailto:${business.email}`}>
+        {business.email}
+      </a>
       <span>ABN {business.abn}</span>
     </address>
   </div>
@@ -45,6 +47,11 @@ import { business, formattedAddress } from '../data/site';
     color: var(--text-3);
     font-style: normal;
     text-align: right;
+  }
+
+  /* Addresses stay lowercase so they read as typed */
+  .email {
+    text-transform: none;
   }
 
   @media (max-width: 860px) {
