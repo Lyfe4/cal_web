@@ -4,9 +4,10 @@ import { person } from '../../data/site';
 
 <div class="about">
   <p>
-    <strong>I'm {person.firstName}.</strong> By day I'm a frontend developer in the LabNext70 team
-    at UNE in Armidale, and I take on client work alongside it. You deal with me from the first call
-    to launch and after, with no agency in between.
+    <strong>I'm {person.firstName}.</strong> I studied computer science at UNE and have worked
+    <span class="nowrap">in-house</span> as a frontend developer on production web apps. Now I build
+    for businesses directly: you deal with me from the first call to launch and after, with no
+    agency in between.
   </p>
   <a class="btn btn-ghost" href="/about">
     More about me <span aria-hidden="true">→</span>
@@ -27,6 +28,11 @@ import { person } from '../../data/site';
     color: var(--text-2);
     font-size: var(--text-lede);
     line-height: var(--leading-lede);
+  }
+
+  /* Keep the hyphenated word on one line */
+  .nowrap {
+    white-space: nowrap;
   }
 
   strong {

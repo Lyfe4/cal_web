@@ -40,7 +40,7 @@ export const personSchema: SchemaNode = {
   '@id': personId,
   name: person.name,
   jobTitle: person.jobTitle,
-  worksFor: { '@id': businessId },
+  alumniOf: { '@type': 'CollegeOrUniversity', name: person.alumniOf },
   sameAs: [business.github],
 };
 

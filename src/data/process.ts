@@ -23,7 +23,8 @@ export const process: Step[] = [
   },
   {
     name: 'Launch',
-    detail: 'I connect your domain, check it on real phones, and put it live.',
+    detail:
+      'I set up hosting, connect your domain and check everything on real phones before it goes live. You own and pay for the domain; I can help you buy it.',
   },
   {
     name: 'Support',

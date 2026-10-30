@@ -8,7 +8,7 @@
 
 ## 1. Who this site is for
 
-**Calvin R Development** — solo frontend software developer based in **Armidale, NSW (New England)**, working with clients **anywhere in Australia**. Works as a front-end developer at UNE by day; takes client work alongside.
+**Calvin R Development** — solo frontend software developer based in **Armidale, NSW (New England)**, working with clients **anywhere in Australia**. Studied computer science at UNE and has worked in-house as a frontend developer on production web apps; now builds for businesses directly. The site never names a current employer.
 
 Two offers, which the site must make clear within 5 seconds:
 1. **Websites** — fast, custom-built sites for small businesses (local + national).
@@ -270,7 +270,7 @@ Study for *specific* things (listed next to each) — do not copy any site whole
    Each: screenshot, type of work, problem → what was built → result. No invented metrics.
 3. **Services** — split into *Websites* and *Apps & integrations*. Keep current pricing unless told otherwise: Starter from $600, Professional from $1,125, Custom/contract quoted; extras $150/page, monthly support $80/mo, annual $800/yr.
 4. **How I work** — short numbered process. Emphasise working directly with the developer, no agency layers.
-5. **About** — real photo of Calvin, named in full as "Calvin Reinke" (also the `Person` name and `founder` in structured data; the business name stays "Calvin R Development" and the hero stays "I'm Calvin"), Armidale/New England, UNE day job (no detail on UNE projects), remote across Australia, stack shown subtly.
+5. **About** — real photo of Calvin, named in full as "Calvin Reinke" (also the `Person` name and `founder` in structured data; the business name stays "Calvin R Development" and the hero stays "I'm Calvin"), Armidale/New England, computer science at UNE as education only (`alumniOf` the University of New England in structured data; no current employer named anywhere, no `worksFor`), in-house frontend experience on production web apps without naming where, remote across Australia, stack shown subtly.
 6. **Proof** — real testimonials only. None exist yet (LenBuild testimonial pending). Design so this section can be absent until one exists.
 7. **Contact** — form (Formspree, keep the existing validation from the hotfix), email, phone, service area ("Armidale & New England in person, Australia-wide remote"). Response promise: **"Replies within one business day"** — no Mon–Fri 9–5 hours anywhere, including schema.
 8. **Local pages** — Armidale, Tamworth, New England. Same design system, genuinely useful local content, not thin keyword pages.

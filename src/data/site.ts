@@ -32,6 +32,8 @@ export const person = {
   name: 'Calvin Reinke',
   firstName: 'Calvin',
   jobTitle: 'Frontend Developer',
+  /** Education only. The site never names a current employer (no worksFor in structured data). */
+  alumniOf: 'University of New England',
 } as const;
 
 /** "Armidale NSW 2350", the Australia Post format, used wherever the full address is shown. */

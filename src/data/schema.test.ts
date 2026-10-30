@@ -15,6 +15,15 @@ test('always includes the business and its founder', () => {
   assert.equal('openingHoursSpecification' in (business ?? {}), false);
 });
 
+test('names education, never an employer', () => {
+  const person = parse(buildJsonLd())['@graph'].find((n) => n['@id'] === personId);
+  assert.deepEqual(person?.alumniOf, {
+    '@type': 'CollegeOrUniversity',
+    name: 'University of New England',
+  });
+  assert.equal('worksFor' in (person ?? {}), false);
+});
+
 test('adds page schema alongside the sitewide nodes', () => {
   const graph = parse(buildJsonLd({ '@type': 'ContactPage', name: 'Contact' }))['@graph'];
   assert.equal(graph.length, 3);

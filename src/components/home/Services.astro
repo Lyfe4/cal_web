@@ -12,6 +12,14 @@ import { services } from '../../data/services';
           <li>{item}</li>
         ))}
       </ul>
+      <p class="example">
+        {/* One expression, so no template whitespace lands before the punctuation */}
+        {[
+          service.example.before,
+          <a href={service.example.href}>{service.example.link}</a>,
+          service.example.after,
+        ]}
+      </p>
       <p class="mono price">{service.price}</p>
       <a class="btn btn-ghost" href={service.link.href}>
         {service.link.label} <span aria-hidden="true">→</span>
@@ -50,6 +58,12 @@ import { services } from '../../data/services';
   li {
     padding: 11px 0;
     border-top: var(--border);
+    color: var(--text-2);
+    font-size: var(--text-ui);
+  }
+
+  .example {
+    margin: var(--space-16) 0 0;
     color: var(--text-2);
     font-size: var(--text-ui);
   }

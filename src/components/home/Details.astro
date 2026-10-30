@@ -1,6 +1,6 @@
 ---
 import SpecList from '../SpecList.astro';
-import { business, formatPrice, pricing, replyPromise, serviceAreas } from '../../data/site';
+import { formatPrice, pricing, replyPromise, serviceAreas } from '../../data/site';
 
 const sentence = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 
@@ -21,7 +21,6 @@ const logistics = [
   { label: 'In person', value: serviceAreas.inPerson },
   { label: 'Remote', value: serviceAreas.remote },
   { label: 'Stack', value: 'TypeScript · React · CSS' },
-  { label: 'Email', value: business.email, href: `mailto:${business.email}` },
 ];
 ---
 
