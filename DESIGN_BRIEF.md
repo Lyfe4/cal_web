@@ -164,7 +164,7 @@ The scale is bimodal: big statements (42–104px) and small functional text (11�
 ### 3.7 What not to do in this system
 
 - Don't lead the hero with location, or repeat "Armidale" in the hero. Local relevance belongs in the lede, the spec sheet, local pages and the footer.
-- Don't use any surname. "Calvin" only until he confirms otherwise. The business name "Calvin R Development" is fine.
+- Don't mix up the three name forms. The hero and conversational copy say "I'm Calvin". The About page and structured data (`Person` name, `founder` on the business schema) use the full name "Calvin Reinke". The business name is always "Calvin R Development" and is never expanded to "Calvin Reinke Development".
 - Don't add cards, shadows, rounded corners, gradients, glows or glass. Structure comes from 1px rules and space.
 - Don't use the accent outside 3.6, and don't introduce a second accent colour. Colour comes from the screenshots.
 - Don't put a screenshot on the page unframed, let frames in one list differ in width or right edge, or crop the work so it's clipped or mostly empty.
@@ -270,7 +270,7 @@ Study for *specific* things (listed next to each) — do not copy any site whole
    Each: screenshot, type of work, problem → what was built → result. No invented metrics.
 3. **Services** — split into *Websites* and *Apps & integrations*. Keep current pricing unless told otherwise: Starter from $600, Professional from $1,125, Custom/contract quoted; extras $150/page, monthly support $80/mo, annual $800/yr.
 4. **How I work** — short numbered process. Emphasise working directly with the developer, no agency layers.
-5. **About** — real photo of Calvin, Armidale/New England, UNE day job (no detail on UNE projects), remote across Australia, stack shown subtly.
+5. **About** — real photo of Calvin, named in full as "Calvin Reinke" (also the `Person` name and `founder` in structured data; the business name stays "Calvin R Development" and the hero stays "I'm Calvin"), Armidale/New England, UNE day job (no detail on UNE projects), remote across Australia, stack shown subtly.
 6. **Proof** — real testimonials only. None exist yet (LenBuild testimonial pending). Design so this section can be absent until one exists.
 7. **Contact** — form (Formspree, keep the existing validation from the hotfix), email, phone, service area ("Armidale & New England in person, Australia-wide remote"). Response promise: **"Replies within one business day"** — no Mon–Fri 9–5 hours anywhere, including schema.
 8. **Local pages** — Armidale, Tamworth, New England. Same design system, genuinely useful local content, not thin keyword pages.
