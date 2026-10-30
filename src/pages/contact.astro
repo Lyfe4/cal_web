@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { businessId } from '../data/schema';
+import { business, replyPromise } from '../data/site';
+---
+
+<BaseLayout
+  title="Contact"
+  description={`Ask for a quote or a chat about your website or app. ${business.name} replies ${replyPromise}.`}
+  schema={{ '@type': 'ContactPage', about: { '@id': businessId } }}
+>
+  <div class="wrap page">
+    <h1>Contact</h1>
+    <p class="lede">
+      <strong>Replies {replyPromise}.</strong> The form is on its way. Until then, email
+      <a href={`mailto:${business.email}`}>{business.email}</a> or call
+      <a href={business.phone.href}>{business.phone.display}</a>.
+    </p>
+    <p class="mono enquiry" data-enquiry hidden>
+      Enquiry about: <span data-enquiry-package></span>
+    </p>
+  </div>
+</BaseLayout>
+
+<script>
+  import { enquiryPackages, type EnquiryPackage } from '../data/site';
+
+  // Links like /contact?package=starter preselect the enquiry type. The contact
+  // form phase will use the same key for the form's subject.
+  const key = new URLSearchParams(window.location.search).get('package');
+  const isPackage = (value: string | null): value is EnquiryPackage =>
+    value !== null && Object.hasOwn(enquiryPackages, value);
+
+  if (isPackage(key)) {
+    const note = document.querySelector<HTMLElement>('[data-enquiry]');
+    const label = note?.querySelector('[data-enquiry-package]');
+    if (note && label) {
+      label.textContent = enquiryPackages[key];
+      note.hidden = false;
+    }
+  }
+</script>
+
+<style>
+  .enquiry {
+    margin: var(--space-24) 0 0;
+    color: var(--text-3);
+  }
+</style>

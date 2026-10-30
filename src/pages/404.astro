@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Page not found" description="There's no page at this address." noindex>
+  <div class="wrap page">
+    <p class="mono code">404</p>
+    <h1>There's no page at this address.</h1>
+    <p class="lede">
+      It may have moved in the rebuild. Try the <a href="/">home page</a> or
+      <a href="/contact">get in touch</a>.
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  .code {
+    margin: 0 0 var(--space-20);
+    color: var(--text-3);
+  }
+</style>

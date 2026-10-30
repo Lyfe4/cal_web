@@ -1,4 +1,6 @@
-build
+dist
+.astro
 node_modules
 package-lock.json
-public/sitemap.xml
+mockups
+DESIGN_BRIEF.md

@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { formatPrice, pricing } from '../data/site';
+---
+
+<BaseLayout
+  title="Services and prices"
+  description={`Websites for small businesses from ${formatPrice(pricing.starter.from)}, plus frontend work on web apps and integrations, quoted per project.`}
+>
+  <div class="wrap page">
+    <h1>Services</h1>
+    <p class="lede">
+      <strong>Websites from {formatPrice(pricing.starter.from)}.</strong> Apps and integrations are
+      quoted per project. This page is a placeholder while the site is rebuilt.
+    </p>
+  </div>
+</BaseLayout>

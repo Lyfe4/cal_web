@@ -1,0 +1,193 @@
+---
+import { nav } from '../data/site';
+
+const current = Astro.url.pathname.replace(/\.html$/, '').replace(/\/index$/, '') || '/';
+const isCurrent = (href: string) => href === current || current.startsWith(`${href}/`);
+// "Work" lives on the home page and on /work/<slug>
+const isWork = (href: string) => href === '/#work' && current.startsWith('/work/');
+---
+
+<header class="top">
+  <div class="wrap bar">
+    <a class="brand" href="/">
+      Calvin R <span>Development</span>
+    </a>
+    <nav class="site-nav" aria-label="Main" data-nav>
+      <button
+        class="menu-toggle mono"
+        type="button"
+        aria-expanded="false"
+        aria-controls="site-menu"
+        data-nav-toggle
+      >
+        Menu
+      </button>
+      <ul id="site-menu" class="nav-list mono">
+        {nav.map(({ href, label }) => (
+          <li>
+            <a href={href} aria-current={isCurrent(href) || isWork(href) ? 'page' : undefined}>
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const nav = document.querySelector<HTMLElement>('[data-nav]');
+  const toggle = nav?.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+  const menu = toggle && document.getElementById(toggle.getAttribute('aria-controls') ?? '');
+  const desktop = window.matchMedia('(min-width: 861px)');
+
+  if (nav && toggle && menu) {
+    const setOpen = (open: boolean, { restoreFocus = false } = {}) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      nav.toggleAttribute('data-open', open);
+      // Closed, the list is display: none under 860px; inert makes that explicit for
+      // assistive tech. At desktop widths the same list is the visible nav, so never inert.
+      menu.inert = !open && !desktop.matches;
+      if (open) menu.querySelector('a')?.focus();
+      else if (restoreFocus) toggle.focus();
+    };
+
+    setOpen(false);
+
+    toggle.addEventListener('click', () => {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true', { restoreFocus: true });
+    });
+
+    nav.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        event.preventDefault();
+        setOpen(false, { restoreFocus: true });
+      }
+    });
+
+    // A same-page link (Work on the home page) doesn't unload the page, so close explicitly
+    menu.addEventListener('click', (event) => {
+      if (event.target instanceof Element && event.target.closest('a')) setOpen(false);
+    });
+
+    // Close when focus or a click moves elsewhere on the page
+    nav.addEventListener('focusout', (event) => {
+      const next = event.relatedTarget;
+      if (next instanceof Node && !nav.contains(next)) setOpen(false);
+    });
+    document.addEventListener('click', (event) => {
+      if (event.target instanceof Node && !nav.contains(event.target)) setOpen(false);
+    });
+
+    desktop.addEventListener('change', () => setOpen(false));
+  }
+</script>
+
+<style>
+  .top {
+    position: relative;
+    border-bottom: var(--border);
+  }
+
+  .bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: var(--header-height);
+  }
+
+  .brand {
+    font-weight: var(--weight-wordmark);
+    letter-spacing: -0.01em;
+    text-decoration: none;
+  }
+
+  .brand span {
+    color: var(--text-3);
+    font-weight: var(--weight-regular);
+  }
+
+  .nav-list {
+    display: flex;
+    gap: var(--space-28);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nav-list a {
+    color: var(--text-2);
+    text-decoration: none;
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .nav-list a:hover,
+  .nav-list a[aria-current='page'] {
+    color: var(--text);
+  }
+
+  .menu-toggle {
+    display: none;
+  }
+
+  @media (max-width: 860px) {
+    .menu-toggle {
+      display: inline-flex;
+      align-items: center;
+      height: var(--control-height);
+      margin-right: calc(var(--space-12) * -1);
+      padding: 0 var(--space-12);
+      background: none;
+      border: 0;
+      border-radius: var(--radius);
+      color: var(--text-2);
+      cursor: pointer;
+    }
+
+    .menu-toggle[aria-expanded='true'] {
+      color: var(--text);
+    }
+
+    /* The menu drops under the header as a panel on --surface, one link per ruled row */
+    .nav-list {
+      position: absolute;
+      inset: 100% 0 auto;
+      z-index: 10;
+      display: none;
+      flex-direction: column;
+      gap: 0;
+      padding: 0 var(--gutter) var(--space-8);
+      background: var(--surface);
+      border-bottom: var(--border);
+    }
+
+    [data-open] .nav-list {
+      display: flex;
+    }
+
+    .nav-list li + li {
+      border-top: var(--border);
+    }
+
+    .nav-list a {
+      display: flex;
+      align-items: center;
+      min-height: 48px;
+    }
+  }
+
+  @media (max-width: 860px) and (prefers-reduced-motion: no-preference) {
+    .nav-list {
+      transition:
+        opacity var(--duration) var(--ease-out),
+        translate var(--duration) var(--ease-out);
+    }
+
+    @starting-style {
+      [data-open] .nav-list {
+        opacity: 0;
+        translate: 0 -4px;
+      }
+    }
+  }
+</style>

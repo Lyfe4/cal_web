@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { personId } from '../data/schema';
+import { person, shortLocation } from '../data/site';
+---
+
+<BaseLayout
+  title={`About ${person.name}`}
+  description={`${person.name} is a frontend developer in ${shortLocation}, working with businesses in person across New England and remotely Australia-wide.`}
+  ogType="profile"
+  schema={{ '@type': 'AboutPage', mainEntity: { '@id': personId } }}
+>
+  <div class="wrap page">
+    <h1>About</h1>
+    <p class="lede">
+      <strong>
+        {person.name}, frontend developer in {shortLocation}.
+      </strong>{' '}
+      This page is a placeholder while the site is rebuilt.
+    </p>
+  </div>
+</BaseLayout>

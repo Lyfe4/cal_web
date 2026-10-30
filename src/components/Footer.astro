@@ -1,0 +1,60 @@
+---
+import { business, formattedAddress } from '../data/site';
+---
+
+<footer class="foot">
+  <div class="wrap foot-grid">
+    <p class="ack">
+      I live and work in Armidale on Aboriginal land. I acknowledge the Traditional Custodians of
+      the New England region and pay my respects to Elders past and present.
+    </p>
+    <address class="foot-meta mono">
+      <span>
+        {business.name} · {formattedAddress}
+      </span>
+      <a href={business.phone.href}>{business.phone.display}</a>
+      <a href={`mailto:${business.email}`}>{business.email}</a>
+      <span>ABN {business.abn}</span>
+    </address>
+  </div>
+</footer>
+
+<style>
+  .foot {
+    padding: var(--space-40) 0 var(--space-48);
+    border-top: var(--border);
+  }
+
+  .foot-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-32) var(--space-64);
+  }
+
+  .ack {
+    margin: 0;
+    max-width: 52ch;
+    color: var(--text-2);
+    font-size: var(--text-ui);
+  }
+
+  .foot-meta {
+    display: grid;
+    gap: var(--space-8);
+    justify-items: end;
+    color: var(--text-3);
+    font-style: normal;
+    text-align: right;
+  }
+
+  @media (max-width: 860px) {
+    .foot-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .foot-meta {
+      justify-items: start;
+      text-align: left;
+    }
+  }
+</style>

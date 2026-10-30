@@ -1,0 +1,72 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Frame from '../../components/Frame.astro';
+import Status from '../../components/Status.astro';
+import { getProjects, type Project } from '../../data/projects';
+import { businessId } from '../../data/schema';
+
+export const getStaticPaths = (async () =>
+  (await getProjects()).map((project) => ({
+    params: { slug: project.data.slug },
+    props: { project },
+  }))) satisfies GetStaticPaths;
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const { name, type, status, url, summary, tags, screenshot } = project.data;
+---
+
+<BaseLayout
+  title={`${name}: ${type}`}
+  description={summary}
+  ogType="article"
+  ogImage={{
+    src: screenshot.src.src,
+    alt: screenshot.alt,
+    width: screenshot.src.width,
+    height: screenshot.src.height,
+  }}
+  schema={{
+    '@type': 'CreativeWork',
+    name,
+    description: summary,
+    url,
+    creator: { '@id': businessId },
+  }}
+>
+  <article class="wrap page">
+    <h1>{name}</h1>
+    <p class="facts mono">
+      <span>{type}</span>
+      {tags.map((tag) => (
+        <span>{tag}</span>
+      ))}
+      <Status status={status} />
+    </p>
+    <p class="lede">
+      <strong>{summary}</strong> The full case study is a placeholder while the site is rebuilt.
+    </p>
+    <div class="shot">
+      <Frame url={url} image={screenshot.src} alt={screenshot.alt} eager />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8) var(--space-24);
+    margin: var(--space-24) 0 0;
+    color: var(--text-3);
+  }
+
+  .shot {
+    margin-top: var(--space-48);
+    max-width: 860px;
+  }
+</style>

@@ -1,0 +1,71 @@
+---
+import type { ImageMetadata } from 'astro';
+import { displayHost } from '../data/projects';
+
+export interface Props {
+  url: string;
+  image: ImageMetadata;
+  alt: string;
+  /** Load straight away; set on the one frame that can be the LCP element */
+  eager?: boolean;
+}
+
+const { url, image, alt, eager = false } = Astro.props;
+// Portrait captures (app UIs) are capped and centred; the frame never shrinks to fit.
+const tall = image.height > image.width;
+---
+
+<figure class:list={['frame', { tall }]}>
+  <div class="frame-bar mono" aria-hidden="true">
+    {displayHost(url)}
+  </div>
+  <img
+    src={image.src}
+    width={image.width}
+    height={image.height}
+    alt={alt}
+    loading={eager ? 'eager' : 'lazy'}
+    decoding="async"
+    fetchpriority={eager ? 'high' : undefined}
+  />
+</figure>
+
+<style>
+  .frame {
+    margin: 0;
+    padding: 0 var(--space-8) var(--space-8);
+    background: var(--mat);
+    border: var(--border-frame);
+    border-radius: var(--radius);
+  }
+
+  .frame-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-12);
+    height: 32px;
+    color: var(--text-2);
+    font-size: var(--text-frame);
+    text-transform: none;
+    letter-spacing: var(--tracking-frame);
+  }
+
+  /* The three browser dots, drawn rather than marked up */
+  .frame-bar::before {
+    content: '';
+    flex: none;
+    width: 34px;
+    height: 8px;
+    background: radial-gradient(circle at 4px 4px, var(--mat-edge) 3.5px, transparent 4px) 0 0 /
+      13px 8px repeat-x;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  .tall img {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+</style>

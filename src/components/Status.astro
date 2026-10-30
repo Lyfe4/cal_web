@@ -1,0 +1,15 @@
+---
+import type { Project } from '../data/projects';
+
+export interface Props {
+  status: Project['data']['status'];
+}
+
+const { status } = Astro.props;
+const label = status === 'live' ? 'Live' : 'In progress';
+---
+
+<span class:list={{ wip: status === 'in progress' }}>
+  <span class="dot"></span>
+  {label}
+</span>

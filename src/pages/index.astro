@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getProjects, projectPath } from '../data/projects';
+import { person, shortLocation } from '../data/site';
+
+const projects = await getProjects();
+---
+
+<BaseLayout
+  title="Websites and web apps for businesses across Australia | Calvin R Development"
+  description={`${person.firstName} is a frontend developer in ${shortLocation}, building fast, custom websites for small businesses and the front end of web apps and integrations.`}
+>
+  <div class="wrap page">
+    <h1>Websites and web apps for businesses across Australia.</h1>
+    <p class="lede">
+      <strong>
+        I'm {person.firstName}, a frontend developer based in {shortLocation}.
+      </strong>{' '}
+      This home page is a placeholder while the site is rebuilt.
+    </p>
+    <section id="work" aria-labelledby="work-h">
+      <h2 id="work-h" class="mono">
+        01 / Selected work
+      </h2>
+      <ul>
+        {projects.map((project) => (
+          <li>
+            <a href={projectPath(project)}>{project.data.name}</a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  #work {
+    margin-top: var(--space-64);
+    padding-top: var(--space-20);
+    border-top: var(--border);
+    color: var(--text-2);
+  }
+
+  #work h2 {
+    margin: 0 0 var(--space-28);
+    font-weight: var(--weight-regular);
+    color: var(--text-3);
+  }
+
+  #work ul {
+    margin: 0;
+    padding-left: var(--space-20);
+  }
+</style>

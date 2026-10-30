@@ -1,0 +1,14 @@
+---
+// Cloudflare Web Analytics: cookieless, no consent banner needed. Only rendered
+// when the token is set at build time, so local and preview builds stay clean.
+const token = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
+---
+
+{token && (
+  <script
+    is:inline
+    defer
+    src="https://static.cloudflareinsights.com/beacon.min.js"
+    data-cf-beacon={JSON.stringify({ token })}
+  />
+)}
