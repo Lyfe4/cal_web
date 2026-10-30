@@ -1,4 +1,5 @@
 ---
+import FactList from '../FactList.astro';
 import Frame from '../Frame.astro';
 import Status from '../Status.astro';
 import { displayHost, projectPath, type Project } from '../../data/projects';
@@ -27,26 +28,19 @@ const [featured, ...rest] = Astro.props.projects;
         Read the case study <span class="visually-hidden">about {featured.data.name}</span>
         <span aria-hidden="true">→</span>
       </a>
-      <dl class="mono">
-        {featured.data.client && (
-          <div>
-            <dt>Client</dt>
-            <dd>{featured.data.client}</dd>
-          </div>
-        )}
-        <div>
-          <dt>Live site</dt>
-          <dd class="url">
-            <a href={featured.data.url}>{displayHost(featured.data.url)}</a>
-          </dd>
-        </div>
-        <div>
-          <dt>Status</dt>
-          <dd>
-            <Status status={featured.data.status} />
-          </dd>
-        </div>
-      </dl>
+      <div class="feature-facts">
+        <FactList
+          facts={[
+            ...(featured.data.client ? [{ label: 'Client', value: featured.data.client }] : []),
+            {
+              label: 'Live site',
+              value: displayHost(featured.data.url),
+              href: featured.data.url,
+            },
+            { label: 'Status', status: featured.data.status },
+          ]}
+        />
+      </div>
     </div>
   </article>
 )}
@@ -111,30 +105,11 @@ const [featured, ...rest] = Astro.props.projects;
     color: var(--text-2);
   }
 
-  .feature dl {
-    margin: var(--space-28) 0 0;
-    border-top: var(--border);
-  }
-
-  .feature dl div {
-    display: flex;
-    justify-content: space-between;
-    gap: var(--space-12);
-    padding: 10px 0;
-    border-bottom: var(--border);
-  }
-
-  .feature dt {
-    color: var(--text-3);
-  }
-
-  .feature dd {
-    margin: 0;
-    text-align: right;
+  .feature-facts {
+    margin-top: var(--space-28);
   }
 
   /* URLs stay lowercase, like the frame bar */
-  .url,
   .live {
     text-transform: none;
   }

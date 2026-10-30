@@ -1,0 +1,65 @@
+---
+import Status from './Status.astro';
+import type { Project } from '../data/projects';
+
+export interface Fact {
+  label: string;
+  value?: string;
+  /** Links the value; shown lowercase, like the frame bar */
+  href?: string;
+  status?: Project['data']['status'];
+}
+
+export interface Props {
+  facts: Fact[];
+  /** Accessible name for the list, e.g. "Project details" */
+  label?: string;
+}
+
+const { facts, label } = Astro.props;
+---
+
+<dl class="facts mono" aria-label={label}>
+  {facts.map(({ label, value, href, status }) => (
+    <div>
+      <dt>{label}</dt>
+      <dd class:list={{ url: href }}>
+        {status ? <Status status={status} /> : href ? <a href={href}>{value}</a> : value}
+      </dd>
+    </div>
+  ))}
+</dl>
+
+<style>
+  .facts {
+    margin: 0;
+    border-top: var(--border);
+  }
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-12);
+    padding: 10px 0;
+    border-bottom: var(--border);
+  }
+
+  dt {
+    flex: none;
+    color: var(--text-3);
+  }
+
+  dd {
+    margin: 0;
+    text-align: right;
+  }
+
+  /* URLs stay lowercase, like the frame bar */
+  .url {
+    text-transform: none;
+  }
+
+  a {
+    text-underline-offset: 0.2em;
+  }
+</style>

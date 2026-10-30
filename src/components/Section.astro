@@ -2,22 +2,20 @@
 export interface Props {
   /** Anchor id; the heading gets `${id}-h` */
   id: string;
-  /** Position on the page, shown as "01" */
-  n: number;
+  /** Position on the page, shown as "01"; left out for closing sections like Contact */
+  n?: number | undefined;
   title: string;
   /** Quiet note on the right of the head; hidden under 860px */
   note?: string | undefined;
 }
 
 const { id, n, title, note } = Astro.props;
-const num = String(n).padStart(2, '0');
+const heading = n === undefined ? title : `${String(n).padStart(2, '0')} / ${title}`;
 ---
 
 <section class="sec" id={id} aria-labelledby={`${id}-h`}>
   <div class="sec-head mono">
-    <h2 id={`${id}-h`}>
-      {num} / {title}
-    </h2>
+    <h2 id={`${id}-h`}>{heading}</h2>
     {note && <span>{note}</span>}
   </div>
   <slot />

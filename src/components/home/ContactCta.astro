@@ -1,12 +1,22 @@
 ---
 import { business, replyPromise } from '../../data/site';
+
+export interface Props {
+  statement?: string;
+  lede?: string;
+}
+
+const {
+  statement = 'Tell me about your project.',
+  lede = 'A few lines about your business and what you need is plenty.',
+} = Astro.props;
 ---
 
 <div class="cta">
   <div>
-    <p class="statement">Tell me about your project.</p>
+    <p class="statement">{statement}</p>
     <p class="lede">
-      A few lines about your business and what you need is plenty. I reply {replyPromise}.
+      {lede} I reply {replyPromise}.
     </p>
   </div>
   <div>
