@@ -4,6 +4,6 @@
  */
 export const stack = {
   frontend: ['React', 'TypeScript', 'JavaScript', 'Astro', 'CSS'],
-  backend: ['Python', 'Django', 'REST APIs'],
+  backend: ['Python', 'Django', 'PostgreSQL', 'REST APIs'],
   tools: ['Git', 'CI', 'Netlify'],
 } as const;

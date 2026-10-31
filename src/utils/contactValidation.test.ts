@@ -50,14 +50,27 @@ test('rejects numbers that are not Australian phone numbers', () => {
   }
 });
 
-test('accepts real names with apostrophes, hyphens and non-Latin letters', () => {
-  for (const name of ["O'Brien", 'Smith-Jones', 'José', 'Lê', 'Wei', '李明', 'Mary Ann', ' Jo ']) {
+test('accepts real names with apostrophes, hyphens, non-Latin letters and one character', () => {
+  for (const name of [
+    "O'Brien",
+    'Smith-Jones',
+    'José',
+    'Lê',
+    'Wei',
+    '李明',
+    'Mary Ann',
+    ' Jo ',
+    '李',
+    '이',
+    'J',
+    ' J ',
+  ]) {
     assert.ok(isValidName(name), name);
   }
 });
 
-test('rejects empty and one-character names', () => {
-  for (const name of ['', '   ', 'J', ' J ']) {
+test('rejects empty and whitespace-only names', () => {
+  for (const name of ['', '   ', '\t\n']) {
     assert.ok(!isValidName(name), JSON.stringify(name));
   }
 });
@@ -97,6 +110,11 @@ test('reports every problem, in the order the fields appear', () => {
     message: 'Hi',
   });
   assert.deepEqual(Object.keys(errors), ['firstName', 'email', 'enquiry', 'message']);
+});
+
+test('one-character names pass, and whitespace-only names are required errors', () => {
+  assert.deepEqual(validateContact({ ...valid, firstName: '이', lastName: ' 李 ' }), {});
+  assert.equal(validateField('lastName', '   '), 'Enter your last name.');
 });
 
 test('only the three enquiry types are accepted', () => {

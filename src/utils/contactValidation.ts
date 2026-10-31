@@ -12,8 +12,9 @@ export const isValidPhone = (phone: string): boolean => {
   return !digits || AU_PHONE.test(digits);
 };
 
-// Any script, apostrophes and hyphens are all fine; just ask for 2+ characters.
-export const isValidName = (name: string): boolean => name.trim().length >= 2;
+// Any script, apostrophes and hyphens are all fine, and one character is a real
+// name (李, 이), so it only has to be something other than spaces.
+export const isValidName = (name: string): boolean => name.trim().length > 0;
 
 // Deliberately loose: something@something.tld. Formspree checks again on its side.
 export const isValidEmail = (email: string): boolean =>
@@ -50,11 +51,9 @@ export const validateField = (field: ContactField, value: string): string => {
   const v = value.trim();
   switch (field) {
     case 'firstName':
-      if (!v) return 'Enter your first name.';
-      return isValidName(v) ? '' : 'First name needs at least 2 characters.';
+      return isValidName(v) ? '' : 'Enter your first name.';
     case 'lastName':
-      if (!v) return 'Enter your last name.';
-      return isValidName(v) ? '' : 'Last name needs at least 2 characters.';
+      return isValidName(v) ? '' : 'Enter your last name.';
     case 'email':
       if (!v) return 'Enter your email address.';
       return isValidEmail(v) ? '' : 'Enter an email address like name@example.com.';

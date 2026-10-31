@@ -25,7 +25,7 @@ export const websitePackages: WebsitePackage[] = [
       'Works on phones, tablets and desktops',
       'Enquiry form that sends straight to your inbox',
       'Set up to be found on Google: page titles, descriptions and a sitemap',
-      'Hosting set up and the site launched',
+      "Hosting set up on Netlify's free plan, and the site launched",
       'One round of revisions',
       'Two weeks of support after launch',
     ],
@@ -39,11 +39,11 @@ export const websitePackages: WebsitePackage[] = [
     intro: 'Everything in Starter, plus:',
     includes: [
       'Up to seven pages',
-      'A design built around your brand, not a template',
+      'A more detailed design built around your brand',
       'Custom features such as photo galleries or project filters',
       'Google Business Profile set up for local search',
       'Three rounds of revisions',
-      'Two months of priority support',
+      'Two months of support',
     ],
   },
 ];
@@ -87,7 +87,7 @@ export const faqs: Faq[] = [
   },
   {
     q: 'Do you handle hosting and domains?',
-    a: 'Yes. I set up hosting and connect your domain. You own and pay for the domain itself, and I can help you buy one.',
+    a: "Yes. I set up hosting on Netlify's free plan, so most small sites have no ongoing hosting cost. You own and pay for your domain, and I can help you buy one.",
   },
   {
     q: 'What happens after launch?',

@@ -34,7 +34,7 @@ const sentence = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
                 type="text"
                 autocomplete="given-name"
                 required
-                minlength="2"
+                pattern=".*\S.*"
               />
               <p class="error" id="firstName-error" hidden></p>
             </div>
@@ -46,7 +46,7 @@ const sentence = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
                 type="text"
                 autocomplete="family-name"
                 required
-                minlength="2"
+                pattern=".*\S.*"
               />
               <p class="error" id="lastName-error" hidden></p>
             </div>
