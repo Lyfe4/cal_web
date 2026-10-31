@@ -24,8 +24,8 @@ screenshot:
   src: ../../assets/projects/lenbuild.webp
   alt: "LenBuild's Projects and Services page: the Custom Home Building section with photos of a finished home."
 gallery:
-  - src: ../../assets/projects/lenbuild-home.webp
-    alt: "LenBuild's home page: the headline Quality Building Solutions For Your Home over a photo of a finished kitchen, with Get in touch and View our work buttons."
+  - src: ../../assets/projects/lenbuild-contact.webp
+    alt: "LenBuild's Contact page: the Get In Touch form with name, email, optional phone, a Service Interested In dropdown and message fields, beside their contact details."
     section: what-i-built
 ---
 
@@ -40,7 +40,7 @@ LenBuild didn't have a website before this, so I built it from scratch. It neede
 A six-page website: Home, About, Projects & Services and Contact, plus two local pages, one for custom homes in Guyra and one for people looking for builders in Armidale.
 
 - **Projects & Services** gives each service its own section with photos of finished work, so people can judge the quality before they call.
-- **The contact form** asks which service someone is interested in, so each enquiry arrives already sorted. It checks every field before sending, and a short FAQ beside it answers the usual first questions: service area, timelines and design.
+- **The contact form** asks which service someone is interested in, so each enquiry arrives already sorted. It checks every field before sending, and a short FAQ below it answers the usual first questions: service area, timelines and design.
 - **Every page** describes the business to search engines in structured data: what LenBuild does, where it's based and the areas it serves.
 
 ## How it's built

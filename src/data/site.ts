@@ -44,6 +44,9 @@ export const shortLocation = `${business.address.locality}, ${business.address.r
 
 export const replyPromise = 'within one business day';
 
+/** The contact form posts here, with or without JavaScript. Allowed by the CSP in netlify.toml. */
+export const formspreeEndpoint = 'https://formspree.io/f/xqakqbgp';
+
 export const serviceAreas = {
   inPerson: 'Armidale & New England',
   remote: 'Australia-wide',
@@ -64,6 +67,7 @@ export const pricing = {
   professional: { label: 'Professional website', from: 1125 },
   apps: { label: 'Apps & integrations', note: 'Quoted per project' },
   extraPage: { label: 'Extra pages', each: 150 },
+  customFeature: { label: 'Custom features', note: 'Quoted' },
   support: { label: 'Support', monthly: 80, yearly: 800 },
 } as const;
 

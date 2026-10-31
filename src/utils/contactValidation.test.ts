@@ -1,6 +1,16 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { isValidPhone, isValidName } from './contactValidation.ts';
+import {
+  enquiryForPackage,
+  enquirySubject,
+  isEnquiryPackage,
+  isValidEmail,
+  isValidName,
+  isValidPhone,
+  validateContact,
+  validateField,
+  type ContactValues,
+} from './contactValidation.ts';
 
 test('accepts Australian mobiles and landlines in common formats', () => {
   for (const phone of [
@@ -50,4 +60,64 @@ test('rejects empty and one-character names', () => {
   for (const name of ['', '   ', 'J', ' J ']) {
     assert.ok(!isValidName(name), JSON.stringify(name));
   }
+});
+
+test('accepts ordinary email addresses and rejects obvious mistakes', () => {
+  for (const email of [
+    'jo@example.com',
+    'jo.smith+quote@mail.example.com.au',
+    ' jo@example.com ',
+  ]) {
+    assert.ok(isValidEmail(email), email);
+  }
+  for (const email of ['', 'jo', 'jo@', 'jo@example', 'jo @example.com', 'jo@example.c']) {
+    assert.ok(!isValidEmail(email), email);
+  }
+});
+
+const valid: ContactValues = {
+  firstName: 'Jo',
+  lastName: 'Smith',
+  email: 'jo@example.com',
+  phone: '',
+  enquiry: 'New website',
+  message: 'I need a site for my bakery.',
+};
+
+test('a complete form has no errors', () => {
+  assert.deepEqual(validateContact(valid), {});
+});
+
+test('reports every problem, in the order the fields appear', () => {
+  const errors = validateContact({
+    ...valid,
+    firstName: '',
+    email: 'jo@',
+    enquiry: '',
+    message: 'Hi',
+  });
+  assert.deepEqual(Object.keys(errors), ['firstName', 'email', 'enquiry', 'message']);
+});
+
+test('only the three enquiry types are accepted', () => {
+  assert.equal(validateField('enquiry', 'App or integration'), '');
+  assert.notEqual(validateField('enquiry', 'Starter'), '');
+});
+
+test('package links preselect the matching enquiry type', () => {
+  assert.equal(enquiryForPackage.starter, 'New website');
+  assert.equal(enquiryForPackage.professional, 'New website');
+  assert.equal(enquiryForPackage.custom, 'App or integration');
+  assert.ok(isEnquiryPackage('starter'));
+  assert.ok(!isEnquiryPackage('toString'));
+  assert.ok(!isEnquiryPackage(null));
+});
+
+test('the email subject names the enquiry type and any package', () => {
+  assert.equal(
+    enquirySubject('New website', 'starter'),
+    'New website (Starter website) from the website'
+  );
+  assert.equal(enquirySubject('Something else'), 'Something else from the website');
+  assert.equal(enquirySubject(''), 'Enquiry from the website');
 });

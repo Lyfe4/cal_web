@@ -1,22 +1,166 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import Section from '../components/Section.astro';
+import FactList from '../components/FactList.astro';
+import ProjectLinks from '../components/ProjectLinks.astro';
+import ContactCta from '../components/home/ContactCta.astro';
+import portrait from '../assets/calvin.jpg';
+import { getProjects } from '../data/projects';
 import { personId } from '../data/schema';
-import { person, shortLocation } from '../data/site';
+import { person, serviceAreas, shortLocation, siteUrl } from '../data/site';
+import { stack } from '../data/stack';
+import { responsiveSources } from '../utils/images';
+
+const { avif, webp } = await responsiveSources(portrait, [400, 640, 800]);
+const sizes = '(max-width: 860px) calc(100vw - 2 * clamp(16px, 3vw, 40px)), 420px';
+const alt =
+  'Calvin Reinke outdoors in front of a green hedge, in a dark cap and a striped short-sleeved shirt, looking off to one side.';
+
+// Projects with no client are the ones I build in my own time
+const ownProjects = (await getProjects()).filter((p) => !p.data.client);
 ---
 
 <BaseLayout
   title={`About ${person.name}`}
-  description={`${person.name} is a frontend developer in ${shortLocation}, working with businesses in person across New England and remotely Australia-wide.`}
+  description={`${person.name} is a frontend developer in ${shortLocation}. Computer science at UNE, in-house experience on production web apps, now building websites and web apps for businesses across Australia.`}
   ogType="profile"
-  schema={{ '@type': 'AboutPage', mainEntity: { '@id': personId } }}
+  schema={[
+    { '@type': 'AboutPage', mainEntity: { '@id': personId } },
+    {
+      '@type': 'Person',
+      '@id': personId,
+      url: `${siteUrl}/about`,
+      image: new URL(webp.src, siteUrl).href,
+      description: `Frontend developer in ${shortLocation}, working with businesses in person around ${serviceAreas.inPerson} and remotely ${serviceAreas.remote}.`,
+      knowsAbout: [...stack.frontend, ...stack.backend],
+    },
+  ]}
 >
-  <div class="wrap page">
-    <h1>About</h1>
-    <p class="lede">
-      <strong>
-        {person.name}, frontend developer in {shortLocation}.
-      </strong>{' '}
-      This page is a placeholder while the site is rebuilt.
-    </p>
+  <div class="wrap">
+    <PageHead title={person.name} meta={[person.jobTitle, shortLocation, serviceAreas.remote]}>
+      <strong>I build fast websites and the front end of web apps,</strong> for small businesses and
+      for teams that need a frontend developer.
+    </PageHead>
+
+    <Section id="background" n={1} title="Background">
+      <div class="story">
+        <div class="prose">
+          <p>
+            I studied computer science at UNE, then worked <span class="nowrap">in-house</span> as a
+            frontend developer on production web apps, designing and building the parts people see
+            and use.
+          </p>
+          <p>
+            Now I build for businesses directly: custom websites for small businesses, and frontend
+            work on web apps and integrations for teams. You deal with me from the first call to
+            launch and after, with no agency in between.
+          </p>
+          <p>
+            I'm based in Armidale, NSW. I meet clients in person around {serviceAreas.inPerson}, and
+            work remotely with businesses anywhere in Australia.
+          </p>
+          <p>
+            I'm a frontend developer first. I've done enough back-end work to take a feature end to
+            end, but I work across the back end rather than in it.
+          </p>
+        </div>
+        <picture>
+          <source type="image/avif" srcset={avif.srcSet.attribute} sizes={sizes} />
+          <img
+            src={webp.src}
+            srcset={webp.srcSet.attribute}
+            sizes={sizes}
+            width={portrait.width}
+            height={portrait.height}
+            alt={alt}
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
+      </div>
+    </Section>
+
+    <Section id="stack" n={2} title="Stack" note="This site: Astro and TypeScript">
+      <div class="stack">
+        <FactList
+          label="Stack"
+          facts={[
+            { label: 'Frontend', value: stack.frontend.join(', ') },
+            { label: 'Back-end experience', value: stack.backend.join(', ') },
+            { label: 'Tools', value: stack.tools.join(', ') },
+          ]}
+        />
+      </div>
+    </Section>
+
+    <Section id="own-time" n={3} title="In my own time">
+      <div class="own">
+        <p class="own-intro">
+          Things I build for myself, to try ideas that don't belong in client work.
+        </p>
+        <ProjectLinks projects={ownProjects} />
+      </div>
+    </Section>
+
+    <Section id="contact" title="Contact">
+      <ContactCta />
+    </Section>
   </div>
 </BaseLayout>
+
+<style>
+  .story {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+    gap: var(--space-40) var(--space-64);
+    align-items: start;
+  }
+
+  .prose {
+    max-width: 62ch;
+    color: var(--text-2);
+    font-size: var(--text-desc);
+  }
+
+  .prose p {
+    margin: 0 0 var(--space-16);
+  }
+
+  .prose p:last-child {
+    margin-bottom: 0;
+  }
+
+  .nowrap {
+    white-space: nowrap;
+  }
+
+  picture img {
+    width: 100%;
+  }
+
+  .stack {
+    max-width: 760px;
+  }
+
+  .own {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-24) var(--space-64);
+    align-items: start;
+  }
+
+  .own-intro {
+    margin: 0;
+    max-width: 40ch;
+    color: var(--text-2);
+    font-size: var(--text-desc);
+  }
+
+  @media (max-width: 860px) {
+    .story,
+    .own {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

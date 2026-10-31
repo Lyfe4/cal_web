@@ -1,0 +1,50 @@
+---
+import { projectPath, type Project } from '../data/projects';
+
+export interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+---
+
+<ul class="links">
+  {projects.map((project) => (
+    <li>
+      <a href={projectPath(project)}>{project.data.name}</a>
+      <p>{project.data.summary}</p>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-bottom: var(--border);
+  }
+
+  li {
+    padding: var(--space-16) 0 var(--space-20);
+    border-top: var(--border);
+  }
+
+  a {
+    font-size: var(--text-lede);
+    font-weight: var(--weight-medium);
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  p {
+    margin: var(--space-8) 0 0;
+    max-width: 44ch;
+    color: var(--text-2);
+    font-size: var(--text-ui);
+  }
+</style>
