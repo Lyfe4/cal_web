@@ -10,7 +10,8 @@ import ContactCta from '../../components/home/ContactCta.astro';
 import Testimonials from '../../components/home/Testimonials.astro';
 import { displayHost, getProjects, projectPath, type Project } from '../../data/projects';
 import { businessId, personId } from '../../data/schema';
-import { siteUrl } from '../../data/site';
+import { business, siteUrl } from '../../data/site';
+import { ogSize } from '../../utils/brand';
 import { testimonials } from '../../data/testimonials';
 import { splitCaseSections } from '../../utils/caseSections';
 
@@ -75,10 +76,9 @@ const pageUrl = new URL(projectPath(project), siteUrl).href;
   description={seo.description}
   ogType="article"
   ogImage={{
-    src: screenshot.src.src,
-    alt: screenshot.alt,
-    width: screenshot.src.width,
-    height: screenshot.src.height,
+    src: `/og/${project.data.slug}.png`,
+    alt: `${name}: ${[type, ...tags].join(', ')}. A case study by ${business.name}.`,
+    ...ogSize,
   }}
   schema={{
     '@type': 'CreativeWork',

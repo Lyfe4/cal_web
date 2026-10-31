@@ -17,25 +17,23 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "fonts": "node scripts/subset-fonts.js",
-    "generate-icons": "node scripts/generate-icons.cjs"
+    "fonts": "node scripts/subset-fonts.js"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
-    "astro": "^7.4.4"
+    "@resvg/resvg-js": "^2.6.2",
+    "astro": "^7.4.4",
+    "subset-font": "^2.9.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
     "@eslint/js": "^10.0.1",
-    "@resvg/resvg-js": "^2.6.2",
     "eslint": "^10.13.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-astro": "^3.2.1",
     "globals": "^17.13.0",
-    "png-to-ico": "^3.0.2",
     "prettier": "^3.9.10",
     "prettier-plugin-astro": "^1.1.2",
-    "subset-font": "^2.9.0",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.72.1"
   }

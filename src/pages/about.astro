@@ -32,7 +32,8 @@ const ownProjects = (await getProjects()).filter((p) => !p.data.client);
       '@type': 'Person',
       '@id': personId,
       url: `${siteUrl}/about`,
-      image: new URL(webp.src, siteUrl).href,
+      // A stable URL (the old site's), not a hashed build asset that changes on re-encode
+      image: `${siteUrl}/calvin.jpg`,
       description: `Frontend developer in ${shortLocation}, working with businesses in person ${serviceAreas.inPerson} and remotely ${serviceAreas.remote}.`,
       knowsAbout: [...stack.frontend, ...stack.backend],
     },

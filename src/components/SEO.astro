@@ -1,6 +1,7 @@
 ---
 import { business, siteUrl } from '../data/site';
 import { buildJsonLd, type SchemaNode } from '../data/schema';
+import { ogSize, siteCardAlt } from '../utils/brand';
 
 export interface Props {
   /** Page title; the business name is appended unless it's already there */
@@ -19,9 +20,8 @@ const {
   schema,
   ogImage = {
     src: '/og-image.png',
-    alt: `${business.name}: websites and web apps for businesses across Australia.`,
-    width: 1200,
-    height: 630,
+    alt: siteCardAlt,
+    ...ogSize,
   },
   ogType = 'website',
   noindex = false,
