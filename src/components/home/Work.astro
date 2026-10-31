@@ -63,6 +63,7 @@ const [featured, ...rest] = Astro.props.projects;
           ))}
           <Status status={project.data.status} />
         </p>
+        {project.data.upNext && <p class="up-next">{project.data.upNext}</p>}
         <p class="live mono">
           <a href={project.data.url}>{displayHost(project.data.url)}</a>
         </p>
@@ -166,6 +167,12 @@ const [featured, ...rest] = Astro.props.projects;
     gap: var(--space-8) var(--space-24);
     margin: 0;
     color: var(--text-3);
+  }
+
+  .up-next {
+    margin: var(--space-12) 0 0;
+    color: var(--text-2);
+    font-size: var(--text-ui);
   }
 
   .live {

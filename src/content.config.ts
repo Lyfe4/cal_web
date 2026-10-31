@@ -19,6 +19,10 @@ const projects = defineCollection({
       /** The kind of work, e.g. "Client website", "Web app" */
       type: z.string(),
       status: z.enum(['live', 'in progress']),
+      /** One plain line on what's coming next, shown under an "in progress" status */
+      upNext: z.string().optional(),
+      /** I still look after it, shown in the spec table */
+      maintained: z.boolean().default(false),
       url: z.url(),
       /** One sentence, shown in the project list and under the case study's name */
       summary: z.string(),

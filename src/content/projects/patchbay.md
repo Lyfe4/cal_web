@@ -34,7 +34,7 @@ gallery:
 
 Developers paste sensitive things into online tools all day: a login token they're debugging, a config file with a database password in it, an API response full of customer records. Most of those tools are websites, and they receive whatever you paste on a server you don't control.
 
-I wanted a set of everyday developer tools where that can't happen, with the guarantee coming from the browser rather than from a promise.
+I built Patchbay as a side project, to see how far a set of developer tools could go when the browser itself guarantees nothing leaves the page.
 
 ## What I built
 

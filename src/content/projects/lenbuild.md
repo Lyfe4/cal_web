@@ -4,6 +4,7 @@ name: LenBuild
 order: 1
 type: Client website
 status: live
+maintained: true
 url: https://lenbuild.com
 summary: Website for a custom home builder in Guyra, built to show their homes and turn local searches into enquiries.
 tags:
@@ -32,7 +33,7 @@ gallery:
 
 LenBuild is a family-run building company in Guyra, NSW. They build custom homes, extensions and renovations across the New England region, and offer paid consultation (PAC), which brings the builder into the design stage before anything is drawn up.
 
-They needed a website that showed the quality of their work, explained each service plainly and made it easy for people nearby to get in touch about a project.
+LenBuild didn't have a website before this, so I built it from scratch. It needed to show the quality of their work, explain each service plainly and make it easy for people nearby to get in touch about a project.
 
 ## What I built
 
@@ -50,4 +51,4 @@ Enquiries go through Formspree, a form service that sends each one to LenBuild's
 
 ### For developers
 
-React 18 and Vite, with react-snap prerendering all six routes to static HTML after the build, so crawlers never depend on JavaScript. react-helmet-async sets each page's title, description and canonical, and the LocalBusiness and HomeAndConstructionBusiness JSON-LD ships in the static markup. Netlify builds a deploy preview for every pull request.
+React 18 and Vite, with react-snap prerendering all six routes to static HTML after the build, so crawlers never depend on JavaScript. react-helmet-async sets each page's title and description, and every page has one canonical URL on the bare domain with a trailing slash (lenbuild.com/contact/), matching the sitemap and the way Netlify serves the prerendered files. The LocalBusiness and HomeAndConstructionBusiness JSON-LD ships in the static markup. Netlify builds a deploy preview for every pull request.

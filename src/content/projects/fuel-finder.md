@@ -4,6 +4,7 @@ name: Fuel Finder
 order: 2
 type: Web app
 status: in progress
+upNext: 'Next: adding Queensland prices.'
 url: https://nsw-fuel-finder.netlify.app
 summary: Live NSW & ACT fuel prices, cheapest first, as a list or a map, with four months of price history.
 tags:
@@ -35,7 +36,7 @@ Fuel prices in NSW vary a lot from one servo to the next, even in the same town.
 
 The NSW Government publishes every station's price through FuelCheck, and offers it to developers through an API. That API allows 2,500 calls a month and locks the account after three failed sign-ins, so a site that asked it once per search could be shut down by one busy evening or one bot.
 
-I built Fuel Finder as the opposite of Patchbay: everything here depends on someone else's data, quota and uptime, and the work is in making that dependable.
+I built Fuel Finder as something my family and I could use day to day. It's also the opposite of Patchbay: everything here depends on someone else's data, quota and uptime, and the work is in making that dependable.
 
 ## What I built
 

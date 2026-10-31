@@ -7,9 +7,11 @@ import Frame from '../../components/Frame.astro';
 import FactList, { type Fact } from '../../components/FactList.astro';
 import Status from '../../components/Status.astro';
 import ContactCta from '../../components/home/ContactCta.astro';
+import Testimonials from '../../components/home/Testimonials.astro';
 import { displayHost, getProjects, projectPath, type Project } from '../../data/projects';
 import { businessId, personId } from '../../data/schema';
 import { siteUrl } from '../../data/site';
+import { testimonials } from '../../data/testimonials';
 import { splitCaseSections } from '../../utils/caseSections';
 
 export const getStaticPaths = (async () => {
@@ -32,12 +34,27 @@ interface Props {
 }
 
 const { project, next, total } = Astro.props;
-const { name, type, status, url, summary, tags, client, year, stack, source, seo, screenshot } =
-  project.data;
+const {
+  name,
+  type,
+  status,
+  upNext,
+  maintained,
+  url,
+  summary,
+  tags,
+  client,
+  year,
+  stack,
+  source,
+  seo,
+  screenshot,
+} = project.data;
 
 const { headings } = await render(project);
 const sections = splitCaseSections(project.rendered?.html ?? '', headings);
 const galleryFor = (id: string) => project.data.gallery.filter((shot) => shot.section === id);
+const kindWords = testimonials.filter((t) => t.project === project.data.slug);
 
 const facts: Fact[] = [
   ...(client ? [{ label: 'Client', value: client }] : []),
@@ -45,6 +62,7 @@ const facts: Fact[] = [
   { label: 'Year', value: String(year) },
   { label: 'Stack', value: stack.join(', ') },
   { label: 'Status', status },
+  ...(maintained ? [{ label: 'Maintenance', value: 'Ongoing' }] : []),
   { label: 'Live site', value: displayHost(url), href: url },
   ...(source ? [{ label: 'Source', value: source.replace(/^https:\/\//, ''), href: source }] : []),
 ];
@@ -90,6 +108,7 @@ const pageUrl = new URL(projectPath(project), siteUrl).href;
         ))}
         <Status status={status} />
       </p>
+      {upNext && <p class="up-next">{upNext}</p>}
       <div class="head-row">
         <p class="lede">{summary}</p>
         <a class="btn btn-ghost" href={url}>
@@ -131,6 +150,12 @@ const pageUrl = new URL(projectPath(project), siteUrl).href;
         </Section>
       );
     })}
+
+    {kindWords.length > 0 && (
+      <Section id="what-they-said" n={sections.length + 1} title="What they said">
+        <Testimonials testimonials={kindWords} linkProject={false} />
+      </Section>
+    )}
   </article>
 
   <div class="wrap">
@@ -173,6 +198,12 @@ const pageUrl = new URL(projectPath(project), siteUrl).href;
     gap: var(--space-8) var(--space-24);
     margin: var(--space-24) 0 0;
     color: var(--text-3);
+  }
+
+  .up-next {
+    margin: var(--space-12) 0 0;
+    color: var(--text-2);
+    font-size: var(--text-ui);
   }
 
   .head-row {
