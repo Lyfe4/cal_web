@@ -9,7 +9,7 @@ export interface Step {
 export const process: Step[] = [
   {
     name: 'Call',
-    detail: `We talk through what you need, by phone or video, or in person around ${serviceAreas.inPerson}. You're talking to the person who will build it.`,
+    detail: `We talk through what you need, by phone or video, or in person ${serviceAreas.inPerson}. You're talking to the person who will build it.`,
   },
   {
     name: 'Quote',

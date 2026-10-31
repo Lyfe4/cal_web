@@ -94,7 +94,7 @@ export const faqs: Faq[] = [
   },
   {
     q: 'Do you only work with businesses around Armidale?',
-    a: `No. I meet in person around ${serviceAreas.inPerson}, and work remotely with businesses anywhere in Australia by phone, video and email.`,
+    a: `No. I meet clients in person ${serviceAreas.inPerson}, and ${serviceAreas.byArrangement}. Everyone else, anywhere in Australia, I work with by phone, video and email.`,
     link: {
       href: localPages.newEngland.href,
       label: 'More on working with me around New England',

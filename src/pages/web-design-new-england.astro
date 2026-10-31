@@ -38,8 +38,8 @@ const n = (id: string) =>
       title={page.heading}
       meta={[
         'Based in Armidale, NSW',
-        `In person around New England`,
-        `Remote ${serviceAreas.remote}`,
+        `In person ${serviceAreas.inPerson}`,
+        `Phone, video and email ${serviceAreas.remote}`,
       ]}
     >
       <strong>I build websites and web apps for businesses across New England,</strong> from my base
@@ -61,20 +61,24 @@ const n = (id: string) =>
       <div class="towns">
         <div class="prose">
           <p>
-            I'm based in Armidale and meet clients in person around New England. These are the towns
-            I cover.
+            I'm based in Armidale and meet clients in person in and around Armidale, Guyra and
+            Uralla. If you're further away, you're welcome to meet me in Armidale.
           </p>
           <p>
-            Wherever you are, the work runs the same way: a first conversation about what you need,
-            a written quote before anything starts, then a private preview link so you can see the
-            site come together and send feedback straight to me.
+            I work with businesses in the other towns on this list by phone, video and email, and in
+            person by arrangement.
+          </p>
+          <p>
+            Wherever you are, the work runs the same way: a first call or chat about what you need,
+            a written quote before anything starts, then email and phone, whichever suits you, with
+            a private preview link so you can see the site come together.
           </p>
           <p>
             Outside the region, I work by phone, video and email with businesses anywhere in
             Australia.
           </p>
         </div>
-        <ul class="town-list" aria-label="Towns I cover">
+        <ul class="town-list" aria-label="Towns I work with">
           {newEnglandTowns.map((town) => {
             const href = townPages[town];
             const note = townNotes[town];

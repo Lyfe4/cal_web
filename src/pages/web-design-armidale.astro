@@ -22,12 +22,12 @@ if (!fuelFinder || !lenbuild) throw new Error('The Armidale page needs Fuel Find
       title={page.heading}
       meta={[
         'Based in Armidale, NSW',
-        'Meet in person',
+        'Call or meet in person',
         `Websites from ${formatPrice(pricing.starter.from)}`,
       ]}
     >
-      <strong>I live and work in Armidale,</strong> so if your business is here too, we can sit down
-      and talk about your website face to face.
+      <strong>I live and work in Armidale,</strong> so if your business is here too, we can talk
+      about your website over a call or face to face, whichever suits you.
       <Fragment slot="aside">
         <a class="btn btn-primary" href="/contact">
           Get a quote <span aria-hidden="true">→</span>
@@ -35,13 +35,13 @@ if (!fuelFinder || !lenbuild) throw new Error('The Armidale page needs Fuel Find
       </Fragment>
     </PageHead>
 
-    <Section id="local" n={1} title="Working with me in Armidale" note="In person">
+    <Section id="local" n={1} title="Working with me in Armidale" note="Call or in person">
       <div class="prose">
         <p>
           I build custom websites for small businesses and sole traders, and frontend work on web
-          apps for teams that need another developer. If you're in Armidale, we start with a chat in
-          person about what you need. After that, the build runs by phone and email, and you follow
-          it on a private preview link.
+          apps for teams that need another developer. If you're in Armidale, our first conversation
+          can be a call or a chat in person. After that, the build runs by email and phone,
+          whichever you prefer, and you follow it on a private preview link.
         </p>
         <p>
           I studied computer science at UNE, here in Armidale, then worked{' '}
@@ -86,7 +86,7 @@ if (!fuelFinder || !lenbuild) throw new Error('The Armidale page needs Fuel Find
     <Section id="contact" title="Contact" note={`Replies ${replyPromise}`}>
       <ContactCta
         statement="Got a project in Armidale?"
-        lede="Tell me a little about it and we'll find a time to meet."
+        lede="Tell me a little about it and we'll set up a call, or a time to meet."
       />
     </Section>
   </div>

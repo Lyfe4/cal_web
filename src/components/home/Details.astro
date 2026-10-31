@@ -8,7 +8,7 @@ const sentence = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 // Two separate lists, never interleaved: prices first, then how the work runs.
 const logistics = [
   { label: 'Replies', value: sentence(replyPromise) },
-  { label: 'In person', value: serviceAreas.inPerson },
+  { label: 'In person', value: sentence(serviceAreas.inPerson) },
   { label: 'Remote', value: serviceAreas.remote },
   { label: 'Stack', value: 'TypeScript · React · CSS' },
 ];

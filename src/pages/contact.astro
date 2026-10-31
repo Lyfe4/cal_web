@@ -12,7 +12,7 @@ const sentence = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 
 <BaseLayout
   title="Contact"
-  description={`Ask for a quote or a chat about your website or app. ${business.name} replies ${replyPromise}. In person around ${serviceAreas.inPerson}, remote ${serviceAreas.remote}.`}
+  description={`Ask for a quote or a chat about your website or app. ${business.name} replies ${replyPromise}. In person ${serviceAreas.inPerson}, remote ${serviceAreas.remote}.`}
   schema={{ '@type': 'ContactPage', about: { '@id': businessId } }}
 >
   <div class="wrap">
@@ -135,7 +135,10 @@ const sentence = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
               { label: 'Replies', value: sentence(replyPromise) },
               { label: 'Email', value: business.email, href: `mailto:${business.email}` },
               { label: 'Phone', value: business.phone.display, href: business.phone.href },
-              { label: 'In person', value: serviceAreas.inPerson },
+              {
+                label: 'In person',
+                value: `${sentence(serviceAreas.inPerson)}, ${serviceAreas.byArrangement}`,
+              },
               { label: 'Remote', value: serviceAreas.remote },
             ]}
           />

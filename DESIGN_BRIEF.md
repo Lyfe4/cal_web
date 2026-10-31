@@ -146,7 +146,7 @@ The scale is bimodal: big statements (42–104px) and small functional text (11�
    - On mobile it's one column: number above name, frame full width.
 6. **Status:** a 7px dot plus a mono word. "Live" uses a `--text` dot. "In progress" is `--accent` for both dot and word.
 7. **Dot-leader spec sheet ("02 / Details"):**
-   - Two separate `dl`s side by side. Left: **prices** (Starter website from $600, Professional website from $1,125, Apps & integrations quoted per project, Extra pages $150 each, Support $80/mo or $800/yr). Right: **logistics** (Replies within one business day, In person Armidale & New England, Remote Australia-wide, Stack, Email).
+   - Two separate `dl`s side by side. Left: **prices** (Starter website from $600, Professional website from $1,125, Apps & integrations quoted per project, Extra pages $150 each, Support $80/mo or $800/yr). Right: **logistics** (Replies within one business day, In person in and around Armidale, Remote Australia-wide, Stack, Email).
    - Each row: mono `dt`, a dotted leader that fills the gap, right-aligned value in 15px sans.
    - On mobile the two lists stack, prices first. Never interleave the two lists. Under 480px the leaders hide and values wrap under their labels.
 8. **Footer:**
@@ -272,8 +272,9 @@ Study for *specific* things (listed next to each) — do not copy any site whole
 4. **How I work** — short numbered process. Emphasise working directly with the developer, no agency layers.
 5. **About** — real photo of Calvin, named in full as "Calvin Reinke" (also the `Person` name and `founder` in structured data; the business name stays "Calvin R Development" and the hero stays "I'm Calvin"), Armidale/New England, computer science at UNE as education only (`alumniOf` the University of New England in structured data; no current employer named anywhere, no `worksFor`), in-house frontend experience on production web apps without naming where, remote across Australia, stack shown subtly.
 6. **Proof** — real testimonials only. None exist yet (LenBuild testimonial pending). Design so this section can be absent until one exists.
-7. **Contact** — form (Formspree, keep the existing validation from the hotfix), email, phone, service area ("Armidale & New England in person, Australia-wide remote"). Response promise: **"Replies within one business day"** — no Mon–Fri 9–5 hours anywhere, including schema.
+7. **Contact** — form (Formspree, keep the existing validation from the hotfix), email, phone, service area (in person in and around Armidale, further around New England by arrangement; phone, video and email Australia-wide). Response promise: **"Replies within one business day"** — no Mon–Fri 9–5 hours anywhere, including schema.
 8. **Local pages** — Armidale, Tamworth, New England. Same design system, genuinely useful local content, not thin keyword pages.
+   - **How Calvin works with clients (use everywhere):** in person in and around Armidale (Armidale, Guyra, Uralla). Clients from further away are welcome to meet him in Armidale. Elsewhere in New England, in person only by arrangement. Everything else is by phone, video and email, anywhere in Australia. First contact can be a call or an in-person chat; after that the work runs by email and phone, whichever the client prefers, plus the private preview link. Never offer travel to Tamworth. LenBuild is the only local client to name.
 9. **404 page** — real one, returning a 404 status.
 
 ---

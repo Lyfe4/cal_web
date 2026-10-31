@@ -33,7 +33,7 @@ const ownProjects = (await getProjects()).filter((p) => !p.data.client);
       '@id': personId,
       url: `${siteUrl}/about`,
       image: new URL(webp.src, siteUrl).href,
-      description: `Frontend developer in ${shortLocation}, working with businesses in person around ${serviceAreas.inPerson} and remotely ${serviceAreas.remote}.`,
+      description: `Frontend developer in ${shortLocation}, working with businesses in person ${serviceAreas.inPerson} and remotely ${serviceAreas.remote}.`,
       knowsAbout: [...stack.frontend, ...stack.backend],
     },
   ]}
@@ -59,8 +59,9 @@ const ownProjects = (await getProjects()).filter((p) => !p.data.client);
           </p>
           <p>
             I'm based in <a href={localPages.armidale.href}>Armidale, NSW</a>. I meet clients in
-            person around Armidale and <a href={localPages.newEngland.href}>New England</a>, and
-            work remotely with businesses anywhere in Australia.
+            person in and around Armidale, and further around{' '}
+            <a href={localPages.newEngland.href}>New England</a> by arrangement. Everyone else,
+            anywhere in Australia, I work with by phone, video and email.
           </p>
           <p>
             I'm a frontend developer first. I've done enough back-end work to take a feature end to
