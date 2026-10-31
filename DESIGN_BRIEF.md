@@ -96,7 +96,7 @@ The scale is bimodal: big statements (42–104px) and small functional text (11�
 
 ### 3.3 Layout, spacing, rules, radii
 
-- **Container:** `max-width: 1280px`, gutter `clamp(16px, 3vw, 40px)`. Everything is left-aligned. Nothing is centred except a portrait screenshot inside its frame.
+- **Container:** `max-width: 1280px`, gutter `clamp(16px, 3vw, 40px)`. Everything is left-aligned. Nothing is centred.
 - **Spacing steps in use:** 8, 12, 16, 20, 24, 28, 32, 40, 48, 56, 64, 72px, plus the fluid hero values:
   - Hero padding: `clamp(48px, 8vw, 112px)` top, `clamp(40px, 5vw, 64px)` bottom.
   - Lede row: margin `clamp(32px, 4vw, 48px)` above, gap 28px / 64px.
@@ -114,8 +114,8 @@ The scale is bimodal: big statements (42–104px) and small functional text (11�
 
 ### 3.4 Screenshots and how they're framed
 
-- **Source:** real captures of the live sites. Desktop width (1440px viewport) for websites; the app's own compact layout (760px) for app UIs, so nothing is clipped. Saved as WebP quality 80 in the image folder, with `width`/`height` set to stop layout shift. Never a live iframe.
-- **Choose the view that shows the work best:** the brightest, most representative section, not just the top of the homepage. LenBuild uses the "Custom Home Building" section of its Projects & Services page (green brand bar plus real photos). Fuel Finder uses a real Armidale U91 search in its **light theme**, list view. Patchbay is cropped to the headline plus the starting pipeline list. Colours inside a screenshot belong to that product (Fuel Finder's light theme is warm off-white), and none of them become page colours.
+- **Source:** real captures of the live sites. Desktop width (1440px viewport) for websites. For app UIs, the narrowest width at which the app shows its wide (landscape) layout, so the text stays legible when scaled into a frame and nothing is clipped (Fuel Finder: 1100px, list and map side by side). Saved as WebP quality 80 in the image folder, with `width`/`height` set to stop layout shift. Never a live iframe.
+- **Choose the view that shows the work best:** the brightest, most representative section, not just the top of the homepage. LenBuild uses the "Custom Home Building" section of its Projects & Services page (green brand bar plus real photos). Fuel Finder uses a real Armidale U91 search in its **light theme**, list and map side by side, with the map nudged so every station's price tag is in view. Patchbay uses its default **blueprint** theme (navy and cyan), captured in a fresh browser profile so no saved theme applies, and is cropped to the headline plus the starting pipeline list. Colours inside a screenshot belong to that product (Fuel Finder's light theme is warm off-white), and none of them become page colours.
 - **Frame (`figure.frame`):**
   - Background `--mat`, 1px `--mat-edge` border, padding `0 8px 8px`.
   - On top, a 32px browser bar: three 7px dots in `--mat-edge`, then the site's address in 11px Geist Mono, `--text-2`, sentence case, `aria-hidden`.
@@ -123,7 +123,8 @@ The scale is bimodal: big statements (42–104px) and small functional text (11�
   - Every screenshot gets a frame, including the bright ones, so all work reads as an object sitting on the page rather than part of it.
 - **Width and alignment rule:**
   - In the project rows, every frame stretches to fill the screenshot column (`justify-self: stretch`), so all frames are the same width and share the same right edge (1440px viewport: 532px wide, right edge at x = 1320).
-  - A screenshot narrower than its frame, i.e. a portrait app capture, is capped at 400px and centred inside the frame. The frame never shrinks to fit the image.
+  - Every screenshot fills its frame's width, with no side mat showing. Don't cap or centre a narrow capture inside a frame, and never shrink the frame to fit the image.
+  - Capture wide enough that the image is landscape. If a capture can't be made wide, keep it at full frame width and crop its height instead, so a project row is no taller than the others (at 1440px no frame in the rows is taller than Patchbay's, about 391px). A portrait gallery shot beside case-study copy may stay portrait, still at full frame width.
   - On mobile every frame is full content width.
 - **Alt text:** describe what's on screen and the real data shown ("results for Armidale, eight stations listed cheapest first"), not "screenshot of…".
 
@@ -145,7 +146,7 @@ The scale is bimodal: big statements (42–104px) and small functional text (11�
    - The text column holds the name at up to 104px as a link (underline on hover), a description (max 44ch), and a mono facts row (type · data source or "Side project" · status).
    - On mobile it's one column: number above name, frame full width.
 6. **Status:** a 7px dot plus a mono word. "Live" uses a `--text` dot. "In progress" is `--accent` for both dot and word.
-7. **Dot-leader spec sheet ("02 / Details"):**
+7. **Dot-leader spec sheet** (on /services and the local pages; no longer on the homepage):
    - Two separate `dl`s side by side. Left: **prices** (Starter website from $600, Professional website from $1,125, Apps & integrations quoted per project, Extra pages $150 each, Support $80/mo or $800/yr). Right: **logistics** (Replies within one business day, In person in and around Armidale, Remote Australia-wide, Stack, Email).
    - Each row: mono `dt`, a dotted leader that fills the gap, right-aligned value in 15px sans.
    - On mobile the two lists stack, prices first. Never interleave the two lists. Under 480px the leaders hide and values wrap under their labels.
@@ -262,6 +263,8 @@ Study for *specific* things (listed next to each) — do not copy any site whole
 
 ## 6. Site structure and content
 
+**Homepage order:** hero, then numbered sections 01 Selected work, 02 Services, 03 How I work, 04 Kind words, 05 Contact. Numbers come from page order, so they renumber themselves when a section is added or removed (Kind words drops out, and Contact becomes 04, if there are no testimonials). The homepage has no Details (spec sheet) or About section: prices live on /services and the local pages, and About is its own page at /about.
+
 1. **Hero** — one plain sentence of what Calvin does + who for. e.g. *"Frontend developer in Armidale building fast websites and web apps for businesses across Australia."* Two CTAs: **See work** / **Get a quote**. Let type + one strong detail carry it. Hero content must render without JS and without an entrance animation.
 2. **Selected work** — the centrepiece. Three projects, each with its own case-study page:
    - **LenBuild** (lenbuild.com) — client website, custom home builder, Guyra NSW. Use an optimised screenshot, **not a live iframe**.
@@ -270,8 +273,8 @@ Study for *specific* things (listed next to each) — do not copy any site whole
    Each: screenshot, type of work, problem → what was built → result. No invented metrics.
 3. **Services** — split into *Websites* and *Apps & integrations*. Keep current pricing unless told otherwise: Starter from $600, Professional from $1,125, Custom/contract quoted; extras $150/page, monthly support $80/mo, annual $800/yr.
 4. **How I work** — short numbered process. Emphasise working directly with the developer, no agency layers.
-5. **About** — real photo of Calvin, named in full as "Calvin Reinke" (also the `Person` name and `founder` in structured data; the business name stays "Calvin R Development" and the hero stays "I'm Calvin"), Armidale/New England, computer science at UNE as education only (`alumniOf` the University of New England in structured data; no current employer named anywhere, no `worksFor`), in-house frontend experience on production web apps without naming where, remote across Australia, stack shown subtly.
-6. **Proof** — real testimonials only. None exist yet (LenBuild testimonial pending). Design so this section can be absent until one exists.
+5. **About** (its own page, /about; not a homepage section) — real photo of Calvin, named in full as "Calvin Reinke" (also the `Person` name and `founder` in structured data; the business name stays "Calvin R Development" and the hero stays "I'm Calvin"), Armidale/New England, computer science at UNE as education only (`alumniOf` the University of New England in structured data; no current employer named anywhere, no `worksFor`), in-house frontend experience on production web apps without naming where, remote across Australia, stack shown subtly.
+6. **Kind words** (proof) — real testimonials only, word for word with a link to the source. One exists (Dan, LenBuild, Google review). The section is absent whenever the list is empty.
 7. **Contact** — form (Formspree, keep the existing validation from the hotfix), email, phone, service area (in person in and around Armidale, further around New England by arrangement; phone, video and email Australia-wide). Response promise: **"Replies within one business day"** — no Mon–Fri 9–5 hours anywhere, including schema.
 8. **Local pages** — Armidale, Tamworth, New England. Same design system, genuinely useful local content, not thin keyword pages.
    - **How Calvin works with clients (use everywhere):** in person in and around Armidale (Armidale, Guyra, Uralla). Clients from further away are welcome to meet him in Armidale. Elsewhere in New England, in person only by arrangement. Everything else is by phone, video and email, anywhere in Australia. First contact can be a call or an in-person chat; after that the work runs by email and phone, whichever the client prefers, plus the private preview link. Never offer travel to Tamworth. LenBuild is the only local client to name.

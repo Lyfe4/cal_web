@@ -13,16 +13,13 @@ export interface Props {
   eager?: boolean;
 }
 
-const { url, image, alt, eager = false } = Astro.props;
-
-// Portrait captures (app UIs) are capped at 400px and centred; the frame never shrinks to fit.
-const tall = image.height > image.width;
-const sizes = tall ? '(max-width: 480px) calc(100vw - 50px), 400px' : Astro.props.sizes;
+// Every capture fills the frame's width; crop the capture, not the frame.
+const { url, image, alt, sizes, eager = false } = Astro.props;
 
 const { avif, webp } = await responsiveSources(image);
 ---
 
-<figure class:list={['frame', { tall }]}>
+<figure class="frame">
   <div class="frame-bar" aria-hidden="true">
     {displayHost(url)}
   </div>
@@ -76,10 +73,5 @@ const { avif, webp } = await responsiveSources(image);
 
   .frame :global(img) {
     width: 100%;
-  }
-
-  .tall :global(img) {
-    max-width: 400px;
-    margin: 0 auto;
   }
 </style>

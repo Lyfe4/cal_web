@@ -5,8 +5,6 @@ import Hero from '../components/home/Hero.astro';
 import Work from '../components/home/Work.astro';
 import Services from '../components/home/Services.astro';
 import Process from '../components/home/Process.astro';
-import Details from '../components/home/Details.astro';
-import About from '../components/home/About.astro';
 import Testimonials from '../components/home/Testimonials.astro';
 import ContactCta from '../components/home/ContactCta.astro';
 import { getProjects } from '../data/projects';
@@ -16,7 +14,7 @@ import { testimonials } from '../data/testimonials';
 const projects = await getProjects();
 
 // Sections are numbered in page order. "Kind words" only exists once there's a real testimonial.
-const order = ['work', 'services', 'process', 'details', 'about', 'proof', 'contact'].filter(
+const order = ['work', 'services', 'process', 'proof', 'contact'].filter(
   (id) => id !== 'proof' || testimonials.length > 0
 );
 const n = (id: string) => order.indexOf(id) + 1;
@@ -39,14 +37,6 @@ const n = (id: string) => order.indexOf(id) + 1;
 
     <Section id="process" n={n('process')} title="How I work" note="One person, start to finish">
       <Process />
-    </Section>
-
-    <Section id="details" n={n('details')} title="Details" note="Prices in AUD">
-      <Details />
-    </Section>
-
-    <Section id="about" n={n('about')} title="About">
-      <About />
     </Section>
 
     {testimonials.length > 0 && (

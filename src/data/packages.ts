@@ -60,7 +60,7 @@ export const appsWork: string[] = [
 /** How app and contract work is priced. */
 export const appsPricing = `${pricing.apps.note}. Contract work by the day, the sprint or the project.`;
 
-/** Every price on one dot-leader sheet: the home page's Details and the local pages. */
+/** Every price on one dot-leader sheet, for the local pages. */
 export const priceRows = [
   { label: pricing.starter.label, value: `from ${formatPrice(pricing.starter.from)}` },
   { label: pricing.professional.label, value: `from ${formatPrice(pricing.professional.from)}` },

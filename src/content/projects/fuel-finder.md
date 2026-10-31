@@ -23,7 +23,7 @@ seo:
   description: Fuel Finder, a web app I'm building that shows live NSW and ACT fuel prices cheapest first, on a list and a map, with four months of price history.
 screenshot:
   src: ../../assets/projects/fuel-finder.webp
-  alt: 'Fuel Finder in its light theme: results for Armidale, eight stations listed cheapest first with prices per litre.'
+  alt: 'Fuel Finder in its light theme: Unleaded 91 results for Armidale, eight stations listed cheapest first beside a map with each price on a tag.'
 gallery:
   - src: ../../assets/projects/fuel-finder-history.webp
     alt: "Fuel Finder's price history for Freedom Fuels Armidale in the light theme: 234.5 cents a litre now, above a chart of daily Unleaded 91 prices from July to late October with a gap marked No data."
@@ -43,7 +43,7 @@ I built Fuel Finder as something my family and I could use day to day. It's also
 A web app that answers one question: where's the cheapest fuel near me?
 
 - **Search** by suburb or postcode, or use your location, for any of ten fuels within 2 to 25 km. Results come back cheapest first, each with its price, distance and how old the price is.
-- **A one-line answer** above the list: what the cheapest is worth on a 50 litre fill compared with the average. In Armidale that day it was $3.65.
+- **A one-line answer** above the list: what the cheapest is worth on a 50 litre fill compared with the average. In Armidale that day it was $3.40.
 - **A map** of the same results with each price on a tag. Colour marks the cheapest, middle and dearest third, and the cheapest also say "Cheapest" in words, so colour is never the only signal.
 - **Price history** for each station: a chart of about four months of daily low, high and last prices, with every value also in a table.
 - Sort by nearest, filter by brand or by how old the price is, save favourites, and switch between light and dark.
