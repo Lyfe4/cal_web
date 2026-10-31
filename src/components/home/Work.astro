@@ -1,5 +1,5 @@
 ---
-import FactList from '../FactList.astro';
+import FeaturedProject from '../FeaturedProject.astro';
 import Frame from '../Frame.astro';
 import Status from '../Status.astro';
 import { displayHost, projectPath, type Project } from '../../data/projects';
@@ -12,37 +12,9 @@ const [featured, ...rest] = Astro.props.projects;
 ---
 
 {featured && (
-  <article class="feature" aria-labelledby={`p-${featured.data.slug}`}>
-    <Frame
-      url={featured.data.url}
-      image={featured.data.screenshot.src}
-      alt={featured.data.screenshot.alt}
-      sizes="(max-width: 860px) calc(100vw - 2 * clamp(16px, 3vw, 40px) - 18px), (max-width: 1280px) 58vw, 750px"
-      eager
-    />
-    <div>
-      <h3 id={`p-${featured.data.slug}`}>{featured.data.name}</h3>
-      <p class="mono kind">{[featured.data.type, ...featured.data.tags].join(' · ')}</p>
-      <p class="desc">{featured.data.summary}</p>
-      <a class="btn btn-ghost" href={projectPath(featured)}>
-        Read the case study <span class="visually-hidden">about {featured.data.name}</span>
-        <span aria-hidden="true">→</span>
-      </a>
-      <div class="feature-facts">
-        <FactList
-          facts={[
-            ...(featured.data.client ? [{ label: 'Client', value: featured.data.client }] : []),
-            {
-              label: 'Live site',
-              value: displayHost(featured.data.url),
-              href: featured.data.url,
-            },
-            { label: 'Status', status: featured.data.status },
-          ]}
-        />
-      </div>
-    </div>
-  </article>
+  <div class="featured">
+    <FeaturedProject project={featured} eager />
+  </div>
 )}
 
 <ol class="projects">
@@ -79,40 +51,8 @@ const [featured, ...rest] = Astro.props.projects;
 </ol>
 
 <style>
-  /* Featured project: framed screenshot, then name, kind, description and spec */
-  .feature {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: var(--space-32) var(--space-48);
+  .featured {
     padding-bottom: var(--space-56);
-  }
-
-  .feature h3 {
-    margin: 0 0 6px;
-    font-size: var(--text-feature);
-    font-weight: var(--weight-medium);
-    line-height: var(--leading-feature);
-    letter-spacing: var(--tracking-feature);
-  }
-
-  .kind {
-    margin: 0 0 var(--space-20);
-    color: var(--text-3);
-  }
-
-  .feature .desc {
-    margin: 0 0 var(--space-20);
-    max-width: 40ch;
-    color: var(--text-2);
-  }
-
-  .feature-facts {
-    margin-top: var(--space-28);
-  }
-
-  /* URLs stay lowercase, like the frame bar */
-  .live {
-    text-transform: none;
   }
 
   /* Other projects: large names */
@@ -175,8 +115,10 @@ const [featured, ...rest] = Astro.props.projects;
     font-size: var(--text-ui);
   }
 
+  /* URLs stay lowercase, like the frame bar */
   .live {
     margin: var(--space-12) 0 0;
+    text-transform: none;
   }
 
   .live a {
@@ -189,10 +131,6 @@ const [featured, ...rest] = Astro.props.projects;
   }
 
   @media (max-width: 860px) {
-    .feature {
-      grid-template-columns: 1fr;
-    }
-
     .projects li {
       grid-template-columns: minmax(0, 1fr);
       row-gap: var(--space-12);

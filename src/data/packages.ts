@@ -1,3 +1,4 @@
+import { localPages } from './areas.ts';
 import { formatPrice, pricing, serviceAreas, type EnquiryPackage } from './site.ts';
 
 export interface WebsitePackage {
@@ -59,6 +60,18 @@ export const appsWork: string[] = [
 /** How app and contract work is priced. */
 export const appsPricing = `${pricing.apps.note}. Contract work by the day, the sprint or the project.`;
 
+/** Every price on one dot-leader sheet: the home page's Details and the local pages. */
+export const priceRows = [
+  { label: pricing.starter.label, value: `from ${formatPrice(pricing.starter.from)}` },
+  { label: pricing.professional.label, value: `from ${formatPrice(pricing.professional.from)}` },
+  { label: pricing.apps.label, value: pricing.apps.note },
+  { label: pricing.extraPage.label, value: `${formatPrice(pricing.extraPage.each)} each` },
+  {
+    label: pricing.support.label,
+    value: `${formatPrice(pricing.support.monthly)}/mo or ${formatPrice(pricing.support.yearly)}/yr`,
+  },
+];
+
 /** Extras and support, for the dot-leader spec sheet. */
 export const extras = [
   { label: pricing.extraPage.label, value: `${formatPrice(pricing.extraPage.each)} each` },
@@ -70,6 +83,8 @@ export const extras = [
 export interface Faq {
   q: string;
   a: string;
+  /** A page that answers it in more depth, linked after the answer */
+  link?: { href: string; label: string };
 }
 
 export const faqs: Faq[] = [
@@ -80,6 +95,10 @@ export const faqs: Faq[] = [
   {
     q: 'Do you only work with businesses around Armidale?',
     a: `No. I meet in person around ${serviceAreas.inPerson}, and work remotely with businesses anywhere in Australia by phone, video and email.`,
+    link: {
+      href: localPages.newEngland.href,
+      label: 'More on working with me around New England',
+    },
   },
   {
     q: 'What do you need from me to get started?',

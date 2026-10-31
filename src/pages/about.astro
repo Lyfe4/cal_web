@@ -6,6 +6,7 @@ import FactList from '../components/FactList.astro';
 import ProjectLinks from '../components/ProjectLinks.astro';
 import ContactCta from '../components/home/ContactCta.astro';
 import portrait from '../assets/calvin.jpg';
+import { localPages } from '../data/areas';
 import { getProjects } from '../data/projects';
 import { personId } from '../data/schema';
 import { person, serviceAreas, shortLocation, siteUrl } from '../data/site';
@@ -57,7 +58,8 @@ const ownProjects = (await getProjects()).filter((p) => !p.data.client);
             launch and after, with no agency in between.
           </p>
           <p>
-            I'm based in Armidale, NSW. I meet clients in person around {serviceAreas.inPerson}, and
+            I'm based in <a href={localPages.armidale.href}>Armidale, NSW</a>. I meet clients in
+            person around Armidale and <a href={localPages.newEngland.href}>New England</a>, and
             work remotely with businesses anywhere in Australia.
           </p>
           <p>
@@ -129,6 +131,10 @@ const ownProjects = (await getProjects()).filter((p) => !p.data.client);
 
   .prose p:last-child {
     margin-bottom: 0;
+  }
+
+  .prose a {
+    text-underline-offset: 0.2em;
   }
 
   .nowrap {

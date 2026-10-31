@@ -126,10 +126,18 @@ const serviceArea = [
 
     <Section id="faq" n={5} title="Questions">
       <div class="faq">
-        {faqs.map(({ q, a }) => (
+        {faqs.map(({ q, a, link }) => (
           <details>
             <summary>{q}</summary>
-            <p>{a}</p>
+            <p>
+              {a}
+              {link && (
+                <>
+                  {' '}
+                  <a href={link.href}>{link.label}</a>.
+                </>
+              )}
+            </p>
           </details>
         ))}
       </div>
@@ -269,6 +277,10 @@ const serviceArea = [
     padding: 0 0 var(--space-20);
     max-width: 62ch;
     color: var(--text-2);
+  }
+
+  details a {
+    text-underline-offset: 0.2em;
   }
 
   @media (max-width: 860px) {

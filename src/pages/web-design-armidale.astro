@@ -1,0 +1,127 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import Section from '../components/Section.astro';
+import FeaturedProject from '../components/FeaturedProject.astro';
+import LocalServices from '../components/LocalServices.astro';
+import ContactCta from '../components/home/ContactCta.astro';
+import { localPageSchema, localPages } from '../data/areas';
+import { getProjects, projectPath } from '../data/projects';
+import { formatPrice, pricing, replyPromise } from '../data/site';
+
+const page = localPages.armidale;
+const projects = await getProjects();
+const fuelFinder = projects.find((p) => p.data.slug === 'fuel-finder');
+const lenbuild = projects.find((p) => p.data.slug === 'lenbuild');
+if (!fuelFinder || !lenbuild) throw new Error('The Armidale page needs Fuel Finder and LenBuild');
+---
+
+<BaseLayout title={page.title} description={page.description} schema={localPageSchema(page)}>
+  <div class="wrap">
+    <PageHead
+      title={page.heading}
+      meta={[
+        'Based in Armidale, NSW',
+        'Meet in person',
+        `Websites from ${formatPrice(pricing.starter.from)}`,
+      ]}
+    >
+      <strong>I live and work in Armidale,</strong> so if your business is here too, we can sit down
+      and talk about your website face to face.
+      <Fragment slot="aside">
+        <a class="btn btn-primary" href="/contact">
+          Get a quote <span aria-hidden="true">→</span>
+        </a>
+      </Fragment>
+    </PageHead>
+
+    <Section id="local" n={1} title="Working with me in Armidale" note="In person">
+      <div class="prose">
+        <p>
+          I build custom websites for small businesses and sole traders, and frontend work on web
+          apps for teams that need another developer. If you're in Armidale, we start with a chat in
+          person about what you need. After that, the build runs by phone and email, and you follow
+          it on a private preview link.
+        </p>
+        <p>
+          I studied computer science at UNE, here in Armidale, then worked{' '}
+          <span class="nowrap">in-house</span> as a frontend developer on production web apps. Now I
+          build for businesses directly. You deal with me the whole way: the first chat, the quote,
+          the build and any changes after launch.
+        </p>
+        <p>
+          Most small businesses need a website to do a few plain things well: say what you do, show
+          your work, and make it easy for people nearby to ring or send an enquiry. I build each
+          site from scratch, so it loads fast on a phone, and set it up with the page titles,
+          descriptions and sitemap Google needs to find it.
+        </p>
+      </div>
+    </Section>
+
+    <Section id="work" n={2} title="Built with Armidale data" note="A real Armidale search">
+      <FeaturedProject project={fuelFinder}>
+        <p>
+          A web app I'm building on live NSW FuelCheck data. The screenshot is a real Armidale
+          search: Unleaded 91 at eight stations within 10 km, from 234.5 to 247.0 cents a litre,
+          cheapest first.
+        </p>
+        <p>
+          It shows the other half of what I do: taking someone else's data and making it dependable
+          to use every day.
+        </p>
+      </FeaturedProject>
+      <p class="also">
+        For a small-business website, see <a href={projectPath(lenbuild)}>LenBuild</a>, a builder up
+        the road in Guyra. Their site includes a page for people looking for builders in Armidale.
+      </p>
+    </Section>
+
+    <Section id="services" n={3} title="Services and prices" note="Prices in AUD">
+      <LocalServices>
+        Websites have fixed starting prices. Work on web apps and integrations is quoted once I know
+        what it involves.
+      </LocalServices>
+    </Section>
+
+    <Section id="contact" title="Contact" note={`Replies ${replyPromise}`}>
+      <ContactCta
+        statement="Got a project in Armidale?"
+        lede="Tell me a little about it and we'll find a time to meet."
+      />
+    </Section>
+  </div>
+</BaseLayout>
+
+<style>
+  .prose {
+    max-width: 62ch;
+    color: var(--text-2);
+    font-size: var(--text-desc);
+  }
+
+  .prose p {
+    margin: 0 0 var(--space-16);
+  }
+
+  .prose p:last-child {
+    margin-bottom: 0;
+  }
+
+  .nowrap {
+    white-space: nowrap;
+  }
+
+  .also {
+    margin: var(--space-48) 0 0;
+    padding-top: var(--space-20);
+    max-width: 62ch;
+    color: var(--text-2);
+    font-size: var(--text-desc);
+    border-top: var(--border);
+  }
+
+  .also a {
+    color: var(--text);
+    text-underline-offset: 0.2em;
+  }
+</style>

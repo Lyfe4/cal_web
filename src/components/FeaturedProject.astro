@@ -1,0 +1,93 @@
+---
+import FactList from './FactList.astro';
+import Frame from './Frame.astro';
+import { displayHost, projectPath, type Project } from '../data/projects';
+
+export interface Props {
+  project: Project;
+  /** Load the screenshot straight away; only when it's in the first screen */
+  eager?: boolean;
+}
+
+const { project, eager = false } = Astro.props;
+const { slug, name, type, tags, url, screenshot, client, status } = project.data;
+---
+
+<!-- Framed screenshot, then name, kind, description and spec. The default slot
+     replaces the project's one-line summary with words for this page. -->
+<article class="feature" aria-labelledby={`p-${slug}`}>
+  <Frame
+    url={url}
+    image={screenshot.src}
+    alt={screenshot.alt}
+    sizes="(max-width: 860px) calc(100vw - 2 * clamp(16px, 3vw, 40px) - 18px), (max-width: 1280px) 58vw, 750px"
+    eager={eager}
+  />
+  <div>
+    <h3 id={`p-${slug}`}>{name}</h3>
+    <p class="mono kind">{[type, ...tags].join(' · ')}</p>
+    <div class="desc">
+      <slot>
+        <p>{project.data.summary}</p>
+      </slot>
+    </div>
+    <a class="btn btn-ghost" href={projectPath(project)}>
+      Read the case study <span class="visually-hidden">about {name}</span>
+      <span aria-hidden="true">→</span>
+    </a>
+    <div class="feature-facts">
+      <FactList
+        facts={[
+          ...(client ? [{ label: 'Client', value: client }] : []),
+          { label: 'Live site', value: displayHost(url), href: url },
+          { label: 'Status', status },
+        ]}
+      />
+    </div>
+  </div>
+</article>
+
+<style>
+  .feature {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-32) var(--space-48);
+  }
+
+  h3 {
+    margin: 0 0 6px;
+    font-size: var(--text-feature);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-feature);
+    letter-spacing: var(--tracking-feature);
+  }
+
+  .kind {
+    margin: 0 0 var(--space-20);
+    color: var(--text-3);
+  }
+
+  .desc {
+    margin: 0 0 var(--space-20);
+    max-width: 40ch;
+    color: var(--text-2);
+  }
+
+  .desc :global(p) {
+    margin: 0 0 var(--space-12);
+  }
+
+  .desc :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .feature-facts {
+    margin-top: var(--space-28);
+  }
+
+  @media (max-width: 860px) {
+    .feature {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

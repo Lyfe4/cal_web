@@ -1,13 +1,26 @@
 ---
+import { areaLinks } from '../data/areas';
 import { business, formattedAddress } from '../data/site';
 ---
 
 <footer class="foot">
   <div class="wrap foot-grid">
-    <p class="ack">
-      I live and work in Armidale on Aboriginal land. I acknowledge the Traditional Custodians of
-      the New England region and pay my respects to Elders past and present.
-    </p>
+    <div class="foot-main">
+      <p class="ack">
+        I live and work in Armidale on Aboriginal land. I acknowledge the Traditional Custodians of
+        the New England region and pay my respects to Elders past and present.
+      </p>
+      <nav class="areas mono" aria-labelledby="areas-h">
+        <h2 id="areas-h">Areas</h2>
+        <ul>
+          {areaLinks.map((area) => (
+            <li>
+              <a href={area.href}>{area.name}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
     <address class="foot-meta mono">
       <span>
         {business.name} · {formattedAddress}
@@ -38,6 +51,38 @@ import { business, formattedAddress } from '../data/site';
     max-width: 52ch;
     color: var(--text-2);
     font-size: var(--text-ui);
+  }
+
+  .areas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-8) var(--space-24);
+    margin-top: var(--space-32);
+    color: var(--text-3);
+  }
+
+  .areas h2 {
+    margin: 0;
+    font: inherit;
+  }
+
+  .areas ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8) var(--space-24);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .areas a {
+    color: var(--text-2);
+    text-underline-offset: 0.2em;
+  }
+
+  .areas a:hover {
+    color: var(--text);
   }
 
   .foot-meta {

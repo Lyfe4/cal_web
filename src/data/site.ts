@@ -47,15 +47,23 @@ export const replyPromise = 'within one business day';
 /** The contact form posts here, with or without JavaScript. Allowed by the CSP in netlify.toml. */
 export const formspreeEndpoint = 'https://formspree.io/f/xqakqbgp';
 
+/** The New England towns I cover, home base first. The New England page lists them. */
+export const newEnglandTowns = [
+  'Armidale',
+  'Guyra',
+  'Uralla',
+  'Walcha',
+  'Glen Innes',
+  'Inverell',
+  'Tamworth',
+] as const;
+
 export const serviceAreas = {
   inPerson: 'Armidale & New England',
   remote: 'Australia-wide',
-  /** For structured data: towns served in person, then the wider remote area */
+  /** For structured data: the New England towns, the region, then the wider remote area */
   schema: [
-    { type: 'City', name: 'Armidale' },
-    { type: 'City', name: 'Guyra' },
-    { type: 'City', name: 'Uralla' },
-    { type: 'City', name: 'Tamworth' },
+    ...newEnglandTowns.map((name) => ({ type: 'City', name }) as const),
     { type: 'AdministrativeArea', name: 'New England, NSW' },
     { type: 'Country', name: 'Australia' },
   ],
