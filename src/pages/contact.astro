@@ -12,7 +12,7 @@ const sentence = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 
 <BaseLayout
   title="Contact"
-  description={`Ask for a quote or a chat about your website or app. ${business.name} replies ${replyPromise}. In person ${serviceAreas.inPerson}, remote ${serviceAreas.remote}.`}
+  description={`Ask for a quote or a chat about your website or app. Replies ${replyPromise}. In person ${serviceAreas.inPerson}, remote ${serviceAreas.remote}.`}
   schema={{ '@type': 'ContactPage', about: { '@id': businessId } }}
 >
   <div class="wrap">
@@ -224,10 +224,18 @@ const sentence = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
     // Errors appear on leaving a field you've typed in, or on sending; once shown,
     // they update as you type, so fixing a typo clears its message straight away.
     let attempted = false;
+    // A field Formspree refused keeps its message until its value changes. The value
+    // passes our own checks, so re-checking it on blur would hide the message, and
+    // pressing Send would then move the button out from under the pointer.
+    const serverErrors = new Map<ContactField, string>();
     const check = (event: Event) => {
       const target = event.target as HTMLInputElement;
       const field = target.name as ContactField;
       if (!contactFields.includes(field)) return;
+      if (serverErrors.has(field)) {
+        if (values()[field] === serverErrors.get(field)) return;
+        serverErrors.delete(field);
+      }
       const shown = !form.querySelector(`#${field}-error`)?.hasAttribute('hidden');
       // Tabbing past the radios without choosing isn't a mistake yet
       const blurredWithText =
@@ -245,6 +253,7 @@ const sentence = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
       event.preventDefault();
       if (sending) return;
       attempted = true;
+      serverErrors.clear();
       failed?.replaceChildren();
       if (status) status.textContent = '';
 
@@ -294,6 +303,7 @@ const sentence = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
         );
         if (fieldError?.field && fieldError.message) {
           const field = fieldError.field as ContactField;
+          serverErrors.set(field, current[field]);
           showError(field, `${fieldError.message}.`);
           controls(field)[0]?.focus();
         } else {

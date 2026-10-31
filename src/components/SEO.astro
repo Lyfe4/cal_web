@@ -2,6 +2,7 @@
 import { business, siteUrl } from '../data/site';
 import { buildJsonLd, type SchemaNode } from '../data/schema';
 import { ogSize, siteCardAlt } from '../utils/brand';
+import { canonicalPath } from '../utils/canonical';
 
 export interface Props {
   /** Page title; the business name is appended unless it's already there */
@@ -29,15 +30,15 @@ const {
 
 const fullTitle = title.includes(business.name) ? title : `${title} | ${business.name}`;
 // Canonical never carries a query string, so /contact?package=starter points at /contact.
-const canonical = new URL(Astro.url.pathname.replace(/\.html$/, ''), Astro.site ?? siteUrl).href;
+const canonical = new URL(canonicalPath(Astro.url.pathname), Astro.site ?? siteUrl).href;
 const imageUrl = new URL(ogImage.src, Astro.site ?? siteUrl).href;
 const jsonLd = buildJsonLd(schema);
 ---
 
 <title>{fullTitle}</title>
 <meta name="description" content={description} />
-<link rel="canonical" href={canonical} />
-{noindex && <meta name="robots" content="noindex" />}
+{/* A noindex page (the 404) is served at any unknown URL, so it has no canonical */}
+{noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
 
 <meta property="og:type" content={ogType} />
 <meta property="og:site_name" content={business.name} />

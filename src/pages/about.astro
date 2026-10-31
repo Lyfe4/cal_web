@@ -24,7 +24,7 @@ const ownProjects = (await getProjects()).filter((p) => !p.data.client);
 
 <BaseLayout
   title={`About ${person.name}`}
-  description={`${person.name} is a frontend developer in ${shortLocation}. Computer science at UNE, in-house experience on production web apps, now building websites and web apps for businesses across Australia.`}
+  description={`${person.name}, frontend developer in ${shortLocation}. Studied computer science at UNE, worked in-house on production web apps, now builds for businesses Australia-wide.`}
   ogType="profile"
   schema={[
     { '@type': 'AboutPage', mainEntity: { '@id': personId } },
