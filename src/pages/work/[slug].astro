@@ -358,6 +358,11 @@ const timelineScope = `timeline-scope: ${mapEntries.map((entry) => entry.timelin
     .case-body.has-shots {
       grid-template-columns: minmax(0, 1fr);
     }
+
+    /* Stacked, the facts end the overview, right above the first section's rule */
+    .overview {
+      --ruled-close: 0;
+    }
   }
 
   /* Phones: tighter steps between the head, the overview and the sections */

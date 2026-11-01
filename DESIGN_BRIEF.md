@@ -109,6 +109,7 @@ The scale is bimodal: big statements (42â€“104px) and small functional text (11â
   - Buttons: 44px tall, 18px side padding, 12px apart.
 - **Breakpoints:** 860px (single column, nav hidden, numbers move above names) and 480px (spec values wrap under their labels, leaders hidden).
 - **Rules:** all lines are 1px. Solid `--rule` for structure, dotted leader colour for spec leaders. No 2px rules, no shadows.
+  - Never two parallel hairlines with nothing between them. When a ruled list or table (FactList, ProjectLinks, the town list, Tamworth's steps) is the last thing before another rule (the next section, the footer, the project rows, a ruled note), it drops its own closing rule and the next rule separates. Lists mark themselves `data-ruled` and draw the closing rule with `--ruled-close`. In one column (860px and under) this is automatic for any list that ends its section. In two columns another column can run longer, so a section opts in with Section's `ruledEnd` only where the list really is last on screen (/about Stack and In my own time, New England Where I work and A New England client, Tamworth How it works and Work to look at).
 - **Radii:** 0 on everything rectangular: buttons, frames, panels. The only round shapes are the 7px status dots and the frame's three browser dots.
 - **Focus:** `outline: 2px solid var(--accent); outline-offset: 3px` on `:focus-visible`.
 

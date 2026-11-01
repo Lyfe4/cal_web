@@ -55,7 +55,13 @@ const steps = [
       </Fragment>
     </PageHead>
 
-    <Section id="how" n={1} title="How it works from Tamworth" note="One person, start to finish">
+    <Section
+      id="how"
+      n={1}
+      title="How it works from Tamworth"
+      ruledEnd
+      note="One person, start to finish"
+    >
       <div class="how">
         <div class="prose">
           <p>
@@ -68,7 +74,7 @@ const steps = [
             site and looks after it afterwards.
           </p>
         </div>
-        <ol class="steps">
+        <ol class="steps" data-ruled>
           {steps.map((step, i) => (
             <li>
               <span class="mono n" aria-hidden="true">
@@ -84,7 +90,7 @@ const steps = [
       </div>
     </Section>
 
-    <Section id="work" n={2} title="Work to look at" note={`${work.length} projects`}>
+    <Section id="work" n={2} title="Work to look at" ruledEnd note={`${work.length} projects`}>
       <div class="work">
         <div class="prose">
           <p>
@@ -143,7 +149,7 @@ const steps = [
     margin: 0;
     padding: 0;
     list-style: none;
-    border-bottom: var(--border);
+    border-bottom: var(--ruled-close, var(--border));
   }
 
   .steps li {

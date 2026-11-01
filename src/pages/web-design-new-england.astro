@@ -57,6 +57,7 @@ const n = (id: string) =>
       n={n('towns')}
       title="Where I work"
       note={`${newEnglandTowns.length} towns`}
+      ruledEnd
     >
       <div class="towns">
         <div class="prose">
@@ -78,7 +79,7 @@ const n = (id: string) =>
             Australia.
           </p>
         </div>
-        <ul class="town-list" aria-label="Towns I work with">
+        <ul class="town-list" aria-label="Towns I work with" data-ruled>
           {newEnglandTowns.map((town) => {
             const href = townPages[town];
             const note = townNotes[town];
@@ -93,7 +94,7 @@ const n = (id: string) =>
       </div>
     </Section>
 
-    <Section id="client" n={n('client')} title="A New England client" note="Guyra, NSW">
+    <Section id="client" n={n('client')} title="A New England client" ruledEnd note="Guyra, NSW">
       <FeaturedProject project={lenbuild}>
         <p>
           A family-run building company in Guyra. They build custom homes, extensions and
@@ -156,7 +157,7 @@ const n = (id: string) =>
     margin: 0;
     padding: 0;
     list-style: none;
-    border-bottom: var(--border);
+    border-bottom: var(--ruled-close, var(--border));
   }
 
   .town-list li {

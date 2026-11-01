@@ -9,9 +9,12 @@ export interface Props {
   note?: string | undefined;
   /** Names the section's scroll-driven view timeline, e.g. for a page's section map */
   timeline?: string | undefined;
+  /** The section ends on a ruled list at every width, not just in one column, so the list
+      drops its closing rule on desktop too (see the rules note in global.css) */
+  ruledEnd?: boolean;
 }
 
-const { id, n, title, note, timeline } = Astro.props;
+const { id, n, title, note, timeline, ruledEnd = false } = Astro.props;
 const heading = n === undefined ? title : `${String(n).padStart(2, '0')} / ${title}`;
 ---
 
@@ -19,6 +22,7 @@ const heading = n === undefined ? title : `${String(n).padStart(2, '0')} / ${tit
   class="sec"
   id={id}
   aria-labelledby={`${id}-h`}
+  data-ruled-end={ruledEnd || undefined}
   style={timeline ? `view-timeline-name: ${timeline}` : undefined}
 >
   <div class="sec-head mono">

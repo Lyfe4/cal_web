@@ -94,5 +94,11 @@ const { slug, name, type, tags, url, screenshot, client, status } = project.data
     .feature {
       grid-template-columns: 1fr;
     }
+
+    /* Stacked, the facts end the feature, and a rule always follows it (the project rows,
+       a note or the next section), so the table drops its closing rule */
+    .feature-facts {
+      --ruled-close: 0;
+    }
   }
 </style>
