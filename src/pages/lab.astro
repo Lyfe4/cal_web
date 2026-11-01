@@ -47,15 +47,16 @@ const specs: Record<string, Spec[]> = {
     { label: 'Where', value: 'Every Live and In progress status' },
     {
       label: 'How',
-      value: 'CSS keyframes, started by an IntersectionObserver the first time each is on screen',
+      value:
+        'CSS keyframes, started by an IntersectionObserver each time it comes on screen, with a 1.5 s cooldown after each run',
     },
-    { label: 'JS', value: 'About 0.2 KB, compressed' },
-    { label: 'Reduced motion', value: 'The observer never starts; dots are still' },
+    { label: 'JS', value: 'About 0.3 KB, compressed' },
+    { label: 'Reduced motion', value: 'Never plays; dots are still' },
   ],
   develop: [
     {
       label: 'Where',
-      value: 'Every lazy-loaded frame. Never the first-screen frame, so LCP is untouched',
+      value: 'Every lazy-loaded frame not on screen at load. Never a first-screen frame',
     },
     {
       label: 'How',
@@ -75,21 +76,34 @@ const specs: Record<string, Spec[]> = {
   ],
   process: [
     { label: 'Where', value: 'Home, 03 How I work' },
-    { label: 'How', value: 'animation-timeline: view() on each step, inside @supports' },
-    { label: 'JS', value: '0 KB' },
-    { label: 'Support', value: 'Chrome, Edge, Safari 26. Firefox: the plain list' },
+    {
+      label: 'How',
+      value:
+        'Scroll-driven view() timeline with the reading line 60% down; IntersectionObserver fallback',
+    },
+    { label: 'JS', value: 'About 0.3 KB, compressed' },
+    { label: 'Support', value: 'Chrome, Edge, Safari 26: scroll-driven. Firefox: the observer' },
     { label: 'Reduced motion', value: 'Off; the list is static' },
   ],
   map: [
-    { label: 'Where', value: 'Case studies, windows 1400px and wider, in the left margin' },
-    { label: 'How', value: 'timeline-scope on the article, view-timeline-name per section' },
-    { label: 'JS', value: '0 KB' },
-    { label: 'Reduced motion', value: 'The current number still brightens; the tick doesn’t grow' },
+    {
+      label: 'Where',
+      value: 'Case studies, left margin, only when it clears the content column by 24px',
+    },
+    {
+      label: 'How',
+      value: 'Named view timelines in timeline-scope; IntersectionObserver where unsupported',
+    },
+    { label: 'JS', value: 'About 0.5 KB, compressed (fit check and fallback)' },
+    { label: 'Reduced motion', value: 'Nothing moves; the current section is still brighter' },
   ],
   copy: [
-    { label: 'Where', value: 'Contact block on home and case studies; every arrow button' },
-    { label: 'How', value: 'Clipboard API with a status region; CSS translate on the arrow' },
-    { label: 'JS', value: 'About 0.25 KB, compressed' },
+    { label: 'Where', value: 'Contact blocks and the footer; every arrow button' },
+    {
+      label: 'How',
+      value: 'Clipboard API, "Email address copied" in a status region; CSS translate on the arrow',
+    },
+    { label: 'JS', value: 'About 0.3 KB, compressed' },
     { label: 'Reduced motion', value: 'The word swaps without the drop; the arrow doesn’t move' },
   ],
 };
@@ -147,7 +161,8 @@ const specs: Record<string, Spec[]> = {
       <div class="intro">
         <p>
           A live site pings like a server answering. Work in progress blinks like an activity light.
-          Each runs for under five seconds the first time it's on screen, then stays still.
+          Each time a status comes on screen it plays once, for under five seconds, then stays
+          still. Scroll away and back to see it again.
         </p>
         <dl class="spec mono">
           {specs.status?.map(({ label, value }) => (
@@ -179,7 +194,8 @@ const specs: Record<string, Spec[]> = {
         <p>
           On a slow connection a lazy screenshot used to pop in mid-scroll. Now the frame and its
           address bar are there first and the capture fades in when it has loaded. No fake progress
-          bar: the fade starts when the image really arrives.
+          bar: the fade starts when the image really arrives. On a fast connection images load
+          before you reach them, so there's nothing to see; use Replay, or throttle the network.
         </p>
         <dl class="spec mono">
           {specs.develop?.map(({ label, value }) => (
@@ -208,8 +224,9 @@ const specs: Record<string, Spec[]> = {
     <Section id="process" n={5} title="How I work marks what you've read" note="Wired in">
       <div class="intro">
         <p>
-          Scroll slowly. Each step's rule draws across as it comes up the screen and its number
-          brightens, so the steps you've read stay marked. Scroll back up and it undoes.
+          Scroll slowly. As each step passes a reading line 60% down the screen its rule draws
+          across and its number brightens, so the steps you've read stay marked. Scroll back up and
+          it undoes.
         </p>
         <dl class="spec mono">
           {specs.process?.map(({ label, value }) => (
@@ -226,9 +243,9 @@ const specs: Record<string, Spec[]> = {
     <Section id="map" n={6} title="Section map on case studies" note="Wired in">
       <div class="intro">
         <p>
-          On a wide window, a case study gets a column of section numbers in the left margin. The
-          one you're reading lights up, and each is a link. Under 1400px there's no margin for it,
-          so it isn't there.
+          On a wide window, a case study lists its sections in the left margin, each a link with a
+          short fixed tick. The one you're reading is brighter; nothing else changes. It only shows
+          when it clears the content column by 24px, which needs a window about 1600px wide.
         </p>
         <dl class="spec mono">
           {specs.map?.map(({ label, value }) => (
@@ -250,8 +267,8 @@ const specs: Record<string, Spec[]> = {
       <div class="intro">
         <p>
           Plenty of computers have no mail app set up, so a mailto link does nothing. Copy puts the
-          address on the clipboard and says so, to screen readers too. Arrow buttons lean 3px the
-          way they go.
+          address on the clipboard and says so, to screen readers too. It sits beside the email in
+          the contact block below and in the footer. Arrow buttons lean 3px the way they go.
         </p>
         <dl class="spec mono">
           {specs.copy?.map(({ label, value }) => (

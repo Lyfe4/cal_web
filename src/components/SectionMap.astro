@@ -1,0 +1,165 @@
+---
+export interface MapEntry {
+  /** The section's anchor id */
+  id: string;
+  /** "01" */
+  n: string;
+  title: string;
+  /** The section's view-timeline-name, in timeline-scope on a shared ancestor */
+  timeline: string;
+}
+
+export interface Props {
+  /** Accessible name, e.g. "LenBuild sections" */
+  label: string;
+  entries: MapEntry[];
+}
+
+const { label, entries } = Astro.props;
+---
+
+<!-- Where you are in a long page: one row per numbered section, in the left margin. Only on
+     windows with real margin to spare, and never over the content column. -->
+<nav class="section-map mono" aria-label={label} data-section-map>
+  <ol>
+    {entries.map((entry) => (
+      <li style={`--timeline: ${entry.timeline}`}>
+        <a href={`#${entry.id}`} data-section={entry.id}>
+          {entry.n} {entry.title}
+        </a>
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<script>
+  // 1. Fit: the CSS only shows the map on wide windows; this hides it whenever its labels
+  //    would come within 24px of the content column. 2. Current section: scroll-driven CSS
+  //    where the browser has named view timelines, otherwise an IntersectionObserver.
+  const map = document.querySelector<HTMLElement>('[data-section-map]');
+  const content = map?.closest('article');
+  const CLEARANCE = 24;
+  const READING_LINE = 0.4; // of the viewport height, from the top
+
+  if (map && content) {
+    const fit = () => {
+      const mapBox = map.getBoundingClientRect();
+      if (mapBox.width === 0) return; // hidden by the media query
+      const padding = parseFloat(getComputedStyle(content).paddingLeft);
+      const columnLeft = content.getBoundingClientRect().left + padding;
+      map.toggleAttribute('data-fits', mapBox.left >= 16 && mapBox.right <= columnLeft - CLEARANCE);
+    };
+    map.toggleAttribute('data-measured', true);
+    document.fonts.ready.then(fit);
+    let pending = false;
+    window.addEventListener('resize', () => {
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(() => {
+        pending = false;
+        fit();
+      });
+    });
+
+    const scrollDriven =
+      CSS.supports('animation-timeline: view()') && CSS.supports('timeline-scope: --a');
+
+    if (!scrollDriven && 'IntersectionObserver' in window) {
+      const links = new Map(
+        [...map.querySelectorAll<HTMLAnchorElement>('[data-section]')].map((link) => [
+          link.dataset.section,
+          link,
+        ])
+      );
+      const crossing = new Set<string>();
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) crossing.add(entry.target.id);
+            else crossing.delete(entry.target.id);
+          }
+          // The first section in page order that spans the reading line
+          const current = [...links.keys()].find((id) => id && crossing.has(id));
+          links.forEach((link, id) => link.toggleAttribute('data-current', id === current));
+        },
+        // A thin band at the reading line
+        { rootMargin: `-${READING_LINE * 100}% 0px -${(1 - READING_LINE) * 100 - 1}% 0px` }
+      );
+      links.forEach((_, id) => {
+        const section = id && document.getElementById(id);
+        if (section) observer.observe(section);
+      });
+    }
+  }
+</script>
+
+<style>
+  .section-map {
+    display: none;
+  }
+
+  /* Right edge 32px left of the content column, which starts at the centred container's
+     left edge plus its gutter */
+  @media (min-width: 1600px) {
+    .section-map {
+      position: fixed;
+      top: 50%;
+      left: calc((100vw - var(--container)) / 2 + var(--gutter) - var(--space-32));
+      z-index: 1;
+      display: block;
+      translate: -100% -50%;
+    }
+  }
+
+  .section-map[data-measured]:not([data-fits]) {
+    visibility: hidden;
+  }
+
+  ol {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* A fixed 8px tick, then the number and name. Current is brighter text, nothing else. */
+  a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-12);
+    padding: 4px 0;
+    color: var(--text-3);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  a::before {
+    content: '';
+    flex: none;
+    width: 8px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  a:hover,
+  a[data-current] {
+    color: var(--text);
+  }
+
+  @supports (animation-timeline: view()) and (timeline-scope: --a) {
+    a {
+      animation: map-current linear;
+      animation-timeline: var(--timeline);
+      /* Current while the section spans the reading line, 40% down the screen */
+      animation-range: cover 60vh cover calc(100% - 40vh);
+    }
+  }
+
+  @keyframes map-current {
+    from,
+    to {
+      color: var(--text);
+    }
+  }
+</style>

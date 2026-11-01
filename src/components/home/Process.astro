@@ -2,7 +2,7 @@
 import { process } from '../../data/process';
 ---
 
-<ol class="steps">
+<ol class="steps" data-steps>
   {process.map((step, i) => (
     <li>
       <span class="n mono" aria-hidden="true">
@@ -13,6 +13,34 @@ import { process } from '../../data/process';
     </li>
   ))}
 </ol>
+
+<script>
+  // Turns the reading-progress rules on (styles below). Scroll-driven animations do it in
+  // CSS where the browser has them; otherwise an IntersectionObserver marks each step as
+  // reached once its top passes the reading line, and unmarks it when it drops back below.
+  const steps = document.querySelector<HTMLElement>('[data-steps]');
+  const moving = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+  const READING_LINE = 0.6; // of the viewport height, from the top
+
+  if (steps && moving) {
+    if (CSS.supports('animation-timeline: view()')) {
+      steps.dataset.progress = 'scroll';
+    } else if ('IntersectionObserver' in window) {
+      steps.dataset.progress = 'observer';
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            const line = entry.rootBounds?.bottom ?? window.innerHeight * READING_LINE;
+            entry.target.toggleAttribute('data-reached', entry.boundingClientRect.top < line);
+          }
+        },
+        // The root ends at the reading line, so crossing it either way is a change
+        { rootMargin: `0px 0px -${(1 - READING_LINE) * 100}% 0px` }
+      );
+      steps.querySelectorAll('li').forEach((step) => observer.observe(step));
+    }
+  }
+</script>
 
 <style>
   .steps {
@@ -49,29 +77,61 @@ import { process } from '../../data/process';
     color: var(--text-2);
   }
 
-  /* Reading progress: as each step comes up the screen its rule draws across in --text-3
-     and its number brightens, so the steps you've read stay marked. Scrolling back up
-     undoes it. Scroll-driven, no script; without support (Firefox) it's the plain list. */
+  /* Reading progress: when a step reaches a reading line 60% down the screen, its rule
+     draws across in --text-3 and its number brightens, so the steps you've read stay marked.
+     Scrolling back up undoes it. Scroll-driven where supported; elsewhere the script below
+     toggles data-reached and a transition draws the rule. Off under reduced motion. */
+  @media (prefers-reduced-motion: no-preference) {
+    .steps[data-progress] li::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      right: 0;
+      left: 0;
+      height: 1px;
+      background: var(--text-3);
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+
+    /* Fallback (script): a state, eased */
+    .steps[data-progress='observer'] li::before {
+      transition: transform 500ms var(--ease-out);
+    }
+
+    .steps[data-progress='observer'] .n {
+      transition: color var(--duration) var(--ease-out);
+    }
+
+    .steps[data-progress='observer'] li[data-reached]::before {
+      transform: scaleX(1);
+    }
+
+    .steps[data-progress='observer'] li[data-reached] .n {
+      color: var(--text);
+    }
+  }
+
+  /* Scroll-driven: the rule fills as the step passes the line. The timeline goes through a
+     custom property on purpose: the CSS minifier otherwise folds animation-timeline into the
+     animation shorthand, which can't carry a timeline, and the browser drops the lot. */
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
-      li::before {
-        content: '';
-        position: absolute;
-        top: -1px;
-        right: 0;
-        left: 0;
-        height: 1px;
-        background: var(--text-3);
-        transform-origin: left;
-        animation: draw linear both;
-        animation-timeline: view();
-        animation-range: entry 100% cover 45%;
+      .steps[data-progress='scroll'] {
+        /* The scrollport's bottom pulled up to 60%: "entry" is crossing the reading line */
+        --reading-line: view(block 0% 40%);
       }
 
-      .n {
+      .steps[data-progress='scroll'] li::before {
+        animation: draw linear both;
+        animation-timeline: var(--reading-line);
+        animation-range: entry 0% entry 100%;
+      }
+
+      .steps[data-progress='scroll'] .n {
         animation: brighten linear both;
-        animation-timeline: view();
-        animation-range: cover 35% cover 45%;
+        animation-timeline: var(--reading-line);
+        animation-range: entry 0% entry 30%;
       }
     }
   }

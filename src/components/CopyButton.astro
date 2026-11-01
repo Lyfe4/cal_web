@@ -4,13 +4,16 @@ export interface Props {
   text: string;
   /** What it is, for screen readers: "Copy email address" */
   label: string;
+  /** What's announced once it's copied: "Email address copied" */
+  done: string;
 }
 
-const { text, label } = Astro.props;
+const { text, label, done } = Astro.props;
 ---
 
-<!-- Hidden until the script finds a clipboard to write to; the link beside it still works -->
-<button class="copy mono" type="button" data-copy={text} aria-label={label} hidden>
+<!-- Rendered visible so nothing moves when the script runs. Hidden without JavaScript (the
+     noscript styles in BaseLayout) or without a clipboard; the link beside it always works. -->
+<button class="copy mono" type="button" data-copy={text} data-copy-done={done} aria-label={label}>
   <span data-copy-label>Copy</span>
 </button>
 <span class="visually-hidden" role="status" data-copy-status></span>
@@ -18,24 +21,32 @@ const { text, label } = Astro.props;
 <script>
   const RESET_AFTER = 2000;
 
+  // Clipboard writes need a secure context; without one the button stays hidden
+  const canCopy = window.isSecureContext && typeof navigator.clipboard?.writeText === 'function';
+
   for (const button of document.querySelectorAll<HTMLButtonElement>('[data-copy]')) {
-    if (!navigator.clipboard) continue;
+    if (!canCopy) {
+      button.hidden = true;
+      continue;
+    }
     const label = button.querySelector('[data-copy-label]');
     const status = button.nextElementSibling;
     let timer: number | undefined;
 
-    button.hidden = false;
     button.addEventListener('click', async () => {
-      let message: string;
+      let shown: string;
+      let announced: string;
       try {
         await navigator.clipboard.writeText(button.dataset.copy ?? '');
-        message = 'Copied';
+        shown = 'Copied';
+        announced = button.dataset.copyDone ?? 'Copied';
       } catch {
         // Blocked by the browser or a permission prompt that was dismissed
-        message = 'Copy failed';
+        shown = 'Failed';
+        announced = 'Copy failed';
       }
-      if (label) label.textContent = message;
-      if (status) status.textContent = message;
+      if (label) label.textContent = shown;
+      if (status) status.textContent = announced;
       button.toggleAttribute('data-done', true);
       window.clearTimeout(timer);
       timer = window.setTimeout(() => {
@@ -48,19 +59,38 @@ const { text, label } = Astro.props;
 </script>
 
 <style>
+  /* A small ghost button: the same 1px rule and square corners as .btn, sized to sit on a
+     line of mono text. 28px tall clears the 24px minimum target size (WCAG 2.5.8). */
   .copy {
-    margin-left: var(--space-12);
-    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    height: 28px;
+    /* Taller than the mono line it sits on; the negative margins keep the line's height */
+    margin: -5px 0 -5px var(--space-12);
+    padding: 0 10px;
     background: none;
-    border: 0;
-    color: var(--text-3);
+    border: var(--border);
+    border-radius: var(--radius);
+    color: var(--text-2);
     cursor: pointer;
-    text-underline-offset: 0.2em;
+    vertical-align: middle;
+    transition: border-color var(--duration-fast) var(--ease-out);
+  }
+
+  .copy[hidden] {
+    display: none;
+  }
+
+  /* Wide enough for "Copied" and "Failed", so swapping words never moves the email beside it */
+  .copy span {
+    display: inline-block;
+    min-width: 6.5ch;
+    text-align: center;
   }
 
   .copy:hover {
+    border-color: var(--text-3);
     color: var(--text);
-    text-decoration: underline;
   }
 
   .copy[data-done] {

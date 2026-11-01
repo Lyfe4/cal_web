@@ -46,12 +46,15 @@ const { avif, webp } = await responsiveSources(image);
 
 <script>
   // A lazy screenshot fades in once it has loaded, inside a frame that's already there,
-  // instead of popping in mid-scroll. Only frames whose image hasn't loaded when this runs;
-  // the eager first-screen frame is left alone so it can paint as early as possible.
+  // instead of popping in mid-scroll on a slow connection. Never in the first screen: eager
+  // frames are skipped, and so is any frame already on screen when this runs, so the first
+  // paint is never held back. On a fast connection lazy images load before they're scrolled
+  // to, so there's nothing to see; that's intended.
   if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
     for (const img of document.querySelectorAll<HTMLImageElement>('.frame img[loading="lazy"]')) {
       const frame = img.closest('.frame');
       if (!frame || img.complete) continue;
+      if (frame.getBoundingClientRect().top < window.innerHeight) continue;
       frame.toggleAttribute('data-developing', true);
       const done = () => frame.removeAttribute('data-developing');
       img.addEventListener('load', done, { once: true });

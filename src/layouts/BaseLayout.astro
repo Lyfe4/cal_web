@@ -33,7 +33,8 @@ const seo = Astro.props;
     <meta name="theme-color" content={brandColors.bg} />
     <meta name="google-site-verification" content={business.googleSiteVerification} />
 
-    <!-- Without JS there's no menu toggle, so the nav links show inline at every width -->
+    <!-- Without JS there's no menu toggle, so the nav links show inline at every width,
+         and no copy buttons -->
     <noscript>
       <style is:inline>
         .menu-toggle {
@@ -51,6 +52,10 @@ const seo = Astro.props;
         }
         .nav-list li + li {
           border: 0 !important;
+        }
+        /* Copy buttons need the script */
+        .copy {
+          display: none !important;
         }
       </style>
     </noscript>

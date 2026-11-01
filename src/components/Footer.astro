@@ -1,5 +1,6 @@
 ---
 import { areaLinks } from '../data/areas';
+import CopyButton from './CopyButton.astro';
 import { build, formatBuildTime } from '../data/build';
 import { business, formattedAddress, nav } from '../data/site';
 import { WEIGHT_SLOT } from '../utils/pageWeight';
@@ -34,9 +35,12 @@ import { WEIGHT_SLOT } from '../utils/pageWeight';
         {business.name} · {formattedAddress}
       </span>
       <a href={business.phone.href}>{business.phone.display}</a>
-      <a class="email" href={`mailto:${business.email}`}>
-        {business.email}
-      </a>
+      <span class="email-row">
+        <a class="email" href={`mailto:${business.email}`}>
+          {business.email}
+        </a>
+        <CopyButton text={business.email} label="Copy email address" done="Email address copied" />
+      </span>
       <span>ABN {business.abn}</span>
     </address>
     <!-- Build log: only facts the build itself produces. The weight is measured from the
@@ -123,6 +127,12 @@ import { WEIGHT_SLOT } from '../utils/pageWeight';
   .email,
   .sha {
     text-transform: none;
+  }
+
+  /* A flex row, so the link's trailing space is trimmed and its underline stops at the text */
+  .email-row {
+    display: inline-flex;
+    align-items: center;
   }
 
   .build-log {

@@ -27,7 +27,7 @@ const {
     <ul class="mono direct">
       <li>
         <a href={`mailto:${business.email}`}>{business.email}</a>
-        <CopyButton text={business.email} label="Copy email address" />
+        <CopyButton text={business.email} label="Copy email address" done="Email address copied" />
       </li>
       <li>
         <a href={business.phone.href}>{business.phone.display}</a>
