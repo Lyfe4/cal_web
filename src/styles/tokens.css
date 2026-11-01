@@ -34,7 +34,7 @@
   --text-lede: clamp(17px, 1.5vw, 20px);
   --text-desc: 17px;
   --text-body: 16px;
-  --text-ui: 15px; /* buttons, spec values, Acknowledgement */
+  --text-ui: 15px; /* buttons, spec values */
   --text-label: 12px; /* mono uppercase labels */
   --text-frame: 11px; /* frame URL */
 

@@ -53,7 +53,7 @@ Warm graphite, three text tiers, one accent. Build in OKLCH; the hex values are 
 | `--mat-edge` | `#3D3934` | `oklch(34.7% 0.010 73.6)` | Frame border and the three browser-bar dots. |
 | leader | `#45413B` | `oklch(37.7% 0.011 78.2)` | Dotted leader line in the spec sheet only. Currently inline; make it a token. |
 | `--text` | `#F0EDE8` | `oklch(94.7% 0.007 80.7)` | Headings, project names, values, the bold first sentence of the lede. |
-| `--text-2` | `#BEB8AF` | `oklch(78.5% 0.014 78.2)` | Body copy, descriptions, nav links, Acknowledgement, frame URLs. |
+| `--text-2` | `#BEB8AF` | `oklch(78.5% 0.014 78.2)` | Body copy, descriptions, nav links (header and footer), frame URLs. |
 | `--text-3` | `#999288` | `oklch(66.3% 0.017 77.0)` | Mono labels, section heads, facts rows, `dt`s, footer meta. |
 | `--accent` | `#FF6B2C` | `oklch(70.4% 0.195 40.9)` | Signal orange. See 3.6 for where it's allowed. |
 | `--on-accent` | `#141210` | = `--bg` | Text on the accent. |
@@ -88,7 +88,7 @@ Warm graphite, three text tiers, one accent. Build in OKLCH; the hex values are 
 | Lede | `clamp(17px, 1.5vw, 20px)` | 400, lead-in 500 in `--text` | 1.45 | 0, `max-width: 46ch` |
 | Project description | 17px | 400 | 1.55 | 0, `max-width: 44ch` |
 | Body | 16px | 400 | 1.55 | 0 |
-| Buttons, spec values, Acknowledgement | 15px | 500 / 400 / 400 | 1.55 | 0 |
+| Buttons, spec values | 15px | 500 / 400 / 400 | 1.55 | 0 |
 | Mono label | 12px uppercase | 400 | 1.55 | +0.04em |
 | Frame URL | 11px mono, sentence case | 400 | n/a | +0.02em |
 
@@ -105,7 +105,7 @@ The scale is bimodal: big statements (42–104px) and small functional text (11�
   - Project rows: 32px top, 40px bottom, gap 16px / 40px. On mobile: 24px / 32px.
   - Spec sheet: 64px column gap, 11px row padding.
   - Footer: 40px top, 48px bottom.
-  - Header: 56px tall.
+  - Header: 56px tall, plus its 1px rule.
   - Buttons: 44px tall, 18px side padding, 12px apart.
 - **Breakpoints:** 860px (single column, nav hidden, numbers move above names) and 480px (spec values wrap under their labels, leaders hidden).
 - **Rules:** all lines are 1px. Solid `--rule` for structure, dotted leader colour for spec leaders. No 2px rules, no shadows.
@@ -131,6 +131,12 @@ The scale is bimodal: big statements (42–104px) and small functional text (11�
 ### 3.5 Key patterns
 
 1. **Header:** wordmark "Calvin R **Development**" with "Development" in `--text-3`. Mono uppercase nav (Work, Services, About, Contact) in `--text-2`, 28px apart. 1px rule below.
+   - **Reappears on scroll up.** With JS the header is `position: sticky` at the top on a solid `--bg` background (never translucent or blurred). Scrolling down past the header slides it up out of view; scrolling up, even a little, brings it back. At the top of the page it's always visible. Moves under 6px are ignored so jitter can't flicker it.
+   - It moves by `transform` only and keeps its slot in the flow, so hiding and showing never shifts the layout (CLS 0). Under `prefers-reduced-motion` it shows and hides instantly with no slide.
+   - One passive scroll listener, throttled with `requestAnimationFrame`. No library.
+   - Keyboard: focus moving into the header (Tab from the top, Shift+Tab back up) shows it, and it stays while keyboard focus is inside. A link clicked or tapped doesn't pin it. The open mobile menu keeps it visible until the menu closes.
+   - Without JS it's not sticky; it sits at the top of the page as before.
+   - Because it can overlay content, `html` gets `scroll-padding-top` of the header height + 16px while it's sticky, so in-page anchors (#work), the skip-link target and scrolled-to elements land below it. The contact form focuses a field with `preventScroll` and then scrolls the whole field (label, control, error) into view itself, because WebKit ignores the padding when `focus()` scrolls.
 2. **Hero:**
    - The h1 says what Calvin does, not where: "Websites and web apps for businesses across Australia."
    - Below it, a two-part row. On the left, the lede, starting with the bold `--text` sentence "I'm Calvin, a frontend developer based in Armidale, NSW." On the right, two CTAs, "See work" (ghost) and "Get a quote →" (accent), over a mono note "Websites from $600 · Replies within one business day".
@@ -151,8 +157,8 @@ The scale is bimodal: big statements (42–104px) and small functional text (11�
    - Each row: mono `dt`, a dotted leader that fills the gap, right-aligned value in 15px sans.
    - On mobile the two lists stack, prices first. Never interleave the two lists. Under 480px the leaders hide and values wrap under their labels.
 8. **Footer:**
-   - On the left, the Acknowledgement of Country in `--text-2`, 15px, no Aboriginal language names: "I live and work in Armidale on Aboriginal land. I acknowledge the Traditional Custodians of the New England region and pay my respects to Elders past and present."
-   - On the right, mono meta: business name · Armidale, NSW; email; ABN.
+   - On the left, a footer nav in the mono label + link style: two rows, each led by a `--text-3` label, with `--text-2` links that underline. "Site": Work, Services, About, Contact. "Areas": Armidale, Tamworth, New England. The labels share a column so the links line up; at 375px each row's links wrap within it.
+   - On the right, mono meta in `--text-3`: business name · address; phone; email; ABN. Under 860px it stacks below the nav, left-aligned.
 
 ### 3.6 Accent rules
 

@@ -205,6 +205,15 @@ const sentence = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
         ? [...form.querySelectorAll<HTMLInputElement>('input[name="enquiry"]')]
         : [form.querySelector<HTMLElement>(`#${field}`)].filter((el): el is HTMLElement => !!el);
 
+    // Focus without the browser's own scroll, then bring the whole field (label, control and
+    // error) into view. Scrolling the element ourselves applies the html scroll-padding that
+    // keeps it clear of the sticky header; WebKit ignores that padding when focus() scrolls.
+    const focusInView = (el: HTMLElement | undefined) => {
+      if (!el) return;
+      el.focus({ preventScroll: true });
+      (el.closest('.field') ?? el).scrollIntoView({ block: 'nearest' });
+    };
+
     const showError = (field: ContactField, message: string) => {
       const error = form.querySelector<HTMLElement>(`#${field}-error`);
       if (!error) return;
@@ -263,7 +272,7 @@ const sentence = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 
       const first = contactFields.find((field) => errors[field]);
       if (first) {
-        controls(first)[0]?.focus();
+        focusInView(controls(first)[0]);
         return;
       }
 
@@ -289,7 +298,7 @@ const sentence = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
           if (packageNote) packageNote.hidden = true;
           if (status) {
             status.textContent = `Thanks, your message is on its way. I'll reply within one business day.`;
-            status.focus();
+            focusInView(status);
           }
           return;
         }
@@ -305,7 +314,7 @@ const sentence = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
           const field = fieldError.field as ContactField;
           serverErrors.set(field, current[field]);
           showError(field, `${fieldError.message}.`);
-          controls(field)[0]?.focus();
+          focusInView(controls(field)[0]);
         } else {
           throw new Error(`Formspree answered ${response.status}`);
         }

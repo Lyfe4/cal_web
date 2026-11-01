@@ -7,7 +7,7 @@ const isCurrent = (href: string) => href === current || current.startsWith(`${hr
 const isWork = (href: string) => href === '/#work' && current.startsWith('/work/');
 ---
 
-<header class="top">
+<header class="top" data-header>
   <div class="wrap bar">
     <a class="brand" href="/">
       Calvin R <span>Development</span>
@@ -81,12 +81,91 @@ const isWork = (href: string) => href === '/#work' && current.startsWith('/work/
 
     desktop.addEventListener('change', () => setOpen(false));
   }
+
+  // Sticky header that slides away on scroll down and back on scroll up. Without JS it
+  // never gets data-sticky, so it stays in the flow at the top of the page.
+  const header = document.querySelector<HTMLElement>('[data-header]');
+
+  if (header) {
+    // Ignore smaller moves, so trackpad and touch jitter can't flicker the header
+    const threshold = 6;
+    let lastY = 0;
+    let ticking = false;
+
+    const setHidden = (hidden: boolean) => header.toggleAttribute('data-hidden', hidden);
+    // An open menu, or keyboard focus inside the header, keeps it on screen. A link clicked
+    // or tapped keeps focus too, but that shouldn't stop the header from hiding.
+    // (:focus-visible would do, but Firefox doesn't match it after Escape restores focus.)
+    let keyboard = false;
+    const capture = { capture: true, passive: true };
+    window.addEventListener('keydown', () => (keyboard = true), capture);
+    window.addEventListener('pointerdown', () => (keyboard = false), capture);
+    const pinned = () =>
+      Boolean(
+        nav?.hasAttribute('data-open') || (keyboard && header.contains(document.activeElement))
+      );
+
+    const update = () => {
+      ticking = false;
+      // Clamp: Safari's overscroll bounce reports negative values
+      const y = Math.max(0, window.scrollY);
+      if (y <= header.offsetHeight || pinned()) {
+        setHidden(false);
+        lastY = y;
+        return;
+      }
+      const dy = y - lastY;
+      if (Math.abs(dy) < threshold) return;
+      setHidden(dy > 0);
+      lastY = y;
+    };
+
+    header.toggleAttribute('data-sticky', true);
+    // Read the starting position in a frame, not straight after the writes above, so it
+    // doesn't force a synchronous layout
+    requestAnimationFrame(() => (lastY = Math.max(0, window.scrollY)));
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(update);
+      },
+      { passive: true }
+    );
+    header.addEventListener('focusin', () => setHidden(false));
+    toggle?.addEventListener('click', () => setHidden(false));
+  }
 </script>
 
 <style>
   .top {
     position: relative;
     border-bottom: var(--border);
+  }
+
+  /* Set by the script. Sticky keeps the header's slot in the flow, and it moves by
+     transform only, so hiding and showing never shifts the layout. Solid, never see-through. */
+  .top[data-sticky] {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--bg);
+  }
+
+  .top[data-hidden] {
+    transform: translateY(-100%);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .top[data-sticky] {
+      transition: transform var(--duration) var(--ease-out);
+    }
+  }
+
+  /* Anchors and focused fields land below the header, which may be showing over them */
+  :global(html:has(.top[data-sticky])) {
+    scroll-padding-top: calc(var(--header-height) + var(--space-16));
   }
 
   .bar {

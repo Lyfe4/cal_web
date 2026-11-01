@@ -1,16 +1,22 @@
 ---
 import { areaLinks } from '../data/areas';
-import { business, formattedAddress } from '../data/site';
+import { business, formattedAddress, nav } from '../data/site';
 ---
 
 <footer class="foot">
   <div class="wrap foot-grid">
-    <div class="foot-main">
-      <p class="ack">
-        I live and work in Armidale on Aboriginal land. I acknowledge the Traditional Custodians of
-        the New England region and pay my respects to Elders past and present.
-      </p>
-      <nav class="areas mono" aria-labelledby="areas-h">
+    <div class="foot-nav mono">
+      <nav aria-labelledby="site-h">
+        <h2 id="site-h">Site</h2>
+        <ul>
+          {nav.map(({ href, label }) => (
+            <li>
+              <a href={href}>{label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <nav aria-labelledby="areas-h">
         <h2 id="areas-h">Areas</h2>
         <ul>
           {areaLinks.map((area) => (
@@ -46,28 +52,28 @@ import { business, formattedAddress } from '../data/site';
     gap: var(--space-32) var(--space-64);
   }
 
-  .ack {
-    margin: 0;
-    max-width: 52ch;
-    color: var(--text-2);
-    font-size: var(--text-ui);
-  }
-
-  .areas {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: var(--space-8) var(--space-24);
-    margin-top: var(--space-32);
+  /* Two rows of mono links, each led by its label; labels share a column so the links line up */
+  .foot-nav {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: var(--space-16) var(--space-24);
+    align-content: start;
     color: var(--text-3);
   }
 
-  .areas h2 {
+  .foot-nav nav {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
+    align-items: baseline;
+  }
+
+  .foot-nav h2 {
     margin: 0;
     font: inherit;
   }
 
-  .areas ul {
+  .foot-nav ul {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-8) var(--space-24);
@@ -76,12 +82,12 @@ import { business, formattedAddress } from '../data/site';
     list-style: none;
   }
 
-  .areas a {
+  .foot-nav a {
     color: var(--text-2);
     text-underline-offset: 0.2em;
   }
 
-  .areas a:hover {
+  .foot-nav a:hover {
     color: var(--text);
   }
 
