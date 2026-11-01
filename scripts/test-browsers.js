@@ -130,7 +130,9 @@ async function run(base, name, motion, record) {
     `first=${first} cleared=${cleared} again=${again}`
   );
 
-  // How I work: steps above the reading line filled, below empty; undone on the way up
+  // How I work (on /services): steps above the reading line filled, below empty; undone on
+  // the way up
+  await page.goto(`${base}/services`);
   const mode = await page.evaluate(
     () => document.querySelector('[data-steps]')?.getAttribute('data-progress') ?? 'off'
   );
@@ -150,6 +152,7 @@ async function run(base, name, motion, record) {
       : mode === 'off' && down.every((v) => v === null),
     `mode=${mode} down=${down} up=${up}`
   );
+  await page.goto(`${base}/`);
 
   // Copy: visible beside the email in the contact block and the footer; copies and announces
   const visible = await page

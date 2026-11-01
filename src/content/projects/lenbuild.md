@@ -23,7 +23,7 @@ seo:
 screenshot:
   src: ../../assets/projects/lenbuild.webp
   mobile: ../../assets/projects/lenbuild-mobile.webp
-  alt: "LenBuild's Projects and Services page: the Custom Home Building section with photos of a finished home."
+  alt: "LenBuild's Projects and Services page: photos of a finished home and the green Custom Home Building heading."
 gallery:
   - src: ../../assets/projects/lenbuild-contact.webp
     mobile: ../../assets/projects/lenbuild-contact-mobile.webp

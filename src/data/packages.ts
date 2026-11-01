@@ -26,7 +26,7 @@ export const websitePackages: WebsitePackage[] = [
       'Works on phones, tablets and desktops',
       'Enquiry form that sends straight to your inbox',
       'Set up to be found on Google: page titles, descriptions and a sitemap',
-      "Hosting set up on Netlify's free plan, and the site launched",
+      "Hosted on Netlify's free plan and launched",
       'One round of revisions',
       'Two weeks of support after launch',
     ],

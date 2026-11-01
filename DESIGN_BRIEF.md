@@ -197,7 +197,7 @@ Motion is small, short and tells you something: where you are, what state a proj
 | Page transitions | Project names and frames (home rows, featured project, local pages) into their case study; Next project at the end of a case study | The name and screenshot move to their place on the next page (cross-document View Transitions, CSS only); everything else cross-fades quickly |
 | Build log | Last line of the footer, every page | Build time, commit (linked), and this page's compressed HTML and JS, measured from the built files after the build. Only facts the build produces |
 | Status dots | Every Live / In progress status | Each time a status comes on screen it plays once: Live pings 3 times, In progress blinks 4 times (4.8s each), then still. 1.5s cooldown before it can play again |
-| How I work lines | Home, How I work | As each step passes a reading line 60% down the screen its rule draws across in `--text-3` and its number brightens; scrolling back up undoes it |
+| How I work lines | /services, How I work | As each step passes a reading line 60% down the screen its rule draws across in `--text-3` and its number brightens; scrolling back up undoes it |
 | Copy email | Beside the email in the contact blocks and the footer | A small bordered button (28px) copies the address, shows "Copied" and announces "Email address copied". The mailto link stays |
 | Arrow lean | Every button ending in → | The arrow moves 3px the way it points on hover |
 | Section map | Case studies, left margin | A fixed 8px tick, number and name per section ("01 The brief"); the current section is brighter text, nothing else changes. Shown only when it clears the content column by 24px (about 1600px+ windows) |
@@ -301,7 +301,7 @@ Study for *specific* things (listed next to each) — do not copy any site whole
 
 ## 6. Site structure and content
 
-**Homepage order:** hero, then numbered sections 01 Selected work, 02 Services, 03 How I work, 04 Kind words, 05 Contact. Numbers come from page order, so they renumber themselves when a section is added or removed (Kind words drops out, and Contact becomes 04, if there are no testimonials). The homepage has no Details (spec sheet) or About section: prices live on /services and the local pages, and About is its own page at /about.
+**Homepage order:** hero, then numbered sections 01 Selected work, 02 Services, 03 Kind words, 04 Contact. Numbers come from page order, so they renumber themselves when a section is added or removed (Kind words drops out, and Contact becomes 03, if there are no testimonials). The homepage has no How I work, Details (spec sheet) or About section: How I work and prices live on /services (prices also on the local pages), and About is its own page at /about. In-person wording ("in person in and around Armidale") lives on /services, /contact and the local pages; the homepage names Armidale once, in the hero lede.
 
 1. **Hero** — one plain sentence of what Calvin does + who for. e.g. *"Frontend developer in Armidale building fast websites and web apps for businesses across Australia."* Two CTAs: **See work** / **Get a quote**. Let type + one strong detail carry it. Hero content must render without JS and without an entrance animation.
 2. **Selected work** — the centrepiece. Three projects, each with its own case-study page:
@@ -310,7 +310,7 @@ Study for *specific* things (listed next to each) — do not copy any site whole
    - **Patchbay** (patchbay-tools.netlify.app) — developer toolbox that runs entirely in your browser. Shown as a project only (see Section 7).
    Each: screenshot, type of work, problem → what was built → result. No invented metrics.
 3. **Services** — split into *Websites* and *Apps & integrations*. Keep current pricing unless told otherwise: Starter from $600, Professional from $1,125, Custom/contract quoted; extras $150/page, monthly support $80/mo, annual $800/yr.
-4. **How I work** — short numbered process. Emphasise working directly with the developer, no agency layers.
+4. **How I work** (on /services, not the homepage) — short numbered process. Emphasise working directly with the developer, no agency layers.
 5. **About** (its own page, /about; not a homepage section) — real photo of Calvin, named in full as "Calvin Reinke" (also the `Person` name and `founder` in structured data; the business name stays "Calvin R Development" and the hero stays "I'm Calvin"), Armidale/New England, computer science at UNE as education only (`alumniOf` the University of New England in structured data; no current employer named anywhere, no `worksFor`), in-house frontend experience on production web apps without naming where, remote across Australia, stack shown subtly.
 6. **Kind words** (proof) — real testimonials only, word for word with a link to the source. One exists (Dan, LenBuild, Google review). The section is absent whenever the list is empty.
 7. **Contact** — form (Formspree, keep the existing validation from the hotfix), email, phone, service area (in person in and around Armidale, further around New England by arrangement; phone, video and email Australia-wide). Response promise: **"Replies within one business day"** — no Mon–Fri 9–5 hours anywhere, including schema.

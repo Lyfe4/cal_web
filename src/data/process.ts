@@ -24,7 +24,7 @@ export const process: Step[] = [
   {
     name: 'Launch',
     detail:
-      "I set up hosting on Netlify's free plan, connect your domain and check everything on real phones before it goes live. You own and pay for the domain; I can help you buy it.",
+      "I set up hosting on Netlify's free plan, connect your domain and check everything on real phones before it goes live. You own the domain, and I can help you buy one.",
   },
   {
     name: 'Support',
