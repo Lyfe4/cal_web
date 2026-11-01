@@ -5,7 +5,7 @@ import Section from '../components/Section.astro';
 import SpecList from '../components/SpecList.astro';
 import Process from '../components/home/Process.astro';
 import ContactCta from '../components/home/ContactCta.astro';
-import { appsPricing, appsWork, extras, faqs, websitePackages } from '../data/packages';
+import { appsPricing, appsWork, extras, faqs, support, websitePackages } from '../data/packages';
 import { businessId } from '../data/schema';
 import { services } from '../data/services';
 import { formatPrice, pricing, serviceAreas, siteUrl } from '../data/site';
@@ -125,11 +125,12 @@ const serviceArea = [
         <div>
           <h3>Extras</h3>
           <p class="mono price">Priced per item</p>
-          <SpecList label="Extras and support prices" rows={extras} />
+          <SpecList label="Extras prices" rows={extras} />
         </div>
         <div>
           <h3>Support</h3>
           <p class="mono price">Optional</p>
+          <SpecList label="Support prices" rows={support} />
           <p class="note">
             Support covers updates, fixes and small changes after launch. It's optional, and you can
             stop it any time.
@@ -249,8 +250,9 @@ const serviceArea = [
     align-items: start;
   }
 
+  /* Under the support prices */
   .note {
-    margin: 11px 0 0;
+    margin: var(--space-16) 0 0;
     max-width: 44ch;
     color: var(--text-2);
     font-size: var(--text-ui);

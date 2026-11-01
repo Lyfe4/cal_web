@@ -72,10 +72,14 @@ export const priceRows = [
   },
 ];
 
-/** Extras and support, for the dot-leader spec sheet. */
+/** Extras priced per item, for the dot-leader spec sheet on /services. */
 export const extras = [
   { label: pricing.extraPage.label, value: `${formatPrice(pricing.extraPage.each)} each` },
   { label: pricing.customFeature.label, value: pricing.customFeature.note },
+];
+
+/** Optional support after launch, priced by the month or the year. */
+export const support = [
   { label: 'Monthly support', value: `${formatPrice(pricing.support.monthly)}/mo` },
   { label: 'Annual support', value: `${formatPrice(pricing.support.yearly)}/yr` },
 ];
