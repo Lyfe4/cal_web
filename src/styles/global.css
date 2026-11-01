@@ -253,14 +253,22 @@ img {
   }
 }
 
-.sec[data-ruled-end] > [data-ruled]:last-child,
-.sec[data-ruled-end] > :last-child > [data-ruled]:last-child,
-.sec[data-ruled-end] > :last-child > :last-child > [data-ruled]:last-child,
-.sec[data-ruled-end] > :last-child > :last-child > :last-child > [data-ruled]:last-child {
+.sec[data-ruled-end='all'] > [data-ruled]:last-child,
+.sec[data-ruled-end='all'] > :last-child > [data-ruled]:last-child,
+.sec[data-ruled-end='all'] > :last-child > :last-child > [data-ruled]:last-child,
+.sec[data-ruled-end='all'] > :last-child > :last-child > :last-child > [data-ruled]:last-child {
   --ruled-close: 0;
 }
 
 /* main raises it above Section's own padding rules */
-main .sec[data-ruled-end] {
+main .sec[data-ruled-end='all'] {
   padding-bottom: 0;
+}
+
+/* "wide": only in two columns. The page hands over the list's closing rule itself, since
+   there the list ends a column rather than the markup. */
+@media (min-width: 861px) {
+  main .sec[data-ruled-end='wide'] {
+    padding-bottom: 0;
+  }
 }

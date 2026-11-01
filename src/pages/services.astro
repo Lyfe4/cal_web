@@ -85,7 +85,13 @@ const serviceArea = [
       </div>
     </Section>
 
-    <Section id="apps" n={2} title="Apps & integrations" note="Web apps and integrations">
+    <Section
+      id="apps"
+      n={2}
+      title="Apps & integrations"
+      note="Web apps and integrations"
+      ruledEnd="wide"
+    >
       <div class="apps">
         <article aria-labelledby="pkg-custom">
           <h3 id="pkg-custom">Custom</h3>
@@ -94,26 +100,28 @@ const serviceArea = [
             Frontend work on web apps, new or existing, and connecting your site or app to the tools
             you already use.
           </p>
-          <ul class="ruled">
+          <ul class="ruled" data-ruled>
             {appsWork.map((item) => (
               <li>{item}</li>
             ))}
           </ul>
-          {appsExample && (
-            <p class="example">
-              {/* One expression, so no template whitespace lands before the punctuation */}
-              {[
-                appsExample.before,
-                <a href={appsExample.href}>{appsExample.link}</a>,
-                appsExample.after,
-              ]}
-            </p>
-          )}
-          <p class="mono price apps-price">{appsPricing}</p>
-          <a class="btn btn-ghost" href="/contact?package=custom">
-            Get a quote <span class="visually-hidden">for apps and integrations</span>
-            <span aria-hidden="true">→</span>
-          </a>
+          <div class="apps-aside">
+            {appsExample && (
+              <p class="example">
+                {/* One expression, so no template whitespace lands before the punctuation */}
+                {[
+                  appsExample.before,
+                  <a href={appsExample.href}>{appsExample.link}</a>,
+                  appsExample.after,
+                ]}
+              </p>
+            )}
+            <p class="mono price apps-price">{appsPricing}</p>
+            <a class="btn btn-ghost" href="/contact?package=custom">
+              Get a quote <span class="visually-hidden">for apps and integrations</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
         </article>
       </div>
     </Section>
@@ -200,7 +208,7 @@ const serviceArea = [
     margin: 0 0 var(--space-28);
     padding: 0;
     list-style: none;
-    border-bottom: var(--border);
+    border-bottom: var(--ruled-close, var(--border));
   }
 
   .ruled li {
@@ -298,6 +306,85 @@ const serviceArea = [
     .apps,
     .extras {
       grid-template-columns: 1fr;
+    }
+  }
+
+  /* Side by side, the two packages share their rows, so a description that wraps to two
+     lines in one column moves both columns down together: the Best for lines, the lists and
+     both Get a quote buttons sit level. Starter has no intro line, so its row 5 stays empty
+     and both lists still start on the same line. */
+  @supports (grid-template-rows: subgrid) {
+    @media (min-width: 861px) {
+      .packages {
+        grid-template-rows: repeat(7, auto);
+        row-gap: 0;
+      }
+
+      .packages article {
+        display: grid;
+        grid-row: span 7;
+        grid-template-rows: subgrid;
+      }
+
+      .packages h3 {
+        grid-row: 1;
+      }
+
+      .packages .price {
+        grid-row: 2;
+      }
+
+      .packages .summary {
+        grid-row: 3;
+      }
+
+      .packages .best {
+        grid-row: 4;
+      }
+
+      .packages .intro {
+        grid-row: 5;
+      }
+
+      .packages .ruled {
+        grid-row: 6;
+        align-self: start;
+      }
+
+      .packages .btn {
+        grid-row: 7;
+        justify-self: start;
+      }
+
+      /* Apps on the same two columns: the work on the left, and beside the list the example,
+         the terms and the button, starting level with the list's first item */
+      .apps article {
+        display: grid;
+        grid-column: 1 / -1;
+        grid-template-columns: subgrid;
+        align-items: start;
+      }
+
+      .apps article > :not(.apps-aside) {
+        grid-column: 1;
+      }
+
+      .apps-aside {
+        grid-row: 4;
+        grid-column: 2;
+        /* The list's first rule and row padding, so the first lines sit level */
+        padding-top: 12px;
+      }
+
+      .apps-aside .example {
+        margin-top: 0;
+      }
+
+      /* The list is the tallest column and ends the section, so Extras' rule closes its last
+         row (Section's ruledEnd="wide") */
+      .apps .ruled {
+        --ruled-close: 0;
+      }
     }
   }
 

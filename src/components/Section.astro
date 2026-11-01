@@ -9,9 +9,11 @@ export interface Props {
   note?: string | undefined;
   /** Names the section's scroll-driven view timeline, e.g. for a page's section map */
   timeline?: string | undefined;
-  /** The section ends on a ruled list at every width, not just in one column, so the list
-      drops its closing rule on desktop too (see the rules note in global.css) */
-  ruledEnd?: boolean;
+  /** The section ends on a ruled list in two columns too, not just in one, so the list's
+      closing rule is the next section's rule on desktop as well (see global.css). "wide"
+      when that's only true in two columns, e.g. the list is the tallest column but not the
+      last thing in the markup */
+  ruledEnd?: boolean | 'wide';
 }
 
 const { id, n, title, note, timeline, ruledEnd = false } = Astro.props;
@@ -22,7 +24,7 @@ const heading = n === undefined ? title : `${String(n).padStart(2, '0')} / ${tit
   class="sec"
   id={id}
   aria-labelledby={`${id}-h`}
-  data-ruled-end={ruledEnd || undefined}
+  data-ruled-end={ruledEnd === 'wide' ? 'wide' : ruledEnd ? 'all' : undefined}
   style={timeline ? `view-timeline-name: ${timeline}` : undefined}
 >
   <div class="sec-head mono">
