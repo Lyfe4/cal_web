@@ -5,14 +5,13 @@ import Section from '../components/Section.astro';
 import SpecList from '../components/SpecList.astro';
 import Process from '../components/home/Process.astro';
 import ContactCta from '../components/home/ContactCta.astro';
-import ProjectLinks from '../components/ProjectLinks.astro';
 import { appsPricing, appsWork, extras, faqs, websitePackages } from '../data/packages';
-import { getProjects } from '../data/projects';
 import { businessId } from '../data/schema';
+import { services } from '../data/services';
 import { formatPrice, pricing, serviceAreas, siteUrl } from '../data/site';
 
-// My own projects (no client) are the examples of app and integration work
-const examples = (await getProjects()).filter((p) => !p.data.client);
+// The same real example the home page gives for apps and integrations
+const appsExample = services.find((service) => service.id === 'apps')?.example;
 
 const serviceArea = [
   { '@type': 'AdministrativeArea', name: 'New England, NSW' },
@@ -100,16 +99,22 @@ const serviceArea = [
               <li>{item}</li>
             ))}
           </ul>
+          {appsExample && (
+            <p class="example">
+              {/* One expression, so no template whitespace lands before the punctuation */}
+              {[
+                appsExample.before,
+                <a href={appsExample.href}>{appsExample.link}</a>,
+                appsExample.after,
+              ]}
+            </p>
+          )}
           <p class="mono price apps-price">{appsPricing}</p>
           <a class="btn btn-ghost" href="/contact?package=custom">
             Get a quote <span class="visually-hidden">for apps and integrations</span>
             <span aria-hidden="true">→</span>
           </a>
         </article>
-        <div>
-          <h3 class="mono label">Examples</h3>
-          <ProjectLinks projects={examples} />
-        </div>
       </div>
     </Section>
 
@@ -209,18 +214,20 @@ const serviceArea = [
     margin-bottom: var(--space-24);
   }
 
+  /* One real example under the list, as on the home page */
+  .apps .ruled {
+    margin-bottom: 0;
+  }
+
+  .example {
+    margin: var(--space-16) 0 var(--space-28);
+    color: var(--text-2);
+    font-size: var(--text-ui);
+  }
+
   .apps-price {
     margin: 0 0 var(--space-20);
     color: var(--text-3);
-  }
-
-  /* A mono label, not a heading size: it sits under the h3 rule above */
-  .label {
-    margin: 0 0 var(--space-12);
-    color: var(--text-3);
-    font-size: var(--text-label);
-    font-weight: var(--weight-regular);
-    line-height: var(--leading-body);
   }
 
   .extras {

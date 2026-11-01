@@ -360,9 +360,10 @@ const timelineScope = `timeline-scope: ${mapEntries.map((entry) => entry.timelin
       grid-template-columns: minmax(0, 1fr);
     }
 
-    /* Stacked, the facts end the overview, right above the first section's rule */
+    /* Stacked, the facts end the overview, and the first section's rule closes their last row */
     .overview {
       --ruled-close: 0;
+      padding-bottom: 0;
     }
   }
 
@@ -374,7 +375,6 @@ const timelineScope = `timeline-scope: ${mapEntries.map((entry) => entry.timelin
 
     .overview {
       row-gap: var(--space-24);
-      padding-bottom: var(--space-48);
     }
 
     .case-body.has-shots {

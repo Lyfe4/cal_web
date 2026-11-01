@@ -129,4 +129,11 @@ if (!fuelFinder || !lenbuild) throw new Error('The Armidale page needs Fuel Find
     color: var(--text);
     text-underline-offset: 0.2em;
   }
+
+  /* Stacked, the featured facts end right above the note, so its rule closes their last row */
+  @media (max-width: 860px) {
+    .also {
+      margin-top: 0;
+    }
+  }
 </style>
