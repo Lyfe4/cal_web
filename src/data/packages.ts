@@ -8,8 +8,8 @@ export interface WebsitePackage {
   /** One sentence on what it is */
   summary: string;
   bestFor: string;
-  /** Shown above the list, e.g. "Everything in Starter, plus:" */
-  intro?: string;
+  /** Mono label above the list, e.g. "Everything in Starter, plus" */
+  intro: string;
   includes: string[];
 }
 
@@ -21,9 +21,9 @@ export const websitePackages: WebsitePackage[] = [
     from: pricing.starter.from,
     summary: 'A two-page website that gets a new business online properly.',
     bestFor: 'New businesses and sole traders',
+    intro: 'Includes',
     includes: [
-      'Two pages, designed around your business',
-      'Works on phones, tablets and desktops',
+      'Two pages, designed around your business, for phones, tablets and desktops',
       'Enquiry form that sends straight to your inbox',
       'Set up to be found on Google: page titles, descriptions and a sitemap',
       "Hosted on Netlify's free plan and launched",
@@ -37,7 +37,7 @@ export const websitePackages: WebsitePackage[] = [
     from: pricing.professional.from,
     summary: 'A multi-page website with room to show your work, services and reviews.',
     bestFor: 'Established businesses',
-    intro: 'Everything in Starter, plus:',
+    intro: 'Everything in Starter, plus',
     includes: [
       'Up to seven pages',
       'A more detailed design built around your brand',

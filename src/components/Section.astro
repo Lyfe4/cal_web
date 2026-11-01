@@ -36,7 +36,7 @@ const heading = n === undefined ? title : `${String(n).padStart(2, '0')} / ${tit
 
 <style>
   .sec {
-    padding: var(--space-20) 0 var(--space-72);
+    padding: var(--space-20) 0 var(--space-section-end);
     border-top: var(--border);
     scroll-margin-top: var(--space-16);
   }
@@ -60,13 +60,9 @@ const heading = n === undefined ? title : `${String(n).padStart(2, '0')} / ${tit
     }
   }
 
-  /* Phones: less air at the end of each section, so the page reads as one run of content
-     rather than blocks separated by empty screens */
+  /* Phones: less air at the end of each section (--space-section-end drops to 48px), so the
+     page reads as one run of content rather than blocks separated by empty screens */
   @media (max-width: 480px) {
-    .sec {
-      padding-bottom: var(--space-48);
-    }
-
     .sec-head {
       margin-bottom: var(--space-20);
     }

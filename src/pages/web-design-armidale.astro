@@ -130,10 +130,12 @@ if (!fuelFinder || !lenbuild) throw new Error('The Armidale page needs Fuel Find
     text-underline-offset: 0.2em;
   }
 
-  /* Stacked, the featured facts end right above the note, so its rule closes their last row */
+  /* Stacked, the featured facts end right above the note, so its rule closes their last row
+     and the space above the note moves below the rule */
   @media (max-width: 860px) {
     .also {
       margin-top: 0;
+      padding-top: calc(var(--space-20) + var(--space-48));
     }
   }
 </style>

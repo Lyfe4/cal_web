@@ -67,6 +67,8 @@
   --space-hero-top: clamp(48px, 8vw, 112px);
   --space-hero-bottom: clamp(40px, 5vw, 64px);
   --space-lede-top: clamp(32px, 4vw, 48px);
+  /* Space at the end of a section, above the next section's rule (48px on phones, below) */
+  --space-section-end: var(--space-72);
 
   /* Layout */
   --container: 1280px;
@@ -91,6 +93,12 @@
   --duration-morph: 340ms; /* a project name or frame carried across pages */
   --duration-develop: 400ms; /* a lazy screenshot appearing in its frame */
   --ease-out: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (max-width: 480px) {
+  :root {
+    --space-section-end: var(--space-48);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

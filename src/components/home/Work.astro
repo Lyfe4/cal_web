@@ -155,10 +155,21 @@ const [featured, ...rest] = Astro.props.projects;
   }
 
   /* Stacked, the featured project ends on its facts table, whose last row the first project
-     row's rule closes (global.css, "One line where a ruled list ends a block") */
+     row's rule closes; the space under the featured project moves below that rule (global.css,
+     "One line where a ruled list ends a block") */
   @media (max-width: 860px) {
     .featured {
       padding-bottom: 0;
+    }
+
+    .featured + .projects li:first-child {
+      padding-top: calc(var(--space-24) + var(--space-56));
+    }
+  }
+
+  @media (max-width: 480px) {
+    .featured + .projects li:first-child {
+      padding-top: calc(var(--space-24) + var(--space-40));
     }
   }
 </style>
