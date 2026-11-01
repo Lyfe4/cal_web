@@ -1,0 +1,451 @@
+---
+// Motion lab: playable prototypes for the motion pass, built from the real components.
+// noindex, left out of the sitemap (astro.config.mjs) and not linked from any nav.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import Section from '../components/Section.astro';
+import Frame from '../components/Frame.astro';
+import Status from '../components/Status.astro';
+import Work from '../components/home/Work.astro';
+import Process from '../components/home/Process.astro';
+import ContactCta from '../components/home/ContactCta.astro';
+import { getProjects, projectPath } from '../data/projects';
+
+const projects = await getProjects();
+const [lenbuild] = projects;
+const shot = projects.flatMap((project) => project.data.gallery)[0];
+
+interface Spec {
+  label: string;
+  value: string;
+}
+
+const specs: Record<string, Spec[]> = {
+  morph: [
+    { label: 'Where', value: 'Home, Armidale and New England pages, case studies (Next project)' },
+    {
+      label: 'How',
+      value: '@view-transition { navigation: auto } and view-transition-name on the name and frame',
+    },
+    { label: 'JS', value: '0 KB' },
+    { label: 'Support', value: 'Chrome, Edge, Safari 18.2+. Firefox: a normal page load' },
+    {
+      label: 'Reduced motion',
+      value: 'Opt-in is inside a no-preference query: no transition at all',
+    },
+  ],
+  log: [
+    { label: 'Where', value: 'Footer, every page' },
+    {
+      label: 'How',
+      value: 'Build time and commit at render; page weight measured from dist/ after the build',
+    },
+    { label: 'JS', value: '0 KB' },
+    { label: 'Reduced motion', value: 'Nothing moves' },
+  ],
+  status: [
+    { label: 'Where', value: 'Every Live and In progress status' },
+    {
+      label: 'How',
+      value:
+        'CSS keyframes, started by an IntersectionObserver each time it comes on screen, with a 1.5 s cooldown after each run',
+    },
+    { label: 'JS', value: 'About 0.3 KB, compressed' },
+    { label: 'Reduced motion', value: 'Never plays; dots are still' },
+  ],
+  develop: [
+    {
+      label: 'Where',
+      value: 'Every lazy-loaded frame not on screen at load. Never a first-screen frame',
+    },
+    {
+      label: 'How',
+      value: 'data-developing while the image loads, opacity transition when it lands',
+    },
+    { label: 'JS', value: 'About 0.2 KB, compressed' },
+    { label: 'Reduced motion', value: 'Not applied: the image shows as soon as it loads' },
+  ],
+  weight: [
+    { label: 'Where', value: 'Large project names on the home page' },
+    {
+      label: 'How',
+      value: 'font-weight 500 to 560 on the variable axis, tracking tightened to hold the width',
+    },
+    { label: 'JS', value: '0 KB' },
+    { label: 'Reduced motion', value: 'Weight still changes on hover, with no transition' },
+  ],
+  process: [
+    { label: 'Where', value: 'Home, 03 How I work' },
+    {
+      label: 'How',
+      value:
+        'Scroll-driven view() timeline with the reading line 60% down; IntersectionObserver fallback',
+    },
+    { label: 'JS', value: 'About 0.3 KB, compressed' },
+    { label: 'Support', value: 'Chrome, Edge, Safari 26: scroll-driven. Firefox: the observer' },
+    { label: 'Reduced motion', value: 'Off; the list is static' },
+  ],
+  map: [
+    {
+      label: 'Where',
+      value: 'Case studies, left margin, only when it clears the content column by 24px',
+    },
+    {
+      label: 'How',
+      value: 'Named view timelines in timeline-scope; IntersectionObserver where unsupported',
+    },
+    { label: 'JS', value: 'About 0.5 KB, compressed (fit check and fallback)' },
+    { label: 'Reduced motion', value: 'Nothing moves; the current section is still brighter' },
+  ],
+  copy: [
+    { label: 'Where', value: 'Contact blocks and the footer; every arrow button' },
+    {
+      label: 'How',
+      value: 'Clipboard API, "Email address copied" in a status region; CSS translate on the arrow',
+    },
+    { label: 'JS', value: 'About 0.3 KB, compressed' },
+    { label: 'Reduced motion', value: 'The word swaps without the drop; the arrow doesn’t move' },
+  ],
+};
+---
+
+<BaseLayout title="Motion lab" description="Prototypes for the motion pass on this site." noindex>
+  <div class="wrap">
+    <PageHead title="Motion lab." meta={['Not linked', 'Not indexed', '8 prototypes']}>
+      Each prototype below is wired into the real pages on this branch too. Try them with your
+      phone's reduce-motion setting on and off.
+    </PageHead>
+
+    <Section id="morph" n={1} title="Name and frame carry into the case study" note="Wired in">
+      <div class="intro">
+        <p>
+          Click a project. Its name and screenshot move to where they sit on the case study, so you
+          can see the thing you clicked is the thing you're now reading. Next project at the bottom
+          of a case study does the same.
+        </p>
+        <dl class="spec mono">
+          {specs.morph?.map(({ label, value }) => (
+            <div>
+              <dt>{label}</dt>
+              <dd>{value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <Work projects={projects} />
+    </Section>
+
+    <Section id="weight" n={2} title="Project names firm up on hover" note="Wired in">
+      <div class="intro">
+        <p>
+          Hover or tab to Fuel Finder or Patchbay in the list above. The weight axis moves from 500
+          to 560 and the tracking tightens so the name keeps its width and never rewraps. Measured
+          on this screen:
+        </p>
+        <dl class="spec mono">
+          {specs.weight?.map(({ label, value }) => (
+            <div>
+              <dt>{label}</dt>
+              <dd>{value}</dd>
+            </div>
+          ))}
+          <div>
+            <dt>Width change</dt>
+            <dd data-weight-measure>Needs JavaScript to measure</dd>
+          </div>
+        </dl>
+      </div>
+    </Section>
+
+    <Section id="status" n={3} title="Status says what kind of state it is" note="Wired in">
+      <div class="intro">
+        <p>
+          A live site pings like a server answering. Work in progress blinks like an activity light.
+          Each time a status comes on screen it plays once, for under five seconds, then stays
+          still. Scroll away and back to see it again.
+        </p>
+        <dl class="spec mono">
+          {specs.status?.map(({ label, value }) => (
+            <div>
+              <dt>{label}</dt>
+              <dd>{value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <div class="demo-row mono">
+        <Status status="live" />
+        <Status status="in progress" />
+        <span class="wip">
+          <span class="dot"></span>In progress<span class="cursor" aria-hidden="true"></span>
+        </span>
+        <button class="btn btn-ghost" type="button" data-replay="status">
+          Replay
+        </button>
+      </div>
+      <p class="aside">
+        The third is the blinking-cursor variant from the planning notes, shown for comparison only.
+        It reads as a terminal prop, which the brief rules out, so it isn't wired in.
+      </p>
+    </Section>
+
+    <Section id="develop" n={4} title="Screenshots develop in their frame" note="Wired in">
+      <div class="intro">
+        <p>
+          On a slow connection a lazy screenshot used to pop in mid-scroll. Now the frame and its
+          address bar are there first and the capture fades in when it has loaded. No fake progress
+          bar: the fade starts when the image really arrives. On a fast connection images load
+          before you reach them, so there's nothing to see; use Replay, or throttle the network.
+        </p>
+        <dl class="spec mono">
+          {specs.develop?.map(({ label, value }) => (
+            <div>
+              <dt>{label}</dt>
+              <dd>{value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      {shot && lenbuild && (
+        <div class="demo-frame" data-develop-demo>
+          <Frame
+            url={projects.find((p) => p.data.gallery.includes(shot))?.data.url ?? lenbuild.data.url}
+            image={shot.src}
+            alt={shot.alt}
+            sizes="(max-width: 860px) calc(100vw - 2 * clamp(16px, 3vw, 40px) - 18px), 520px"
+          />
+          <button class="btn btn-ghost" type="button" data-replay="develop">
+            Replay
+          </button>
+        </div>
+      )}
+    </Section>
+
+    <Section id="process" n={5} title="How I work marks what you've read" note="Wired in">
+      <div class="intro">
+        <p>
+          Scroll slowly. As each step passes a reading line 60% down the screen its rule draws
+          across and its number brightens, so the steps you've read stay marked. Scroll back up and
+          it undoes.
+        </p>
+        <dl class="spec mono">
+          {specs.process?.map(({ label, value }) => (
+            <div>
+              <dt>{label}</dt>
+              <dd>{value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <Process />
+    </Section>
+
+    <Section id="map" n={6} title="Section map on case studies" note="Wired in">
+      <div class="intro">
+        <p>
+          On a wide window, a case study lists its sections in the left margin, each a link with a
+          short fixed tick. The one you're reading is brighter; nothing else changes. It only shows
+          when it clears the content column by 24px, which needs a window about 1600px wide.
+        </p>
+        <dl class="spec mono">
+          {specs.map?.map(({ label, value }) => (
+            <div>
+              <dt>{label}</dt>
+              <dd>{value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      {lenbuild && (
+        <a class="btn btn-ghost" href={projectPath(lenbuild)}>
+          Open the LenBuild case study <span aria-hidden="true">→</span>
+        </a>
+      )}
+    </Section>
+
+    <Section id="copy" n={7} title="Copy the email, and arrows that lean" note="Wired in">
+      <div class="intro">
+        <p>
+          Plenty of computers have no mail app set up, so a mailto link does nothing. Copy puts the
+          address on the clipboard and says so, to screen readers too. It sits beside the email in
+          the contact block below and in the footer. Arrow buttons lean 3px the way they go.
+        </p>
+        <dl class="spec mono">
+          {specs.copy?.map(({ label, value }) => (
+            <div>
+              <dt>{label}</dt>
+              <dd>{value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <ContactCta />
+    </Section>
+
+    <Section id="log" n={8} title="Build log in the footer" note="Wired in">
+      <div class="intro">
+        <p>
+          The last line of the footer, below. When this page was built, from which commit, and what
+          this page weighs, measured from the built files. Nothing in it is typed by hand, so it
+          can't go stale or overclaim.
+        </p>
+        <dl class="spec mono">
+          {specs.log?.map(({ label, value }) => (
+            <div>
+              <dt>{label}</dt>
+              <dd>{value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </Section>
+  </div>
+</BaseLayout>
+
+<script>
+  // Lab-only controls: replay a prototype, and measure the hover weight change.
+
+  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-replay]')) {
+    button.addEventListener('click', () => {
+      const section = button.closest('section');
+      if (!section) return;
+      if (button.dataset.replay === 'status') {
+        const statuses = section.querySelectorAll('[data-status], .cursor');
+        statuses.forEach((status) => status.removeAttribute('data-seen'));
+        // Restart the animations on the next frame
+        requestAnimationFrame(() =>
+          statuses.forEach((status) => status.toggleAttribute('data-seen', true))
+        );
+      }
+      if (button.dataset.replay === 'develop') {
+        const frame = section.querySelector('.frame');
+        frame?.toggleAttribute('data-developing', true);
+        window.setTimeout(() => frame?.removeAttribute('data-developing'), 600);
+      }
+    });
+  }
+
+  // Width of each large name at rest and on hover, so the claim is checked on this screen
+  const output = document.querySelector('[data-weight-measure]');
+  const names = [...document.querySelectorAll<HTMLElement>('.projects h3 a')];
+  if (output && names.length > 0) {
+    document.fonts.ready.then(() => {
+      const results = names.map((name) => {
+        const style = getComputedStyle(name);
+        const probe = document.createElement('span');
+        probe.textContent = name.textContent;
+        probe.style.cssText = `position:absolute;visibility:hidden;white-space:nowrap;font:${style.font};letter-spacing:${style.letterSpacing}`;
+        document.body.append(probe);
+        const rest = probe.getBoundingClientRect().width;
+        probe.style.fontWeight = '560';
+        probe.style.letterSpacing = getComputedStyle(document.documentElement).getPropertyValue(
+          '--tracking-project-firm'
+        );
+        const firm = probe.getBoundingClientRect().width;
+        probe.remove();
+        const change = ((firm - rest) / rest) * 100;
+        return `${name.textContent?.trim()} ${change >= 0 ? '+' : ''}${change.toFixed(1)}%`;
+      });
+      output.textContent = results.join(', ');
+    });
+  }
+</script>
+
+<style>
+  .intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-28) var(--space-64);
+    margin-bottom: var(--space-48);
+  }
+
+  .intro p {
+    margin: 0;
+    max-width: 52ch;
+    color: var(--text-2);
+    font-size: var(--text-desc);
+  }
+
+  .spec {
+    margin: 0;
+    border-top: var(--border);
+  }
+
+  .spec div {
+    display: grid;
+    grid-template-columns: 14ch minmax(0, 1fr);
+    gap: var(--space-16);
+    padding: 11px 0;
+    border-bottom: var(--border);
+  }
+
+  .spec dt {
+    color: var(--text-3);
+  }
+
+  .spec dd {
+    margin: 0;
+    color: var(--text-2);
+    text-transform: none;
+  }
+
+  /* The site's ghost button is only ever a link; as a button it needs the UA fill removed */
+  button.btn {
+    background: none;
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .demo-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-16) var(--space-40);
+  }
+
+  .aside {
+    margin: var(--space-24) 0 0;
+    max-width: 52ch;
+    color: var(--text-3);
+  }
+
+  /* Lab-only comparison: a block cursor after "In progress" */
+  .cursor {
+    display: inline-block;
+    width: 0.6em;
+    height: 1.1em;
+    margin-left: 4px;
+    background: currentColor;
+    vertical-align: -0.2em;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .cursor {
+      animation: cursor 1s steps(1) infinite;
+    }
+  }
+
+  @keyframes cursor {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  .demo-frame {
+    display: grid;
+    grid-template-columns: minmax(0, 520px) auto;
+    gap: var(--space-24);
+    align-items: end;
+  }
+
+  @media (max-width: 860px) {
+    .intro,
+    .demo-frame {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .demo-frame .btn {
+      justify-self: start;
+    }
+  }
+</style>

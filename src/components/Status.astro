@@ -9,7 +9,42 @@ const { status } = Astro.props;
 const label = status === 'live' ? 'Live' : 'In progress';
 ---
 
-<span class:list={{ wip: status === 'in progress' }}>
+<span class:list={{ wip: status === 'in progress' }} data-status>
   <span class="dot"></span>
   {label}
 </span>
+
+<script>
+  // Each time a status comes on screen, its dot plays once (styles in global.css): data-seen
+  // starts it, animationend clears it. A short cooldown after each run stops fast scrolling
+  // from retriggering it over and over. Nothing is hidden without this; the dot stays still.
+  const COOLDOWN = 1500;
+  const statuses = document.querySelectorAll<HTMLElement>('[data-status]');
+  const moving = window.matchMedia('(prefers-reduced-motion: no-preference)');
+  const endedAt = new WeakMap<Element, number>();
+
+  const play = (status: Element) => {
+    if (!moving.matches || status.hasAttribute('data-seen')) return;
+    if (performance.now() - (endedAt.get(status) ?? -Infinity) < COOLDOWN) return;
+    status.toggleAttribute('data-seen', true);
+  };
+
+  if (statuses.length > 0 && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) if (entry.isIntersecting) play(entry.target);
+      },
+      // Wait until it's a little way up the screen, not just touching the bottom edge
+      { rootMargin: '0px 0px -15% 0px' }
+    );
+
+    statuses.forEach((status) => {
+      observer.observe(status);
+      // Fires once the run's last iteration ends (from the dot or its ::after ring)
+      status.addEventListener('animationend', () => {
+        status.removeAttribute('data-seen');
+        endedAt.set(status, performance.now());
+      });
+    });
+  }
+</script>

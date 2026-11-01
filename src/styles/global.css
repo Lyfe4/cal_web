@@ -103,8 +103,18 @@ img {
   border-color: var(--text-3);
 }
 
+/* The arrow leans the way the button goes */
+.btn > [aria-hidden='true']:last-child {
+  transition: translate var(--duration) var(--ease-out);
+}
+
+.btn:hover > [aria-hidden='true']:last-child {
+  translate: 3px 0;
+}
+
 /* Status (3.5.6): a 7px dot plus a mono word */
 .dot {
+  position: relative;
   display: inline-block;
   width: var(--dot-size);
   height: var(--dot-size);
@@ -120,6 +130,70 @@ img {
 
 .wip .dot {
   background: var(--accent);
+}
+
+/* When a status first scrolls into view (data-seen, set by Status.astro), its dot says
+   what kind of state it is, then goes still: a live site pings like a server answering,
+   work in progress blinks like an activity light. Both stop within 5 seconds (WCAG 2.2.2). */
+@media (prefers-reduced-motion: no-preference) {
+  [data-seen]:not(.wip) .dot::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: inherit;
+    opacity: 0;
+    animation: ping 1.6s var(--ease-out) 3;
+  }
+
+  .wip[data-seen] .dot {
+    animation: working 1.2s ease-in-out 4;
+  }
+}
+
+@keyframes ping {
+  from {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(2.8);
+  }
+}
+
+@keyframes working {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+/* Cross-page view transitions (Chrome, Edge, Safari 18.2+). A project's name and frame
+   carry over into its case study; everything else cross-fades quickly. Browsers without
+   support, and anyone who prefers reduced motion, get a plain page load. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+
+::view-transition-group(*) {
+  animation-duration: var(--duration-morph);
+  animation-timing-function: var(--ease-out);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--duration);
+}
+
+/* Text snapshots scale with the box; keep their shape instead of stretching */
+::view-transition-old(*),
+::view-transition-new(*) {
+  height: 100%;
+  object-fit: contain;
+  object-position: left top;
 }
 
 /* Stub pages until each page's phase lands */
