@@ -182,6 +182,32 @@ The scale is bimodal: big statements (42–104px) and small functional text (11�
 - Don't use em dashes in rendered copy. Use full stops, commas or a colon (the existing site rule).
 - No live clock, availability pill, entrance animation on hero content, or invented numbers.
 
+### 3.8 Motion
+
+Motion is small, short and tells you something: where you are, what state a project is in, or that something worked. It's never decoration and never gates content. Approved in the motion lab (PR #6) and checked with `npm run test:browsers`.
+
+| Effect | Where | What it does |
+|---|---|---|
+| Page transitions | Project names and frames (home rows, featured project, local pages) into their case study; Next project at the end of a case study | The name and screenshot move to their place on the next page (cross-document View Transitions, CSS only); everything else cross-fades quickly |
+| Build log | Last line of the footer, every page | Build time, commit (linked), and this page's compressed HTML and JS, measured from the built files after the build. Only facts the build produces |
+| Status dots | Every Live / In progress status | Each time a status comes on screen it plays once: Live pings 3 times, In progress blinks 4 times (4.8s each), then still. 1.5s cooldown before it can play again |
+| How I work lines | Home, How I work | As each step passes a reading line 60% down the screen its rule draws across in `--text-3` and its number brightens; scrolling back up undoes it |
+| Copy email | Beside the email in the contact blocks and the footer | A small bordered button (28px) copies the address, shows "Copied" and announces "Email address copied". The mailto link stays |
+| Arrow lean | Every button ending in → | The arrow moves 3px the way it points on hover |
+| Section map | Case studies, left margin | A fixed 8px tick, number and name per section ("01 The brief"); the current section is brighter text, nothing else changes. Shown only when it clears the content column by 24px (about 1600px+ windows) |
+| Screenshot fade | Lazy-loaded frames | On a slow connection the screenshot fades in (400ms) inside its frame once loaded. Never on a frame that's on screen when the page loads |
+| Name weight | Large project names on the home page | On hover or focus the weight goes 500 to 560 and tracking tightens to `--tracking-project-firm`, so the width holds (within 0.3%) and the line never rewraps |
+
+Rules:
+- **`prefers-reduced-motion: reduce` turns everything off.** No page transitions, no dot animations, no drawing lines, no fades, no transitions on hover. Content and controls work exactly the same. Only state shown by colour stays (the section map's current section, hover colours), with no movement.
+- **No entrance animation on the hero**, or on any content as the page loads. Nothing is hidden until JS runs.
+- **CLS stays 0.** Motion uses `transform`, `opacity` and colour only. Anything a script reveals is already in the layout (the copy button is rendered visible and only removed when there's no JS or clipboard).
+- **Scroll-driven CSS first, with a JS fallback.** Where the browser has scroll-driven animations (Chrome, Edge, Safari 26), the How I work lines and the section map run in CSS. Elsewhere (Firefox), a small IntersectionObserver script produces the same states. Route `animation-timeline` through a custom property: the CSS minifier otherwise folds it into the `animation` shorthand, which can't carry a timeline, and the browser drops the animation.
+- **Page transitions are progressive enhancement.** Chrome/Edge 126+ and Safari 18.2+ get them; Firefox loads the page normally, with no errors.
+- **Animations stop within 5 seconds** (WCAG 2.2.2). Nothing loops forever.
+- **No libraries.** Vanilla CSS and a few small module scripts (about 1.7 KB compressed in all), loaded from `'self'` under the CSP. Durations come from the motion tokens in `tokens.css`.
+- **Cut, don't add:** no scroll-scrubbed text reveals, text scrambles, typing effects, blinking cursors, "machine view" toggles or screenshot scroll-throughs.
+
 ---
 
 ## 4. Reference sites to study
