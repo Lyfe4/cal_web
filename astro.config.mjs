@@ -49,8 +49,6 @@ export default defineConfig({
   compressHTML: true,
   integrations: [
     sitemap({
-      // The motion lab is a working page, not part of the site
-      filter: (page) => new URL(page).pathname !== '/lab',
       serialize: (item) => {
         const lastmod = lastCommitDate(pageSources(new URL(item.url).pathname));
         return lastmod ? { ...item, lastmod } : item;
