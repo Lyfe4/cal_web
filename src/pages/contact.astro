@@ -11,6 +11,7 @@ const sentence = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 ---
 
 <BaseLayout
+  contactOnPage
   title="Contact"
   description={`Ask for a quote or a chat about your website or app. Replies ${replyPromise}. In person ${serviceAreas.inPerson}, remote ${serviceAreas.remote}.`}
   schema={{ '@type': 'ContactPage', about: { '@id': businessId } }}

@@ -159,7 +159,9 @@ The scale is bimodal: big statements (42–104px) and small functional text (11�
    - On mobile the two lists stack, prices first. Never interleave the two lists. Under 480px the leaders hide and values wrap under their labels.
 8. **Footer:**
    - On the left, a footer nav in the mono label + link style: two rows, each led by a `--text-3` label, with `--text-2` links that underline. "Site": Work, Services, About, Contact. "Areas": Armidale, Tamworth, New England. The labels share a column so the links line up; at 375px each row's links wrap within it.
-   - On the right, mono meta in `--text-3`: business name · address; phone; email; ABN. Under 860px it stacks below the nav, left-aligned.
+   - On the right, mono meta in `--text-3`: business name · address, then ABN. Under 860px it stacks below the nav, left-aligned.
+   - Phone and email (with its Copy button) appear in the footer only on pages that don't already show them. Pages with a Contact section, and /contact with its own details, pass `contactOnPage` to `BaseLayout`, so the footer doesn't repeat them straight after; the 404 keeps them so they're on every page. The sitewide structured data (NAP) always carries them.
+   - Last, below a 1px rule across both columns: the build log (see 3.8).
 9. **Testimonial quotation marks** ("Kind words" on the homepage, "What they said" on case studies):
    - Real typographic quotes, “ and ” (in the Geist subset), in `--text-3`. Never the accent, and never an icon or graphic.
    - Added in CSS (`::before` on the opening sentence, `::after` on the last paragraph), so the stored quote stays word for word. They use empty alt text (`content: '\201C' / ''`) so screen readers don't read them out; the `<blockquote>` already marks it as a quote.
@@ -199,7 +201,7 @@ Motion is small, short and tells you something: where you are, what state a proj
 | Build log | Last line of the footer, every page | Build time, commit (linked), and this page's compressed HTML and JS, measured from the built files after the build. Only facts the build produces |
 | Status dots | Every Live / In progress status | Each time a status comes on screen it plays once: Live pings 3 times, In progress blinks 4 times (4.8s each), then still. 1.5s cooldown before it can play again |
 | How I work lines | /services, How I work | As each step passes a reading line 60% down the screen its rule draws across in `--text-3` and its number brightens; scrolling back up undoes it |
-| Copy email | Beside the email in the contact blocks and the footer | A small bordered button (28px) copies the address, shows "Copied" and announces "Email address copied". The mailto link stays |
+| Copy email | Beside the email in the Contact sections, and in the footer on pages without one (the 404) | A small bordered button (28px) copies the address, shows "Copied" and announces "Email address copied". The mailto link stays |
 | Arrow lean | Every button ending in → | The arrow moves 3px the way it points on hover |
 | Section map | Case studies, left margin | A fixed 8px tick, number and name per section ("01 The brief"); the current section is brighter text, nothing else changes. Shown only when it clears the content column by 24px (about 1600px+ windows) |
 | Screenshot fade | Lazy-loaded frames | On a slow connection the screenshot fades in (400ms) inside its frame once loaded. Never on a frame that's on screen when the page loads |

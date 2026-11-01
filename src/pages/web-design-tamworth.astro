@@ -40,7 +40,12 @@ const steps = [
 ];
 ---
 
-<BaseLayout title={page.title} description={page.description} schema={localPageSchema(page)}>
+<BaseLayout
+  title={page.title}
+  description={page.description}
+  schema={localPageSchema(page)}
+  contactOnPage
+>
   <div class="wrap">
     <PageHead
       title={page.heading}

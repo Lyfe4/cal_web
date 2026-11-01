@@ -23,6 +23,7 @@ const ownProjects = (await getProjects()).filter((p) => !p.data.client);
 ---
 
 <BaseLayout
+  contactOnPage
   title={`About ${person.name}`}
   description={`${person.name}, frontend developer in ${shortLocation}. Studied computer science at UNE, worked in-house on production web apps, now builds for businesses Australia-wide.`}
   ogType="profile"

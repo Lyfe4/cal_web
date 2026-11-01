@@ -16,7 +16,12 @@ const lenbuild = projects.find((p) => p.data.slug === 'lenbuild');
 if (!fuelFinder || !lenbuild) throw new Error('The Armidale page needs Fuel Finder and LenBuild');
 ---
 
-<BaseLayout title={page.title} description={page.description} schema={localPageSchema(page)}>
+<BaseLayout
+  title={page.title}
+  description={page.description}
+  schema={localPageSchema(page)}
+  contactOnPage
+>
   <div class="wrap">
     <PageHead
       title={page.heading}
