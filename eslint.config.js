@@ -23,6 +23,11 @@ export default defineConfig(
     files: ['*.{js,mjs}', 'scripts/**/*.js'],
     languageOptions: { globals: globals.node },
   },
+  // The browser matrix: Node, plus the callbacks it runs inside the page
+  {
+    files: ['scripts/test-browsers.js'],
+    languageOptions: { globals: { ...globals.node, ...globals.browser } },
+  },
   {
     files: ['scripts/**/*.cjs'],
     languageOptions: { sourceType: 'commonjs', globals: globals.node },

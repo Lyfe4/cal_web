@@ -21,10 +21,29 @@ The dev server runs at [http://localhost:4321](http://localhost:4321).
 - `npm run check` type-checks `.astro` and `.ts` files with `astro check`.
 - `npm run lint` checks the code with ESLint (`npm run lint:fix` auto-fixes what it can).
 - `npm test` runs the unit tests with Node's built-in test runner.
+- `npm run test:browsers` builds the site and checks its motion in Chromium, Firefox and WebKit (optional, see below).
 - `npm run format` formats everything with Prettier (`npm run format:check` only reports).
 - `npm run fonts` rebuilds the subset Geist fonts in `src/assets/fonts/` from the full fonts in `mockups/fonts/`.
 
 Before pushing, run `npm run check && npm run lint && npm test && npm run build`. Pull requests run the same four steps in GitHub Actions.
+
+### Cross-browser motion check
+
+`npm run test:browsers` builds the site, serves `dist/` locally and uses [Playwright](https://playwright.dev) to check every motion effect in Chromium, Firefox and WebKit, each with and without reduced motion (60 checks). It covers the page transitions, build log, status dots, How I work lines, copy button, arrow lean, name weight hover, section map and screenshot fade, plus console errors. It exits non-zero if anything fails.
+
+It's optional and not part of CI. The browsers are a one-off download:
+
+```bash
+npx playwright install chromium firefox webkit
+```
+
+To check a deployed site instead of a local build, for example a Netlify deploy preview:
+
+```bash
+node scripts/test-browsers.js https://deploy-preview-5--calvinrdevelopment.netlify.app
+```
+
+Playwright's WebKit and Chromium stand in for Safari and Chrome/Edge, so it's still worth a look on a real phone.
 
 ## Where things live
 
