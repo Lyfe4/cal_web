@@ -62,7 +62,6 @@ const n = (id: string) =>
       n={n('towns')}
       title="Where I work"
       note={`${newEnglandTowns.length} towns`}
-      ruledEnd
     >
       <div class="towns">
         <div class="prose">
@@ -99,7 +98,7 @@ const n = (id: string) =>
       </div>
     </Section>
 
-    <Section id="client" n={n('client')} title="A New England client" ruledEnd note="Guyra, NSW">
+    <Section id="client" n={n('client')} title="A New England client" note="Guyra, NSW">
       <FeaturedProject project={lenbuild}>
         <p>
           A family-run building company in Guyra. They build custom homes, extensions and

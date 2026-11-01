@@ -227,16 +227,17 @@ img {
 }
 
 /* One line where a ruled list ends a block, never two and never a gap (DESIGN_BRIEF 3.3).
-   When a ruled list (marked data-ruled) is the last thing before another rule (the next
-   section's, the footer's, the project rows'), the list hands its closing rule
-   (--ruled-close) to that next rule and the space moves to the other side of it: the block's
-   trailing space collapses, so the rule sits directly under the last row, and the next block
-   adds that space to its own top. Last row, one line, the full section gap, the next label,
-   the same distance from rule to label as any other section break.
-   In one column (860px and under) a list that ends its section is always the last thing on
-   screen. In two columns another column can run longer, so on wider screens a section opts
-   in with data-ruled-end (Section's ruledEnd). Components that end on a ruled list outside a
-   section (the featured project, the case-study overview) move their own space. */
+   A closing line is always the width of the list it closes. When a full-width ruled list
+   (marked data-ruled) is the last thing before another rule (the next section's, the
+   footer's, the project rows'), the list hands its closing rule (--ruled-close) to that next
+   rule and the space moves to the other side of it: the block's trailing space collapses, so
+   the rule sits directly under the last row, and the next block adds that space to its own
+   top. Last row, one line, the full section gap, the next label.
+   Only in one column (860px and under), where a list that ends its section is the last thing
+   on screen and fills the column. In two columns lists sit in a column or a capped table, so
+   they keep their own closing rule, then the normal section end and the next section's rule.
+   Components that end on a ruled list outside a section (the featured project, the
+   case-study overview, the Armidale note) move their own space. */
 @media (max-width: 860px) {
   .sec > [data-ruled]:last-child,
   .sec > :last-child > [data-ruled]:last-child,
@@ -273,33 +274,5 @@ img {
     )
     .foot {
     padding-top: calc(var(--space-40) + var(--space-section-end));
-  }
-}
-
-.sec[data-ruled-end='all'] > [data-ruled]:last-child,
-.sec[data-ruled-end='all'] > :last-child > [data-ruled]:last-child,
-.sec[data-ruled-end='all'] > :last-child > :last-child > [data-ruled]:last-child,
-.sec[data-ruled-end='all'] > :last-child > :last-child > :last-child > [data-ruled]:last-child {
-  --ruled-close: 0;
-}
-
-/* main raises these above Section's own padding rules */
-main .sec[data-ruled-end='all'] {
-  padding-bottom: 0;
-}
-
-main .sec[data-ruled-end='all'] + .sec {
-  padding-top: calc(var(--space-20) + var(--space-section-end));
-}
-
-/* "wide": only in two columns. The page hands over the list's closing rule itself, since
-   there the list ends a column rather than the markup. */
-@media (min-width: 861px) {
-  main .sec[data-ruled-end='wide'] {
-    padding-bottom: 0;
-  }
-
-  main .sec[data-ruled-end='wide'] + .sec {
-    padding-top: calc(var(--space-20) + var(--space-section-end));
   }
 }
