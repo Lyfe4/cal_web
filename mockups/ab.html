@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup A+B: Notebook with a sense of place</title>
+<style>
+@font-face { font-family: "Geist"; src: url("fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Geist Mono"; src: url("fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+
+:root {
+  --bg: #141210;
+  --surface: #1D1B18;
+  --rule: #2E2B27;
+  --text: #F0EDE8;
+  --text-2: #BEB8AF;
+  --text-3: #999288;
+  --accent: #FF6B2C;
+  --on-accent: #141210;
+  --sans: "Geist", system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, monospace;
+  --gutter: clamp(16px, 3vw, 40px);
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 16px/1.55 var(--sans); }
+::selection { background: var(--accent); color: var(--on-accent); }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.wrap { max-width: 1280px; margin: 0 auto; padding: 0 var(--gutter); }
+.mono { font-family: var(--mono); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
+
+.top { border-bottom: 1px solid var(--rule); }
+.top .wrap { display: flex; justify-content: space-between; align-items: center; height: 56px; }
+.brand { font-weight: 560; letter-spacing: -.01em; text-decoration: none; }
+.brand span { color: var(--text-3); font-weight: 400; }
+nav ul { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; }
+nav a { color: var(--text-2); text-decoration: none; }
+nav a:hover { color: var(--text); }
+
+/* Hero: place first */
+.hero { padding: clamp(40px, 7vw, 88px) 0 clamp(48px, 7vw, 88px); display: grid; grid-template-columns: 1fr; gap: 28px; }
+.place { margin: 0; font-weight: 500; font-size: clamp(56px, 11.5vw, 176px); line-height: .9; letter-spacing: -.055em; }
+.place small { display: block; font-size: .42em; letter-spacing: -.035em; color: var(--text-3); font-weight: 400; margin-top: .18em; }
+.hero-row { display: grid; grid-template-columns: 1fr 1fr; gap: 32px 64px; align-items: end; border-top: 1px solid var(--rule); padding-top: 28px; }
+.hero h1 { margin: 0; font-weight: 450; font-size: clamp(22px, 2.4vw, 32px); line-height: 1.25; letter-spacing: -.02em; max-width: 28ch; }
+.hero-side { display: flex; flex-direction: column; gap: 18px; align-items: flex-start; }
+.ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; gap: 10px; height: 44px; padding: 0 18px; font: 500 15px var(--sans); text-decoration: none; border: 1px solid var(--rule); }
+.btn-primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.btn-ghost:hover { border-color: var(--text-3); }
+.hero-note { color: var(--text-3); margin: 0; }
+
+.sec { border-top: 1px solid var(--rule); padding: 20px 0 72px; }
+.sec-head { display: flex; justify-content: space-between; gap: 16px; color: var(--text-3); margin-bottom: 28px; }
+.sec-head h2 { margin: 0; font-weight: 400; }
+
+/* Feature project */
+.feature { display: grid; grid-template-columns: 2fr 1fr; gap: 32px 48px; margin-bottom: 56px; }
+.ph { display: grid; place-items: center; background: var(--surface); border: 1px solid var(--rule); color: var(--text-3); font-family: var(--mono); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; text-align: center; padding: 12px; }
+.ph-large { aspect-ratio: 16 / 10; }
+.feature h3 { margin: 0 0 4px; font-size: clamp(32px, 4vw, 56px); font-weight: 500; letter-spacing: -.04em; line-height: 1; }
+.feature .kind { color: var(--text-3); margin: 0 0 20px; }
+.feature p { color: var(--text-2); margin: 0 0 16px; max-width: 40ch; }
+.feature dl { margin: 24px 0 0; border-top: 1px solid var(--rule); }
+.feature dl div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--rule); }
+.feature dt { color: var(--text-3); }
+.feature dd { margin: 0; text-align: right; }
+
+/* Remaining work: ruled rows */
+.rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+.rows li { display: grid; grid-template-columns: 56px 22% 1fr 140px 180px; gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--rule); align-items: start; }
+.rows .n { color: var(--text-3); }
+.rows .name { font-size: 24px; font-weight: 500; letter-spacing: -.02em; }
+.rows .desc { color: var(--text-2); }
+.rows .ph { aspect-ratio: 16 / 10; font-size: 11px; }
+.dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--text); margin-right: 8px; vertical-align: 1px; }
+.wip { color: var(--accent); }
+.wip .dot { background: var(--accent); }
+
+footer { border-top: 1px solid var(--rule); padding: 40px 0 48px; }
+.foot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px 64px; }
+.ack { margin: 0; color: var(--text-2); max-width: 52ch; font-size: 15px; }
+.foot-meta { color: var(--text-3); display: grid; gap: 8px; justify-items: end; text-align: right; }
+
+@media (max-width: 860px) {
+  nav { display: none; }
+  .hero-row, .feature, .foot-grid { grid-template-columns: 1fr; }
+  .rows li { grid-template-columns: 36px 1fr; row-gap: 6px; column-gap: 8px; }
+  .rows li > :not(.n) { grid-column: 2; }
+  .rows .ph { margin-top: 8px; }
+  .foot-meta { justify-items: start; text-align: left; }
+  .sec-head span { display: none; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#">Calvin R <span>Development</span></a>
+    <nav aria-label="Main"><ul class="mono">
+      <li><a href="#work">Work</a></li><li><a href="#">Services</a></li><li><a href="#">About</a></li><li><a href="#">Contact</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <section class="hero" aria-labelledby="h1">
+      <p class="place">Armidale, NSW<small>New England, working Australia-wide</small></p>
+      <div class="hero-row">
+        <h1 id="h1">Frontend developer in Armidale, building fast websites and web apps for businesses in New England and across Australia.</h1>
+        <div class="hero-side">
+          <div class="ctas">
+            <a class="btn btn-ghost" href="#work">See work</a>
+            <a class="btn btn-primary" href="#">Get a quote →</a>
+          </div>
+          <p class="mono hero-note">In person around New England · Remote Australia-wide · Replies within one business day</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="work" aria-labelledby="work-h">
+      <div class="sec-head mono"><h2 id="work-h" class="mono">Selected work</h2><span>01 / 03</span></div>
+
+      <article class="feature">
+        <div class="ph ph-large">LenBuild: full-colour screenshot</div>
+        <div>
+          <h3>LenBuild</h3>
+          <p class="mono kind">Client website · Guyra, NSW</p>
+          <p>Website for a custom home builder up the road in Guyra, built to show their homes and bring in enquiries from local searches.</p>
+          <a class="btn btn-ghost" href="#">Read the case study →</a>
+          <dl class="mono">
+            <div><dt>Client</dt><dd>LenBuild</dd></div>
+            <div><dt>Type</dt><dd>Website</dd></div>
+            <div><dt>Status</dt><dd><span class="dot"></span>Live</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <ol class="rows">
+        <li>
+          <span class="n mono">02</span>
+          <span class="name">Fuel Finder</span>
+          <span class="desc">Live NSW &amp; ACT fuel prices, cheapest first, as a list or a map, with four months of price history.</span>
+          <span class="mono wip"><span class="dot"></span>In progress</span>
+          <div class="ph">Fuel Finder</div>
+        </li>
+        <li>
+          <span class="n mono">03</span>
+          <span class="name">Patchbay</span>
+          <span class="desc">A browser-based developer toolbox that runs entirely client-side.</span>
+          <span class="mono"><span class="dot"></span>Live</span>
+          <div class="ph">Patchbay</div>
+        </li>
+      </ol>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot-grid">
+    <p class="ack">I live and work in Armidale on Aboriginal land. I acknowledge the Traditional Custodians of the New England region and pay my respects to Elders past and present.</p>
+    <div class="foot-meta mono">
+      <span>Calvin R Development · Armidale, NSW</span>
+      <a href="mailto:calvin@calvinrdevelopment.com">calvin@calvinrdevelopment.com</a>
+      <span>ABN 15 436 897 520</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

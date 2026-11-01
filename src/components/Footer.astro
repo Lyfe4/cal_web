@@ -1,0 +1,168 @@
+---
+import { areaLinks } from '../data/areas';
+import CopyButton from './CopyButton.astro';
+import { build, formatBuildTime } from '../data/build';
+import { business, formattedAddress, nav } from '../data/site';
+import { WEIGHT_SLOT } from '../utils/pageWeight';
+---
+
+<footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-nav mono">
+      <nav aria-labelledby="site-h">
+        <h2 id="site-h">Site</h2>
+        <ul>
+          {nav.map(({ href, label }) => (
+            <li>
+              <a href={href}>{label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <nav aria-labelledby="areas-h">
+        <h2 id="areas-h">Areas</h2>
+        <ul>
+          {areaLinks.map((area) => (
+            <li>
+              <a href={area.href}>{area.name}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+    <address class="foot-meta mono">
+      <span>
+        {business.name} · {formattedAddress}
+      </span>
+      <a href={business.phone.href}>{business.phone.display}</a>
+      <span class="email-row">
+        <a class="email" href={`mailto:${business.email}`}>
+          {business.email}
+        </a>
+        <CopyButton text={business.email} label="Copy email address" done="Email address copied" />
+      </span>
+      <span>ABN {business.abn}</span>
+    </address>
+    <!-- Build log: only facts the build itself produces. The weight is measured from the
+         built files and filled in after the build (src/integrations/pageWeight.ts). -->
+    <p class="build-log mono">
+      <span>
+        Built <time datetime={build.at.toISOString()}>{formatBuildTime(build.at)}</time>
+        {build.commit && (
+          <>
+            {' '}
+            from{' '}
+            <a class="sha" href={build.commit.href}>
+              {build.commit.short}
+            </a>
+          </>
+        )}
+      </span>
+      <Fragment set:html={WEIGHT_SLOT} />
+    </p>
+  </div>
+</footer>
+
+<style>
+  .foot {
+    padding: var(--space-40) 0 var(--space-48);
+    border-top: var(--border);
+  }
+
+  .foot-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-32) var(--space-64);
+  }
+
+  /* Two rows of mono links, each led by its label; labels share a column so the links line up */
+  .foot-nav {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: var(--space-16) var(--space-24);
+    align-content: start;
+    color: var(--text-3);
+  }
+
+  .foot-nav nav {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
+    align-items: baseline;
+  }
+
+  .foot-nav h2 {
+    margin: 0;
+    font: inherit;
+  }
+
+  .foot-nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8) var(--space-24);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .foot-nav a {
+    color: var(--text-2);
+    text-underline-offset: 0.2em;
+  }
+
+  .foot-nav a:hover {
+    color: var(--text);
+  }
+
+  .foot-meta {
+    display: grid;
+    gap: var(--space-8);
+    justify-items: end;
+    color: var(--text-3);
+    font-style: normal;
+    text-align: right;
+  }
+
+  /* Addresses and hashes stay lowercase so they read as typed */
+  .email,
+  .sha {
+    text-transform: none;
+  }
+
+  /* A flex row, so the link's trailing space is trimmed and its underline stops at the text */
+  .email-row {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .build-log {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8) var(--space-24);
+    grid-column: 1 / -1;
+    margin: 0;
+    padding-top: var(--space-20);
+    border-top: var(--border);
+    color: var(--text-3);
+  }
+
+  .build-log a {
+    color: var(--text-2);
+    text-underline-offset: 0.2em;
+  }
+
+  .build-log a:hover {
+    color: var(--text);
+  }
+
+  @media (max-width: 860px) {
+    .foot-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .foot-meta {
+      justify-items: start;
+      text-align: left;
+    }
+  }
+</style>

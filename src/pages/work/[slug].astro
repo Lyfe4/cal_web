@@ -1,0 +1,360 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import Frame from '../../components/Frame.astro';
+import FactList, { type Fact } from '../../components/FactList.astro';
+import Status from '../../components/Status.astro';
+import SectionMap from '../../components/SectionMap.astro';
+import ContactCta from '../../components/home/ContactCta.astro';
+import Testimonials from '../../components/home/Testimonials.astro';
+import { displayHost, getProjects, projectPath, type Project } from '../../data/projects';
+import { businessId, personId } from '../../data/schema';
+import { business, siteUrl } from '../../data/site';
+import { ogSize } from '../../utils/brand';
+import { testimonials } from '../../data/testimonials';
+import { splitCaseSections } from '../../utils/caseSections';
+
+export const getStaticPaths = (async () => {
+  const projects = await getProjects();
+  return projects.map((project, i) => ({
+    params: { slug: project.data.slug },
+    // The last project's "next" wraps round to the first
+    props: {
+      project,
+      next: projects[(i + 1) % projects.length] ?? project,
+      total: projects.length,
+    },
+  }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  project: Project;
+  next: Project;
+  total: number;
+}
+
+const { project, next, total } = Astro.props;
+const {
+  name,
+  type,
+  status,
+  upNext,
+  maintained,
+  url,
+  summary,
+  tags,
+  client,
+  year,
+  stack,
+  source,
+  seo,
+  screenshot,
+} = project.data;
+
+const { headings } = await render(project);
+const sections = splitCaseSections(project.rendered?.html ?? '', headings);
+const galleryFor = (id: string) => project.data.gallery.filter((shot) => shot.section === id);
+const kindWords = testimonials.filter((t) => t.project === project.data.slug);
+
+const facts: Fact[] = [
+  ...(client ? [{ label: 'Client', value: client }] : []),
+  { label: 'Type', value: type },
+  { label: 'Year', value: String(year) },
+  { label: 'Stack', value: stack.join(', ') },
+  { label: 'Status', status },
+  ...(maintained ? [{ label: 'Maintenance', value: 'Ongoing' }] : []),
+  { label: 'Live site', value: displayHost(url), href: url },
+  ...(source ? [{ label: 'Source', value: source.replace(/^https:\/\//, ''), href: source }] : []),
+];
+
+const pageUrl = new URL(projectPath(project), siteUrl).href;
+
+// Section map: one entry per numbered section, each tied to that section's view timeline
+const mapEntries = [
+  ...sections.map((section) => ({ id: section.id, title: section.title })),
+  ...(kindWords.length > 0 ? [{ id: 'what-they-said', title: 'What they said' }] : []),
+].map((entry, i) => ({ ...entry, n: String(i + 1).padStart(2, '0'), timeline: `--sec-${i + 1}` }));
+// Every name a map entry animates against has to be in scope on a shared ancestor
+const timelineScope = `timeline-scope: ${mapEntries.map((entry) => entry.timeline).join(', ')}`;
+---
+
+<BaseLayout
+  title={seo.title}
+  description={seo.description}
+  ogType="article"
+  ogImage={{
+    src: `/og/${project.data.slug}.png`,
+    alt: `${name}: ${[type, ...tags].join(', ')}. A case study by ${business.name}.`,
+    ...ogSize,
+  }}
+  schema={{
+    '@type': 'CreativeWork',
+    '@id': `${pageUrl}#work`,
+    name,
+    description: summary,
+    genre: type,
+    url,
+    mainEntityOfPage: pageUrl,
+    image: new URL(screenshot.src.src, siteUrl).href,
+    dateCreated: String(year),
+    keywords: stack.join(', '),
+    inLanguage: 'en-AU',
+    creativeWorkStatus: status === 'live' ? 'Published' : 'Incomplete',
+    creator: { '@id': businessId },
+    author: { '@id': personId },
+    ...(client ? { sourceOrganization: { '@type': 'Organization', name: client, url } } : {}),
+  }}
+>
+  <article class="wrap" aria-labelledby="case-h" style={timelineScope}>
+    <header class="case-head">
+      <h1 id="case-h" style={`view-transition-name: name-${project.data.slug}`}>
+        {name}
+      </h1>
+      <p class="mono meta">
+        <span>{type}</span>
+        {tags.map((tag) => (
+          <span>{tag}</span>
+        ))}
+        <Status status={status} />
+      </p>
+      {upNext && <p class="up-next">{upNext}</p>}
+      <div class="head-row">
+        <p class="lede">{summary}</p>
+        <a class="btn btn-ghost" href={url}>
+          Open {displayHost(url)} <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </header>
+
+    <div class="overview">
+      <Frame
+        url={url}
+        image={screenshot.src}
+        alt={screenshot.alt}
+        sizes="(max-width: 860px) calc(100vw - 2 * clamp(16px, 3vw, 40px) - 18px), (max-width: 1280px) 58vw, 750px"
+        eager
+        transitionName={`frame-${project.data.slug}`}
+      />
+      <FactList facts={facts} label={`${name} details`} />
+    </div>
+
+    {sections.map((section, i) => {
+      const shots = galleryFor(section.id);
+      return (
+        <Section id={section.id} n={i + 1} title={section.title} timeline={mapEntries[i]?.timeline}>
+          <div class:list={['case-body', { 'has-shots': shots.length > 0 }]}>
+            <div class="prose" set:html={section.html} />
+            {shots.length > 0 && (
+              <div class="shots">
+                {shots.map((shot) => (
+                  <Frame
+                    url={url}
+                    image={shot.src}
+                    alt={shot.alt}
+                    sizes="(max-width: 860px) calc(100vw - 2 * clamp(16px, 3vw, 40px) - 18px), (max-width: 1280px) 42vw, 520px"
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        </Section>
+      );
+    })}
+
+    {kindWords.length > 0 && (
+      <Section
+        id="what-they-said"
+        n={sections.length + 1}
+        title="What they said"
+        timeline={mapEntries.at(-1)?.timeline}
+      >
+        <Testimonials testimonials={kindWords} linkProject={false} />
+      </Section>
+    )}
+    {mapEntries.length > 1 && <SectionMap label={`${name} sections`} entries={mapEntries} />}
+  </article>
+
+  <div class="wrap">
+    <Section
+      id="next"
+      title="Next project"
+      note={`${String(next.data.order).padStart(2, '0')} of ${String(total).padStart(2, '0')}`}
+    >
+      <p
+        class="next"
+        style={
+          next.data.slug === project.data.slug
+            ? undefined
+            : `view-transition-name: name-${next.data.slug}`
+        }
+      >
+        <a href={projectPath(next)}>{next.data.name}</a>
+      </p>
+      <p class="next-desc">{next.data.summary}</p>
+    </Section>
+
+    <Section id="contact" title="Contact">
+      <ContactCta
+        statement="Want something like this?"
+        lede="Tell me a little about your business and what you need, and I'll tell you what it would take."
+      />
+    </Section>
+  </div>
+</BaseLayout>
+
+<style>
+  .case-head {
+    padding: var(--space-hero-top) 0 var(--space-48);
+  }
+
+  h1 {
+    width: fit-content;
+    margin: 0;
+    font-size: var(--text-project);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-project);
+    letter-spacing: var(--tracking-project);
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8) var(--space-24);
+    margin: var(--space-24) 0 0;
+    color: var(--text-3);
+  }
+
+  .up-next {
+    margin: var(--space-12) 0 0;
+    color: var(--text-2);
+    font-size: var(--text-ui);
+  }
+
+  .head-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-28) var(--space-64);
+    align-items: end;
+    margin-top: var(--space-lede-top);
+  }
+
+  .lede {
+    margin: 0;
+    max-width: 46ch;
+    color: var(--text-2);
+    font-size: var(--text-lede);
+    line-height: var(--leading-lede);
+  }
+
+  /* Screenshot and spec table: the featured-project grid from the home page */
+  .overview {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-32) var(--space-48);
+    align-items: start;
+    padding-bottom: var(--space-72);
+  }
+
+  .case-body.has-shots {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-40) var(--space-64);
+    align-items: start;
+  }
+
+  .shots {
+    display: grid;
+    gap: var(--space-32);
+  }
+
+  /* Rendered Markdown: sentences in sans, the one sub-label in mono */
+  .prose {
+    max-width: 62ch;
+    color: var(--text-2);
+    font-size: var(--text-desc);
+  }
+
+  .prose :global(p),
+  .prose :global(ul) {
+    margin: 0 0 var(--space-16);
+  }
+
+  .prose :global(> :last-child) {
+    margin-bottom: 0;
+  }
+
+  .prose :global(strong) {
+    color: var(--text);
+    font-weight: var(--weight-medium);
+  }
+
+  .prose :global(h3) {
+    margin: var(--space-32) 0 var(--space-12);
+    color: var(--text-3);
+    font: var(--weight-regular) var(--text-label) / var(--leading-body) var(--mono);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+  }
+
+  .prose :global(ul) {
+    padding-left: 1.1em;
+  }
+
+  .prose :global(li + li) {
+    margin-top: var(--space-8);
+  }
+
+  .prose :global(li::marker) {
+    color: var(--text-3);
+  }
+
+  .prose :global(code) {
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 0.88em;
+  }
+
+  .prose :global(a) {
+    text-underline-offset: 0.2em;
+  }
+
+  .prose :global(a:hover) {
+    color: var(--text);
+  }
+
+  .next {
+    width: fit-content;
+    margin: 0 0 var(--space-20);
+    font-size: var(--text-project);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-project);
+    letter-spacing: var(--tracking-project);
+  }
+
+  .next a {
+    text-decoration: none;
+  }
+
+  .next a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.12em;
+  }
+
+  .next-desc {
+    margin: 0;
+    max-width: 44ch;
+    color: var(--text-2);
+    font-size: var(--text-desc);
+  }
+
+  @media (max-width: 860px) {
+    .head-row,
+    .overview,
+    .case-body.has-shots {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,97 @@
+---
+import '../styles/global.css';
+import geist from '../assets/fonts/geist.woff2?url';
+import geistMono from '../assets/fonts/geist-mono.woff2?url';
+import SEO, { type Props as SEOProps } from '../components/SEO.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Analytics from '../components/Analytics.astro';
+import { business } from '../data/site';
+import { brandColors } from '../utils/brand';
+
+export type Props = SEOProps;
+
+const seo = Astro.props;
+---
+
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <SEO {...seo} />
+
+    <!-- Both families render in the first screen (mono for nav and labels), so preload both:
+         letting either swap in late shifts the layout -->
+    <link rel="preload" href={geist} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={geistMono} as="font" type="font/woff2" crossorigin />
+
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content={brandColors.bg} />
+    <meta name="google-site-verification" content={business.googleSiteVerification} />
+
+    <!-- Without JS there's no menu toggle, so the nav links show inline at every width,
+         and no copy buttons -->
+    <noscript>
+      <style is:inline>
+        .menu-toggle {
+          display: none !important;
+        }
+        .nav-list {
+          position: static !important;
+          display: flex !important;
+          flex-direction: row !important;
+          flex-wrap: wrap;
+          gap: 4px 20px !important;
+          padding: 0 !important;
+          background: none !important;
+          border: 0 !important;
+        }
+        .nav-list li + li {
+          border: 0 !important;
+        }
+        /* Copy buttons need the script */
+        .copy {
+          display: none !important;
+        }
+      </style>
+    </noscript>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
+    <Header />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+    <Analytics />
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    position: absolute;
+    top: var(--space-8);
+    left: var(--space-8);
+    z-index: 100;
+    padding: var(--space-12) var(--space-16);
+    background: var(--text);
+    color: var(--bg);
+    font-weight: var(--weight-medium);
+    text-decoration: none;
+    translate: 0 calc(-100% - var(--space-16));
+  }
+
+  .skip-link:focus-visible {
+    translate: 0;
+  }
+
+  main:focus {
+    outline: none;
+  }
+</style>

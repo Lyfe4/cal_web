@@ -1,0 +1,76 @@
+---
+import SpecList from './SpecList.astro';
+import { priceRows } from '../data/packages';
+import { enquiryPackages, type EnquiryPackage } from '../data/site';
+
+// The default slot is a sentence or two on what the services mean for this page's area.
+const packages = Object.entries(enquiryPackages) as [EnquiryPackage, string][];
+---
+
+<div class="local-services">
+  <div>
+    <p class="intro">
+      <slot />
+    </p>
+    <a class="btn btn-ghost" href="/services">
+      Services and prices <span aria-hidden="true">→</span>
+    </a>
+    <p class="mono quote-label" id="quote-for">
+      Get a quote for
+    </p>
+    <ul class="quote-links" aria-labelledby="quote-for">
+      {packages.map(([key, label]) => (
+        <li>
+          <a href={`/contact?package=${key}`}>{label}</a>
+        </li>
+      ))}
+    </ul>
+  </div>
+  <SpecList label="Prices" rows={priceRows} />
+</div>
+
+<style>
+  .local-services {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-32) var(--space-64);
+    align-items: start;
+  }
+
+  .intro {
+    margin: 0 0 var(--space-24);
+    max-width: 44ch;
+    color: var(--text-2);
+    font-size: var(--text-desc);
+  }
+
+  .quote-label {
+    margin: var(--space-32) 0 var(--space-8);
+    color: var(--text-3);
+  }
+
+  .quote-links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .quote-links li {
+    padding: 6px 0;
+  }
+
+  .quote-links a {
+    color: var(--text-2);
+    text-underline-offset: 0.2em;
+  }
+
+  .quote-links a:hover {
+    color: var(--text);
+  }
+
+  @media (max-width: 860px) {
+    .local-services {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

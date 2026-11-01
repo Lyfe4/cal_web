@@ -1,0 +1,60 @@
+---
+import { business, siteUrl } from '../data/site';
+import { buildJsonLd, type SchemaNode } from '../data/schema';
+import { ogSize, siteCardAlt } from '../utils/brand';
+import { canonicalPath } from '../utils/canonical';
+
+export interface Props {
+  /** Page title; the business name is appended unless it's already there */
+  title: string;
+  description: string;
+  /** Extra JSON-LD for this page, merged with the sitewide business schema */
+  schema?: SchemaNode | SchemaNode[];
+  ogImage?: { src: string; alt: string; width: number; height: number };
+  ogType?: 'website' | 'article' | 'profile';
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  schema,
+  ogImage = {
+    src: '/og-image.png',
+    alt: siteCardAlt,
+    ...ogSize,
+  },
+  ogType = 'website',
+  noindex = false,
+} = Astro.props;
+
+const fullTitle = title.includes(business.name) ? title : `${title} | ${business.name}`;
+// Canonical never carries a query string, so /contact?package=starter points at /contact.
+const canonical = new URL(canonicalPath(Astro.url.pathname), Astro.site ?? siteUrl).href;
+const imageUrl = new URL(ogImage.src, Astro.site ?? siteUrl).href;
+const jsonLd = buildJsonLd(schema);
+---
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+{/* A noindex page (the 404) is served at any unknown URL, so it has no canonical */}
+{noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+
+<meta property="og:type" content={ogType} />
+<meta property="og:site_name" content={business.name} />
+<meta property="og:locale" content="en_AU" />
+<meta property="og:url" content={canonical} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:image:width" content={String(ogImage.width)} />
+<meta property="og:image:height" content={String(ogImage.height)} />
+<meta property="og:image:alt" content={ogImage.alt} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+<meta name="twitter:image:alt" content={ogImage.alt} />
+
+<script type="application/ld+json" is:inline set:html={jsonLd} />

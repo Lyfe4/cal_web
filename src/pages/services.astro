@@ -1,0 +1,295 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import Section from '../components/Section.astro';
+import SpecList from '../components/SpecList.astro';
+import Process from '../components/home/Process.astro';
+import ContactCta from '../components/home/ContactCta.astro';
+import ProjectLinks from '../components/ProjectLinks.astro';
+import { appsPricing, appsWork, extras, faqs, websitePackages } from '../data/packages';
+import { getProjects } from '../data/projects';
+import { businessId } from '../data/schema';
+import { formatPrice, pricing, serviceAreas, siteUrl } from '../data/site';
+
+// My own projects (no client) are the examples of app and integration work
+const examples = (await getProjects()).filter((p) => !p.data.client);
+
+const serviceArea = [
+  { '@type': 'AdministrativeArea', name: 'New England, NSW' },
+  { '@type': 'Country', name: 'Australia' },
+];
+---
+
+<BaseLayout
+  title="Services and prices"
+  description={`Websites for small businesses from ${formatPrice(pricing.starter.from)}, plus frontend work on web apps and integrations, quoted per project. Based in Armidale, working Australia-wide.`}
+  schema={[
+    {
+      '@type': 'Service',
+      '@id': `${siteUrl}/services#websites`,
+      name: 'Website design and development',
+      serviceType: 'Website development',
+      provider: { '@id': businessId },
+      areaServed: serviceArea,
+      offers: websitePackages.map((pkg) => ({
+        '@type': 'Offer',
+        name: `${pkg.name} website`,
+        description: pkg.summary,
+        price: String(pkg.from),
+        priceCurrency: 'AUD',
+        priceSpecification: {
+          '@type': 'PriceSpecification',
+          minPrice: pkg.from,
+          priceCurrency: 'AUD',
+        },
+        url: `${siteUrl}/contact?package=${pkg.key}`,
+      })),
+    },
+    {
+      '@type': 'Service',
+      '@id': `${siteUrl}/services#apps`,
+      name: 'Apps & integrations',
+      serviceType: 'Frontend web development',
+      description: appsWork.join('. '),
+      provider: { '@id': businessId },
+      areaServed: serviceArea,
+    },
+  ]}
+>
+  <div class="wrap">
+    <PageHead title="Services and prices">
+      <strong>Two ways I can help.</strong> Fixed starting prices for websites, and quotes for work
+      on web apps and integrations. Prices are in AUD.
+    </PageHead>
+
+    <Section id="websites" n={1} title="Websites" note="Two packages">
+      <div class="packages">
+        {websitePackages.map((pkg) => (
+          <article aria-labelledby={`pkg-${pkg.key}`}>
+            <h3 id={`pkg-${pkg.key}`}>{pkg.name}</h3>
+            <p class="mono price">From {formatPrice(pkg.from)}</p>
+            <p class="summary">{pkg.summary}</p>
+            <p class="mono best">Best for · {pkg.bestFor}</p>
+            {pkg.intro && <p class="intro">{pkg.intro}</p>}
+            <ul class="ruled">
+              {pkg.includes.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+            <a class="btn btn-ghost" href={`/contact?package=${pkg.key}`}>
+              Get a quote <span class="visually-hidden">for a {pkg.name} website</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </article>
+        ))}
+      </div>
+    </Section>
+
+    <Section id="apps" n={2} title="Apps & integrations" note="Web apps and integrations">
+      <div class="apps">
+        <article aria-labelledby="pkg-custom">
+          <h3 id="pkg-custom">Custom</h3>
+          <p class="mono price">{pricing.apps.note}</p>
+          <p class="summary">
+            Frontend work on web apps, new or existing, and connecting your site or app to the tools
+            you already use.
+          </p>
+          <ul class="ruled">
+            {appsWork.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+          <p class="mono price apps-price">{appsPricing}</p>
+          <a class="btn btn-ghost" href="/contact?package=custom">
+            Get a quote <span class="visually-hidden">for apps and integrations</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </article>
+        <div>
+          <h3 class="mono label">Examples</h3>
+          <ProjectLinks projects={examples} />
+        </div>
+      </div>
+    </Section>
+
+    <Section id="extras" n={3} title="Extras and support">
+      <div class="extras">
+        <SpecList label="Extras and support" rows={extras} />
+        <p class="note">
+          Support covers updates, fixes and small changes after launch. It's optional, and you can
+          stop it any time.
+        </p>
+      </div>
+    </Section>
+
+    <Section id="process" n={4} title="How I work" note="One person, start to finish">
+      <Process />
+    </Section>
+
+    <Section id="faq" n={5} title="Questions">
+      <div class="faq">
+        {faqs.map(({ q, a, link }) => (
+          <details>
+            <summary>{q}</summary>
+            <p>
+              {a}
+              {link && (
+                <>
+                  {' '}
+                  <a href={link.href}>{link.label}</a>.
+                </>
+              )}
+            </p>
+          </details>
+        ))}
+      </div>
+    </Section>
+
+    <Section id="contact" title="Contact" note={`In person ${serviceAreas.inPerson}`}>
+      <ContactCta />
+    </Section>
+  </div>
+</BaseLayout>
+
+<style>
+  .packages,
+  .apps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-56) var(--space-64);
+  }
+
+  h3 {
+    margin: 0;
+    font-size: var(--text-lede);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-lede);
+  }
+
+  .price {
+    margin: var(--space-8) 0 var(--space-20);
+    color: var(--text);
+  }
+
+  .summary {
+    margin: 0 0 var(--space-12);
+    max-width: 44ch;
+    color: var(--text-2);
+    font-size: var(--text-desc);
+  }
+
+  .best {
+    margin: 0 0 var(--space-24);
+    color: var(--text-3);
+  }
+
+  .intro {
+    margin: 0 0 var(--space-8);
+    color: var(--text-2);
+    font-size: var(--text-ui);
+  }
+
+  /* Ruled list, as on the home page's services */
+  .ruled {
+    margin: 0 0 var(--space-28);
+    padding: 0;
+    list-style: none;
+    border-bottom: var(--border);
+  }
+
+  .ruled li {
+    padding: 11px 0;
+    border-top: var(--border);
+    color: var(--text-2);
+    font-size: var(--text-ui);
+  }
+
+  .apps .summary {
+    margin-bottom: var(--space-24);
+  }
+
+  .apps-price {
+    margin: 0 0 var(--space-20);
+    color: var(--text-3);
+  }
+
+  /* A mono label, not a heading size: it sits under the h3 rule above */
+  .label {
+    margin: 0 0 var(--space-12);
+    color: var(--text-3);
+    font-size: var(--text-label);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-body);
+  }
+
+  .extras {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-24) var(--space-64);
+    align-items: start;
+  }
+
+  .note {
+    margin: 11px 0 0;
+    max-width: 44ch;
+    color: var(--text-2);
+    font-size: var(--text-ui);
+  }
+
+  /* Native disclosure: keyboard and screen reader support without JS */
+  .faq {
+    max-width: 760px;
+    border-bottom: var(--border);
+  }
+
+  details {
+    border-top: var(--border);
+  }
+
+  summary {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-24);
+    padding: var(--space-16) 0;
+    font-size: var(--text-desc);
+    font-weight: var(--weight-medium);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* Open/closed state in mono text, not an icon */
+  summary::after {
+    content: '+';
+    flex: none;
+    color: var(--text-3);
+    font-family: var(--mono);
+    font-weight: var(--weight-regular);
+  }
+
+  details[open] summary::after {
+    content: '\2013';
+  }
+
+  details p {
+    margin: 0;
+    padding: 0 0 var(--space-20);
+    max-width: 62ch;
+    color: var(--text-2);
+  }
+
+  details a {
+    text-underline-offset: 0.2em;
+  }
+
+  @media (max-width: 860px) {
+    .packages,
+    .apps,
+    .extras {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

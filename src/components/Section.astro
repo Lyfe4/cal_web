@@ -1,0 +1,56 @@
+---
+export interface Props {
+  /** Anchor id; the heading gets `${id}-h` */
+  id: string;
+  /** Position on the page, shown as "01"; left out for closing sections like Contact */
+  n?: number | undefined;
+  title: string;
+  /** Quiet note on the right of the head; hidden under 860px */
+  note?: string | undefined;
+  /** Names the section's scroll-driven view timeline, e.g. for a page's section map */
+  timeline?: string | undefined;
+}
+
+const { id, n, title, note, timeline } = Astro.props;
+const heading = n === undefined ? title : `${String(n).padStart(2, '0')} / ${title}`;
+---
+
+<section
+  class="sec"
+  id={id}
+  aria-labelledby={`${id}-h`}
+  style={timeline ? `view-timeline-name: ${timeline}` : undefined}
+>
+  <div class="sec-head mono">
+    <h2 id={`${id}-h`}>{heading}</h2>
+    {note && <span>{note}</span>}
+  </div>
+  <slot />
+</section>
+
+<style>
+  .sec {
+    padding: var(--space-20) 0 var(--space-72);
+    border-top: var(--border);
+    scroll-margin-top: var(--space-16);
+  }
+
+  .sec-head {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-16);
+    margin-bottom: var(--space-28);
+    color: var(--text-3);
+  }
+
+  h2 {
+    margin: 0;
+    font: inherit;
+  }
+
+  @media (max-width: 860px) {
+    .sec-head span {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,109 @@
+/*
+ * Design tokens: the single source for DESIGN_BRIEF.md section 3.
+ * Colours are authored in OKLCH; the hex beside each is what the mockup shipped
+ * and what the contrast ratios in 3.1 were measured against.
+ */
+:root {
+  color-scheme: dark;
+
+  /* Colour (3.1) */
+  --bg: oklch(18.4% 0.005 67.5); /* #141210 page; also text on the accent */
+  --surface: oklch(22.3% 0.006 78.2); /* #1D1B18 raised panel, e.g. mobile menu */
+  --rule: oklch(29.1% 0.008 75.3); /* #2E2B27 every structural 1px line */
+  --mat: oklch(27.5% 0.008 75.2); /* #2A2723 screenshot frame */
+  --mat-edge: oklch(34.7% 0.01 73.6); /* #3D3934 frame border, browser dots */
+  --leader: oklch(37.7% 0.011 78.2); /* #45413B spec-sheet dotted leader */
+  --text: oklch(94.7% 0.007 80.7); /* #F0EDE8 headings, names, values */
+  --text-2: oklch(78.5% 0.014 78.2); /* #BEB8AF body, nav, descriptions */
+  --text-3: oklch(66.3% 0.017 77); /* #999288 mono labels; the floor for text */
+  --accent: oklch(70.4% 0.195 40.9); /* #FF6B2C primary CTA, "In progress", focus */
+  --on-accent: var(--bg);
+
+  /* Type (3.2) */
+  --sans: 'Geist', system-ui, sans-serif;
+  --mono: 'Geist Mono', ui-monospace, monospace;
+
+  --weight-regular: 400;
+  --weight-hero: 480;
+  --weight-medium: 500;
+  --weight-wordmark: 560;
+
+  --text-hero: clamp(42px, 6.6vw, 96px);
+  --text-project: clamp(44px, 7vw, 104px);
+  --text-feature: clamp(44px, 6vw, 88px);
+  --text-lede: clamp(17px, 1.5vw, 20px);
+  --text-desc: 17px;
+  --text-body: 16px;
+  --text-ui: 15px; /* buttons, spec values */
+  --text-label: 12px; /* mono uppercase labels */
+  --text-frame: 11px; /* frame URL */
+
+  --leading-hero: 1;
+  --leading-project: 0.92;
+  --leading-feature: 0.95;
+  --leading-lede: 1.45;
+  --leading-body: 1.55;
+
+  --tracking-hero: -0.048em;
+  --tracking-project: -0.055em;
+  --tracking-feature: -0.05em;
+  --tracking-label: 0.04em;
+  --tracking-frame: 0.02em;
+  --tracking-project-firm: -0.062em; /* project name on hover, at weight 560 */
+
+  /* Spacing (3.3): the steps in use, plus the fluid hero values */
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-28: 28px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-56: 56px;
+  --space-64: 64px;
+  --space-72: 72px;
+  --space-hero-top: clamp(48px, 8vw, 112px);
+  --space-hero-bottom: clamp(40px, 5vw, 64px);
+  --space-lede-top: clamp(32px, 4vw, 48px);
+
+  /* Layout */
+  --container: 1280px;
+  --gutter: clamp(16px, 3vw, 40px);
+  --header-height: 56px;
+  --control-height: 44px;
+
+  /* Borders and radii: all lines 1px, nothing rounded except dots */
+  --border: 1px solid var(--rule);
+  --border-frame: 1px solid var(--mat-edge);
+  --border-leader: 1px dotted var(--leader);
+  --radius: 0;
+  --dot-size: 7px;
+
+  /* Focus (3.3) */
+  --focus-ring: 2px solid var(--accent);
+  --focus-offset: 3px;
+
+  /* Motion: short and functional only; zeroed under prefers-reduced-motion */
+  --duration-fast: 120ms;
+  --duration: 200ms;
+  --duration-morph: 340ms; /* a project name or frame carried across pages */
+  --duration-develop: 400ms; /* a lazy screenshot appearing in its frame */
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration: 0ms;
+    --duration-morph: 0ms;
+    --duration-develop: 0ms;
+  }
+}
+
+/*
+ * Breakpoints (custom properties can't be used in media queries):
+ *   860px  single column, nav collapses to the menu, numbers above names
+ *   480px  spec values wrap under their labels, leaders hidden
+ */

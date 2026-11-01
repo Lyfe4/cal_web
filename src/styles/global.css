@@ -1,0 +1,227 @@
+@import './tokens.css';
+
+@font-face {
+  font-family: 'Geist';
+  src: url('../assets/fonts/geist.woff2') format('woff2');
+  font-weight: 400 560;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../assets/fonts/geist-mono.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: var(--weight-regular) var(--text-body) / var(--leading-body) var(--sans);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+.wrap {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.mono {
+  font-family: var(--mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Buttons (3.3): 44px tall, 18px side padding, square corners */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: var(--control-height);
+  padding: 0 18px;
+  font: var(--weight-medium) var(--text-ui) var(--sans);
+  text-decoration: none;
+  border: var(--border);
+  border-radius: var(--radius);
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--on-accent);
+  border-color: var(--accent);
+}
+
+.btn-ghost:hover {
+  border-color: var(--text-3);
+}
+
+/* The arrow leans the way the button goes; it stays put under reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+  .btn > [aria-hidden='true']:last-child {
+    transition: translate var(--duration) var(--ease-out);
+  }
+
+  .btn:hover > [aria-hidden='true']:last-child {
+    translate: 3px 0;
+  }
+}
+
+/* Status (3.5.6): a 7px dot plus a mono word */
+.dot {
+  position: relative;
+  display: inline-block;
+  width: var(--dot-size);
+  height: var(--dot-size);
+  margin-right: var(--space-8);
+  border-radius: 50%;
+  background: var(--text);
+  vertical-align: 1px;
+}
+
+.wip {
+  color: var(--accent);
+}
+
+.wip .dot {
+  background: var(--accent);
+}
+
+/* When a status first scrolls into view (data-seen, set by Status.astro), its dot says
+   what kind of state it is, then goes still: a live site pings like a server answering,
+   work in progress blinks like an activity light. Both stop within 5 seconds (WCAG 2.2.2). */
+@media (prefers-reduced-motion: no-preference) {
+  [data-seen]:not(.wip) .dot::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: inherit;
+    opacity: 0;
+    animation: ping 1.6s var(--ease-out) 3;
+  }
+
+  .wip[data-seen] .dot {
+    animation: working 1.2s ease-in-out 4;
+  }
+}
+
+@keyframes ping {
+  from {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(2.8);
+  }
+}
+
+@keyframes working {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+/* Cross-page view transitions (Chrome, Edge, Safari 18.2+). A project's name and frame
+   carry over into its case study; everything else cross-fades quickly. Browsers without
+   support, and anyone who prefers reduced motion, get a plain page load. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+
+::view-transition-group(*) {
+  animation-duration: var(--duration-morph);
+  animation-timing-function: var(--ease-out);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--duration);
+}
+
+/* Text snapshots scale with the box; keep their shape instead of stretching */
+::view-transition-old(*),
+::view-transition-new(*) {
+  height: 100%;
+  object-fit: contain;
+  object-position: left top;
+}
+
+/* Stub pages until each page's phase lands */
+.page {
+  /* Block padding only: .page sits on .wrap, which owns the side gutter */
+  padding-block: var(--space-hero-top) var(--space-hero-bottom);
+}
+
+.page h1 {
+  margin: 0;
+  max-width: 16ch;
+  font-size: var(--text-hero);
+  font-weight: var(--weight-hero);
+  line-height: var(--leading-hero);
+  letter-spacing: var(--tracking-hero);
+}
+
+.page .lede {
+  margin: var(--space-lede-top) 0 0;
+  max-width: 46ch;
+  font-size: var(--text-lede);
+  line-height: var(--leading-lede);
+  color: var(--text-2);
+}
+
+.page .lede strong {
+  color: var(--text);
+  font-weight: var(--weight-medium);
+}

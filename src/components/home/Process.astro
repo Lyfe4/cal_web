@@ -1,0 +1,164 @@
+---
+import { process } from '../../data/process';
+---
+
+<ol class="steps" data-steps>
+  {process.map((step, i) => (
+    <li>
+      <span class="n mono" aria-hidden="true">
+        {String(i + 1).padStart(2, '0')}
+      </span>
+      <h3>{step.name}</h3>
+      <p>{step.detail}</p>
+    </li>
+  ))}
+</ol>
+
+<script>
+  // Turns the reading-progress rules on (styles below). Scroll-driven animations do it in
+  // CSS where the browser has them; otherwise an IntersectionObserver marks each step as
+  // reached once its top passes the reading line, and unmarks it when it drops back below.
+  const steps = document.querySelector<HTMLElement>('[data-steps]');
+  const moving = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+  const READING_LINE = 0.6; // of the viewport height, from the top
+
+  if (steps && moving) {
+    if (CSS.supports('animation-timeline: view()')) {
+      steps.dataset.progress = 'scroll';
+    } else if ('IntersectionObserver' in window) {
+      steps.dataset.progress = 'observer';
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            const line = entry.rootBounds?.bottom ?? window.innerHeight * READING_LINE;
+            entry.target.toggleAttribute('data-reached', entry.boundingClientRect.top < line);
+          }
+        },
+        // The root ends at the reading line, so crossing it either way is a change
+        { rootMargin: `0px 0px -${(1 - READING_LINE) * 100}% 0px` }
+      );
+      steps.querySelectorAll('li').forEach((step) => observer.observe(step));
+    }
+  }
+</script>
+
+<style>
+  .steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    position: relative;
+    display: grid;
+    /* Same columns as the project rows, so the details line up with the frames above */
+    grid-template-columns: 56px minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-8) var(--space-40);
+    align-items: baseline;
+    padding: var(--space-20) 0 var(--space-24);
+    border-top: var(--border);
+  }
+
+  .n {
+    color: var(--text-3);
+  }
+
+  h3 {
+    margin: 0;
+    font-size: var(--text-lede);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-lede);
+  }
+
+  p {
+    margin: 0;
+    max-width: 52ch;
+    color: var(--text-2);
+  }
+
+  /* Reading progress: when a step reaches a reading line 60% down the screen, its rule
+     draws across in --text-3 and its number brightens, so the steps you've read stay marked.
+     Scrolling back up undoes it. Scroll-driven where supported; elsewhere the script below
+     toggles data-reached and a transition draws the rule. Off under reduced motion. */
+  @media (prefers-reduced-motion: no-preference) {
+    .steps[data-progress] li::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      right: 0;
+      left: 0;
+      height: 1px;
+      background: var(--text-3);
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+
+    /* Fallback (script): a state, eased */
+    .steps[data-progress='observer'] li::before {
+      transition: transform 500ms var(--ease-out);
+    }
+
+    .steps[data-progress='observer'] .n {
+      transition: color var(--duration) var(--ease-out);
+    }
+
+    .steps[data-progress='observer'] li[data-reached]::before {
+      transform: scaleX(1);
+    }
+
+    .steps[data-progress='observer'] li[data-reached] .n {
+      color: var(--text);
+    }
+  }
+
+  /* Scroll-driven: the rule fills as the step passes the line. The timeline goes through a
+     custom property on purpose: the CSS minifier otherwise folds animation-timeline into the
+     animation shorthand, which can't carry a timeline, and the browser drops the lot. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .steps[data-progress='scroll'] {
+        /* The scrollport's bottom pulled up to 60%: "entry" is crossing the reading line */
+        --reading-line: view(block 0% 40%);
+      }
+
+      .steps[data-progress='scroll'] li::before {
+        animation: draw linear both;
+        animation-timeline: var(--reading-line);
+        animation-range: entry 0% entry 100%;
+      }
+
+      .steps[data-progress='scroll'] .n {
+        animation: brighten linear both;
+        animation-timeline: var(--reading-line);
+        animation-range: entry 0% entry 30%;
+      }
+    }
+  }
+
+  @keyframes draw {
+    from {
+      transform: scaleX(0);
+    }
+
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes brighten {
+    to {
+      color: var(--text);
+    }
+  }
+
+  @media (max-width: 860px) {
+    li {
+      grid-template-columns: 40px minmax(0, 1fr);
+    }
+
+    p {
+      grid-column: 2;
+    }
+  }
+</style>

@@ -1,0 +1,73 @@
+---
+export interface SpecRow {
+  label: string;
+  value: string;
+  href?: string;
+}
+
+export interface Props {
+  /** Accessible name for the list, e.g. "Prices" */
+  label: string;
+  rows: SpecRow[];
+}
+
+const { label, rows } = Astro.props;
+---
+
+<dl class="spec" aria-label={label}>
+  {rows.map(({ label, value, href }) => (
+    <div>
+      <dt class="mono">{label}</dt>
+      <span class="lead" aria-hidden="true" />
+      <dd>{href ? <a href={href}>{value}</a> : value}</dd>
+    </div>
+  ))}
+</dl>
+
+<style>
+  .spec {
+    margin: 0;
+  }
+
+  div {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 11px 0;
+  }
+
+  dt {
+    flex: none;
+    color: var(--text-3);
+  }
+
+  /* Dotted leader fills the gap between label and value */
+  .lead {
+    flex: 1;
+    min-width: var(--space-24);
+    border-bottom: var(--border-leader);
+    translate: 0 -4px;
+  }
+
+  dd {
+    margin: 0;
+    font-size: var(--text-ui);
+    text-align: right;
+  }
+
+  @media (max-width: 480px) {
+    div {
+      flex-wrap: wrap;
+      gap: 2px 10px;
+    }
+
+    .lead {
+      display: none;
+    }
+
+    dd {
+      flex-basis: 100%;
+      text-align: left;
+    }
+  }
+</style>

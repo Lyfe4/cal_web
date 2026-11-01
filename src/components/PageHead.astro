@@ -1,0 +1,80 @@
+---
+export interface Props {
+  title: string;
+  /** Mono facts under the title, e.g. "Frontend developer · Armidale, NSW" */
+  meta?: string[];
+}
+
+const { title, meta } = Astro.props;
+---
+
+<header class="page-head">
+  <h1>{title}</h1>
+  {meta && (
+    <p class="mono meta">
+      {meta.map((item) => (
+        <span>{item}</span>
+      ))}
+    </p>
+  )}
+  <div class="head-row">
+    <p class="lede">
+      <slot />
+    </p>
+    {Astro.slots.has('aside') && (
+      <div>
+        <slot name="aside" />
+      </div>
+    )}
+  </div>
+</header>
+
+<style>
+  .page-head {
+    padding: var(--space-hero-top) 0 var(--space-hero-bottom);
+  }
+
+  h1 {
+    margin: 0;
+    max-width: 16ch;
+    font-size: var(--text-hero);
+    font-weight: var(--weight-hero);
+    line-height: var(--leading-hero);
+    letter-spacing: var(--tracking-hero);
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8) var(--space-24);
+    margin: var(--space-24) 0 0;
+    color: var(--text-3);
+  }
+
+  .head-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-28) var(--space-64);
+    align-items: end;
+    margin-top: var(--space-lede-top);
+  }
+
+  .lede {
+    margin: 0;
+    max-width: 46ch;
+    color: var(--text-2);
+    font-size: var(--text-lede);
+    line-height: var(--leading-lede);
+  }
+
+  .lede :global(strong) {
+    color: var(--text);
+    font-weight: var(--weight-medium);
+  }
+
+  @media (max-width: 860px) {
+    .head-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

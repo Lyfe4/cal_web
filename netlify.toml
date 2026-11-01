@@ -1,20 +1,31 @@
 [build]
   command = "npm run build"
-  publish = "build"
+  publish = "dist"
 
-# Security headers (the old public/.htaccess is Apache-only and is ignored by Netlify)
+# Astro writes /404.html, which Netlify serves with a 404 status for unknown paths.
+# There is no SPA catch-all: every page is real static HTML.
+
+# The old site published /sitemap.xml; @astrojs/sitemap writes a sitemap index.
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/sitemap-index.xml"
+  status = 301
+
 [[headers]]
   for = "/*"
   [headers.values]
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
     Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com; frame-src https://lenbuild.com; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://formspree.io; form-action 'self' https://formspree.io; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
+    # Third parties: Cloudflare Web Analytics (beacon script + reporting endpoint) and
+    # Formspree (contact form). style-src keeps 'unsafe-inline' for Astro's inlined
+    # component styles and the <noscript> nav fallback.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com https://formspree.io; form-action 'self' https://formspree.io; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
 
-# Long-cache fingerprinted build assets
+# Fingerprinted build output (JS, CSS, fonts, images): the file name changes when the content does.
 [[headers]]
-  for = "/static/*"
+  for = "/_astro/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"

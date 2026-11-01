@@ -1,0 +1,81 @@
+---
+import { services } from '../../data/services';
+---
+
+<div class="services">
+  {services.map((service) => (
+    <article aria-labelledby={`s-${service.id}`}>
+      <h3 id={`s-${service.id}`}>{service.name}</h3>
+      <p class="summary">{service.summary}</p>
+      <ul>
+        {service.includes.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+      <p class="example">
+        {/* One expression, so no template whitespace lands before the punctuation */}
+        {[
+          service.example.before,
+          <a href={service.example.href}>{service.example.link}</a>,
+          service.example.after,
+        ]}
+      </p>
+      <p class="mono price">{service.price}</p>
+      <a class="btn btn-ghost" href={service.link.href}>
+        {service.link.label} <span aria-hidden="true">→</span>
+      </a>
+    </article>
+  ))}
+</div>
+
+<style>
+  .services {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-48) var(--space-64);
+  }
+
+  h3 {
+    margin: 0 0 var(--space-12);
+    font-size: var(--text-lede);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-lede);
+  }
+
+  .summary {
+    margin: 0 0 var(--space-24);
+    max-width: 44ch;
+    color: var(--text-2);
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-bottom: var(--border);
+  }
+
+  li {
+    padding: 11px 0;
+    border-top: var(--border);
+    color: var(--text-2);
+    font-size: var(--text-ui);
+  }
+
+  .example {
+    margin: var(--space-16) 0 0;
+    color: var(--text-2);
+    font-size: var(--text-ui);
+  }
+
+  .price {
+    margin: var(--space-20) 0;
+    color: var(--text-3);
+  }
+
+  @media (max-width: 860px) {
+    .services {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

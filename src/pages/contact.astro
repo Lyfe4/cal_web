@@ -1,0 +1,493 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import Section from '../components/Section.astro';
+import FactList from '../components/FactList.astro';
+import { businessId } from '../data/schema';
+import { business, formspreeEndpoint, replyPromise, serviceAreas } from '../data/site';
+import { enquirySubject, enquiryTypes } from '../utils/contactValidation';
+
+const sentence = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
+---
+
+<BaseLayout
+  title="Contact"
+  description={`Ask for a quote or a chat about your website or app. Replies ${replyPromise}. In person ${serviceAreas.inPerson}, remote ${serviceAreas.remote}.`}
+  schema={{ '@type': 'ContactPage', about: { '@id': businessId } }}
+>
+  <div class="wrap">
+    <PageHead title="Tell me about your project.">
+      A few lines about your business and what you need is plenty. I reply {replyPromise}.
+    </PageHead>
+
+    <Section id="send" n={1} title="Send a message">
+      <div class="layout">
+        <!-- A normal POST to Formspree without JavaScript; the script below
+             validates first and sends it in the background instead. -->
+        <form id="contact-form" action={formspreeEndpoint} method="POST" data-contact-form>
+          <div class="row">
+            <div class="field">
+              <label for="firstName">First name</label>
+              <input
+                id="firstName"
+                name="firstName"
+                type="text"
+                autocomplete="given-name"
+                required
+                pattern=".*\S.*"
+              />
+              <p class="error" id="firstName-error" hidden></p>
+            </div>
+            <div class="field">
+              <label for="lastName">Last name</label>
+              <input
+                id="lastName"
+                name="lastName"
+                type="text"
+                autocomplete="family-name"
+                required
+                pattern=".*\S.*"
+              />
+              <p class="error" id="lastName-error" hidden></p>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="email">Email</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              inputmode="email"
+              spellcheck="false"
+              required
+            />
+            <p class="error" id="email-error" hidden></p>
+          </div>
+
+          <div class="field">
+            <label for="phone">
+              Phone <span class="optional">(optional)</span>
+            </label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel" />
+            <p class="error" id="phone-error" hidden></p>
+          </div>
+
+          <fieldset class="field" id="enquiry">
+            <legend>What's it about?</legend>
+            <div class="choices">
+              {enquiryTypes.map((type, i) => (
+                <label class="choice">
+                  <input
+                    type="radio"
+                    name="enquiry"
+                    value={type}
+                    id={i === 0 ? 'enquiry-first' : undefined}
+                    required
+                  />
+                  {type}
+                </label>
+              ))}
+            </div>
+            <p class="mono package" data-package-note hidden></p>
+            <p class="error" id="enquiry-error" hidden></p>
+          </fieldset>
+
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="6" required minlength="10"></textarea>
+            <p class="error" id="message-error" hidden></p>
+          </div>
+
+          <!-- Formspree settings: the email subject, the package from a ?package= link,
+               and a honeypot that people never see or fill in -->
+          <input type="hidden" name="_subject" value={enquirySubject('')} />
+          <input type="hidden" name="package" value="" />
+          <div class="honeypot" aria-hidden="true">
+            <label for="_gotcha">Leave this empty</label>
+            <input id="_gotcha" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div class="send">
+            <button class="btn btn-primary" type="submit" data-submit>
+              <span data-submit-label>Send message</span> <span aria-hidden="true">→</span>
+            </button>
+          </div>
+
+          <!-- Always in the page, so screen readers announce what's written into them -->
+          <p class="status" role="status" tabindex="-1" data-status></p>
+          <div class="failed" role="alert" data-failed></div>
+          <template data-failed-message>
+            <p>
+              Sorry, your message couldn't be sent. Please try again, or email me at{' '}
+              <a href={`mailto:${business.email}`}>{business.email}</a>.
+            </p>
+          </template>
+        </form>
+
+        <aside aria-labelledby="direct-h">
+          <h3 id="direct-h" class="mono">
+            Or get in touch directly
+          </h3>
+          <FactList
+            facts={[
+              { label: 'Replies', value: sentence(replyPromise) },
+              { label: 'Email', value: business.email, href: `mailto:${business.email}` },
+              { label: 'Phone', value: business.phone.display, href: business.phone.href },
+              {
+                label: 'In person',
+                value: `${sentence(serviceAreas.inPerson)}, ${serviceAreas.byArrangement}`,
+              },
+              { label: 'Remote', value: serviceAreas.remote },
+            ]}
+          />
+        </aside>
+      </div>
+    </Section>
+  </div>
+</BaseLayout>
+
+<script>
+  import { enquiryPackages } from '../data/site';
+  import {
+    contactFields,
+    enquiryForPackage,
+    enquirySubject,
+    isEnquiryPackage,
+    validateContact,
+    validateField,
+    type ContactField,
+    type ContactValues,
+  } from '../utils/contactValidation';
+
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  if (form) enhance(form);
+
+  function enhance(form: HTMLFormElement) {
+    // The script takes over validation; without it the browser's own checks apply.
+    form.noValidate = true;
+
+    const status = form.querySelector<HTMLElement>('[data-status]');
+    const failed = form.querySelector<HTMLElement>('[data-failed]');
+    const submit = form.querySelector<HTMLButtonElement>('[data-submit]');
+    const submitLabel = form.querySelector<HTMLElement>('[data-submit-label]');
+    const failedMessage = form.querySelector<HTMLTemplateElement>('[data-failed-message]');
+    const packageNote = form.querySelector<HTMLElement>('[data-package-note]');
+    const subject = form.elements.namedItem('_subject') as HTMLInputElement;
+    const packageField = form.elements.namedItem('package') as HTMLInputElement;
+
+    // /contact?package=starter|professional|custom preselects the enquiry type
+    const pkgParam = new URLSearchParams(window.location.search).get('package');
+    const pkg = isEnquiryPackage(pkgParam) ? pkgParam : undefined;
+    if (pkg) {
+      const radio = form.querySelector<HTMLInputElement>(
+        `input[name="enquiry"][value="${enquiryForPackage[pkg]}"]`
+      );
+      if (radio) radio.checked = true;
+      packageField.value = enquiryPackages[pkg];
+      if (packageNote && pkg !== 'custom') {
+        packageNote.textContent = `Package: ${enquiryPackages[pkg]}`;
+        packageNote.hidden = false;
+      }
+    }
+
+    const values = (): ContactValues => {
+      const data = new FormData(form);
+      return Object.fromEntries(
+        contactFields.map((field) => [field, String(data.get(field) ?? '')])
+      ) as ContactValues;
+    };
+
+    // The control that carries a field's aria-invalid; the radios share one error
+    const controls = (field: ContactField): HTMLElement[] =>
+      field === 'enquiry'
+        ? [...form.querySelectorAll<HTMLInputElement>('input[name="enquiry"]')]
+        : [form.querySelector<HTMLElement>(`#${field}`)].filter((el): el is HTMLElement => !!el);
+
+    // Focus without the browser's own scroll, then bring the whole field (label, control and
+    // error) into view. Scrolling the element ourselves applies the html scroll-padding that
+    // keeps it clear of the sticky header; WebKit ignores that padding when focus() scrolls.
+    const focusInView = (el: HTMLElement | undefined) => {
+      if (!el) return;
+      el.focus({ preventScroll: true });
+      (el.closest('.field') ?? el).scrollIntoView({ block: 'nearest' });
+    };
+
+    const showError = (field: ContactField, message: string) => {
+      const error = form.querySelector<HTMLElement>(`#${field}-error`);
+      if (!error) return;
+      error.textContent = message;
+      error.hidden = !message;
+      for (const control of controls(field)) {
+        if (message) {
+          control.setAttribute('aria-invalid', 'true');
+          control.setAttribute('aria-describedby', error.id);
+        } else {
+          control.removeAttribute('aria-invalid');
+          control.removeAttribute('aria-describedby');
+        }
+      }
+    };
+
+    // Errors appear on leaving a field you've typed in, or on sending; once shown,
+    // they update as you type, so fixing a typo clears its message straight away.
+    let attempted = false;
+    // A field Formspree refused keeps its message until its value changes. The value
+    // passes our own checks, so re-checking it on blur would hide the message, and
+    // pressing Send would then move the button out from under the pointer.
+    const serverErrors = new Map<ContactField, string>();
+    const check = (event: Event) => {
+      const target = event.target as HTMLInputElement;
+      const field = target.name as ContactField;
+      if (!contactFields.includes(field)) return;
+      if (serverErrors.has(field)) {
+        if (values()[field] === serverErrors.get(field)) return;
+        serverErrors.delete(field);
+      }
+      const shown = !form.querySelector(`#${field}-error`)?.hasAttribute('hidden');
+      // Tabbing past the radios without choosing isn't a mistake yet
+      const blurredWithText =
+        event.type === 'focusout' && target.type !== 'radio' && target.value.trim() !== '';
+      if (attempted || shown || blurredWithText) {
+        showError(field, validateField(field, values()[field]));
+      }
+    };
+    form.addEventListener('input', check);
+    form.addEventListener('change', check);
+    form.addEventListener('focusout', check);
+
+    let sending = false;
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (sending) return;
+      attempted = true;
+      serverErrors.clear();
+      failed?.replaceChildren();
+      if (status) status.textContent = '';
+
+      const current = values();
+      const errors = validateContact(current);
+      for (const field of contactFields) showError(field, errors[field] ?? '');
+
+      const first = contactFields.find((field) => errors[field]);
+      if (first) {
+        focusInView(controls(first)[0]);
+        return;
+      }
+
+      subject.value = enquirySubject(current.enquiry, pkg);
+      sending = true;
+      // aria-disabled rather than disabled: disabling the focused button would drop
+      // keyboard focus to the page, and `sending` already blocks a second submit
+      submit?.setAttribute('aria-disabled', 'true');
+      if (submitLabel) submitLabel.textContent = 'Sending…';
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+
+        if (response.ok) {
+          form.reset();
+          attempted = false;
+          subject.value = enquirySubject('');
+          packageField.value = '';
+          if (packageNote) packageNote.hidden = true;
+          if (status) {
+            status.textContent = `Thanks, your message is on its way. I'll reply within one business day.`;
+            focusInView(status);
+          }
+          return;
+        }
+
+        // Formspree names the field when it rejects one, e.g. an email it can't accept
+        const body = (await response.json().catch(() => ({}))) as {
+          errors?: { field?: string; message?: string }[];
+        };
+        const fieldError = body.errors?.find((e) =>
+          contactFields.includes(e.field as ContactField)
+        );
+        if (fieldError?.field && fieldError.message) {
+          const field = fieldError.field as ContactField;
+          serverErrors.set(field, current[field]);
+          showError(field, `${fieldError.message}.`);
+          focusInView(controls(field)[0]);
+        } else {
+          throw new Error(`Formspree answered ${response.status}`);
+        }
+      } catch {
+        // Inserting the text, rather than unhiding it, is what screen readers announce
+        if (failed && failedMessage) {
+          failed.replaceChildren(failedMessage.content.cloneNode(true));
+          failed.scrollIntoView({ block: 'nearest' });
+        }
+      } finally {
+        sending = false;
+        submit?.removeAttribute('aria-disabled');
+        if (submitLabel) submitLabel.textContent = 'Send message';
+      }
+    });
+  }
+</script>
+
+<style>
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-48) var(--space-64);
+    align-items: start;
+  }
+
+  form {
+    display: grid;
+    gap: var(--space-24);
+    max-width: 640px;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-24) var(--space-20);
+  }
+
+  .field {
+    display: grid;
+    gap: var(--space-8);
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  label,
+  legend {
+    padding: 0;
+    font-size: var(--text-ui);
+    font-weight: var(--weight-medium);
+  }
+
+  legend {
+    margin-bottom: var(--space-8);
+  }
+
+  .optional {
+    color: var(--text-3);
+    font-weight: var(--weight-regular);
+  }
+
+  /* Field edges use --text-3: a control has to be seen to be used (WCAG 1.4.11),
+     and the rule colours are decorative only */
+  input:not([type='radio']),
+  textarea {
+    width: 100%;
+    min-height: var(--control-height);
+    padding: 10px 12px;
+    background: var(--bg);
+    color: var(--text);
+    font: inherit;
+    border: 1px solid var(--text-3);
+    border-radius: var(--radius);
+    scroll-margin-top: var(--space-24);
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  /* An invalid field gets a brighter edge; the message below says what's wrong */
+  [aria-invalid='true']:not([type='radio']) {
+    border-color: var(--text);
+  }
+
+  .choices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8) var(--space-28);
+  }
+
+  .choice {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: var(--control-height);
+    font-weight: var(--weight-regular);
+    cursor: pointer;
+  }
+
+  .choice input {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: var(--text);
+    scroll-margin-top: var(--space-24);
+  }
+
+  .package {
+    margin: 0;
+    color: var(--text-3);
+  }
+
+  .error {
+    margin: 0;
+    color: var(--text);
+    font-size: var(--text-ui);
+  }
+
+  .honeypot {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .send {
+    margin-top: var(--space-8);
+  }
+
+  .btn[aria-disabled='true'] {
+    cursor: progress;
+    opacity: 0.8;
+  }
+
+  .status {
+    margin: 0;
+    font-size: var(--text-lede);
+    line-height: var(--leading-lede);
+    scroll-margin-top: var(--space-24);
+  }
+
+  .status:focus {
+    outline: none;
+  }
+
+  .failed p {
+    margin: 0;
+    color: var(--text);
+  }
+
+  .failed a {
+    text-underline-offset: 0.2em;
+  }
+
+  aside h3 {
+    margin: 0 0 var(--space-12);
+    color: var(--text-3);
+    font-weight: var(--weight-regular);
+  }
+
+  @media (max-width: 860px) {
+    .layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

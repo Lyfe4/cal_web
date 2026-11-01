@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import Hero from '../components/home/Hero.astro';
+import Work from '../components/home/Work.astro';
+import Services from '../components/home/Services.astro';
+import Process from '../components/home/Process.astro';
+import Testimonials from '../components/home/Testimonials.astro';
+import ContactCta from '../components/home/ContactCta.astro';
+import { getProjects } from '../data/projects';
+import { person, replyPromise, shortLocation } from '../data/site';
+import { testimonials } from '../data/testimonials';
+
+const projects = await getProjects();
+
+// Sections are numbered in page order. "Kind words" only exists once there's a real testimonial.
+const order = ['work', 'services', 'process', 'proof', 'contact'].filter(
+  (id) => id !== 'proof' || testimonials.length > 0
+);
+const n = (id: string) => order.indexOf(id) + 1;
+---
+
+<BaseLayout
+  title="Websites and web apps for businesses across Australia | Calvin R Development"
+  description={`${person.firstName} is a frontend developer in ${shortLocation}, building fast, custom websites for small businesses and the front end of web apps and integrations.`}
+>
+  <div class="wrap">
+    <Hero />
+
+    <Section id="work" n={n('work')} title="Selected work" note={`${projects.length} projects`}>
+      <Work projects={projects} />
+    </Section>
+
+    <Section id="services" n={n('services')} title="Services" note="Two ways I can help">
+      <Services />
+    </Section>
+
+    <Section id="process" n={n('process')} title="How I work" note="One person, start to finish">
+      <Process />
+    </Section>
+
+    {testimonials.length > 0 && (
+      <Section id="proof" n={n('proof')} title="Kind words">
+        <Testimonials testimonials={testimonials} />
+      </Section>
+    )}
+
+    <Section id="contact" n={n('contact')} title="Contact" note={`Replies ${replyPromise}`}>
+      <ContactCta />
+    </Section>
+  </div>
+</BaseLayout>

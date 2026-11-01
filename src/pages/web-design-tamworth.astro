@@ -1,0 +1,181 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import Section from '../components/Section.astro';
+import ProjectLinks from '../components/ProjectLinks.astro';
+import LocalServices from '../components/LocalServices.astro';
+import ContactCta from '../components/home/ContactCta.astro';
+import { localPageSchema, localPages } from '../data/areas';
+import { getProjects } from '../data/projects';
+import { formatPrice, pricing, replyPromise } from '../data/site';
+
+const page = localPages.tamworth;
+// The client site and the app, not the developer toolbox
+const work = (await getProjects()).filter((p) => ['lenbuild', 'fuel-finder'].includes(p.data.slug));
+
+const steps = [
+  {
+    name: 'Talk',
+    detail:
+      "We talk through what you need by phone or video. If you're ever in Armidale, I'm happy to meet in person.",
+  },
+  {
+    name: 'Quote',
+    detail: 'A written quote that says what is included and what it costs, before any work starts.',
+  },
+  {
+    name: 'Build',
+    detail:
+      'You watch the site come together on a private preview link, from your desk in Tamworth, and send feedback straight to me.',
+  },
+  {
+    name: 'Launch',
+    detail:
+      "I set up hosting on Netlify's free plan, connect your domain and check everything on real phones before it goes live.",
+  },
+  {
+    name: 'After',
+    detail: `Support is optional: ${formatPrice(pricing.support.monthly)} a month or ${formatPrice(pricing.support.yearly)} a year for updates and fixes, or ask for changes when you need them.`,
+  },
+];
+---
+
+<BaseLayout title={page.title} description={page.description} schema={localPageSchema(page)}>
+  <div class="wrap">
+    <PageHead
+      title={page.heading}
+      meta={['Based in Armidale, NSW', 'Phone, video and email', `Replies ${replyPromise}`]}
+    >
+      <strong>I'm Calvin, a frontend developer in Armidale.</strong> I build custom websites for
+      small businesses in Tamworth and across Australia, and frontend work on web apps for teams.
+      <Fragment slot="aside">
+        <a class="btn btn-primary" href="/contact">
+          Get a quote <span aria-hidden="true">→</span>
+        </a>
+      </Fragment>
+    </PageHead>
+
+    <Section id="how" n={1} title="How it works from Tamworth" note="One person, start to finish">
+      <div class="how">
+        <div class="prose">
+          <p>
+            You don't need to be in the same town to get a website built properly. Most of what
+            makes a project go well is clear communication and seeing the work early, and neither
+            depends on distance.
+          </p>
+          <p>
+            There's no agency between us. The person you first talk to is the person who builds your
+            site and looks after it afterwards.
+          </p>
+        </div>
+        <ol class="steps">
+          {steps.map((step, i) => (
+            <li>
+              <span class="mono n" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <div>
+                <h3>{step.name}</h3>
+                <p>{step.detail}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </Section>
+
+    <Section id="work" n={2} title="Work to look at" note={`${work.length} projects`}>
+      <div class="work">
+        <div class="prose">
+          <p>
+            One of each kind of work I take on: a website for a small business, and a web app built
+            on someone else's data.
+          </p>
+          <p>
+            Fuel Finder holds prices for every fuel station in NSW, so you can search Tamworth on it
+            today.
+          </p>
+        </div>
+        <ProjectLinks projects={work} />
+      </div>
+    </Section>
+
+    <Section id="services" n={3} title="Services and prices" note="Prices in AUD">
+      <LocalServices>
+        The same packages and prices as anywhere else. Websites have fixed starting prices, and app
+        or integration work is quoted per project.
+      </LocalServices>
+    </Section>
+
+    <Section id="contact" title="Contact">
+      <ContactCta
+        statement="Tell me about your business."
+        lede="A few lines on what you do in Tamworth and what you need from a website is plenty."
+      />
+    </Section>
+  </div>
+</BaseLayout>
+
+<style>
+  .how,
+  .work {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-40) var(--space-64);
+    align-items: start;
+  }
+
+  .prose {
+    max-width: 52ch;
+    color: var(--text-2);
+    font-size: var(--text-desc);
+  }
+
+  .prose p {
+    margin: 0 0 var(--space-16);
+  }
+
+  .prose p:last-child {
+    margin-bottom: 0;
+  }
+
+  .steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-bottom: var(--border);
+  }
+
+  .steps li {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: var(--space-16);
+    padding: var(--space-16) 0 var(--space-20);
+    border-top: var(--border);
+  }
+
+  .n {
+    padding-top: 3px;
+    color: var(--text-3);
+  }
+
+  h3 {
+    margin: 0 0 var(--space-8);
+    font-size: var(--text-desc);
+    font-weight: var(--weight-medium);
+  }
+
+  .steps p {
+    margin: 0;
+    max-width: 52ch;
+    color: var(--text-2);
+    font-size: var(--text-ui);
+  }
+
+  @media (max-width: 860px) {
+    .how,
+    .work {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

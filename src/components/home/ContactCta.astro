@@ -1,0 +1,87 @@
+---
+import CopyButton from '../CopyButton.astro';
+import { business, replyPromise } from '../../data/site';
+
+export interface Props {
+  statement?: string;
+  lede?: string;
+}
+
+const {
+  statement = 'Tell me about your project.',
+  lede = 'A few lines about your business and what you need is plenty.',
+} = Astro.props;
+---
+
+<div class="cta">
+  <div>
+    <p class="statement">{statement}</p>
+    <p class="lede">
+      {lede} I reply {replyPromise}.
+    </p>
+  </div>
+  <div>
+    <a class="btn btn-primary" href="/contact">
+      Get a quote <span aria-hidden="true">→</span>
+    </a>
+    <ul class="mono direct">
+      <li>
+        <a href={`mailto:${business.email}`}>{business.email}</a>
+        <CopyButton text={business.email} label="Copy email address" done="Email address copied" />
+      </li>
+      <li>
+        <a href={business.phone.href}>{business.phone.display}</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<style>
+  .cta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-32) var(--space-64);
+    align-items: end;
+  }
+
+  .statement {
+    margin: 0;
+    max-width: 16ch;
+    font-size: var(--text-feature);
+    font-weight: var(--weight-hero);
+    line-height: var(--leading-feature);
+    letter-spacing: var(--tracking-feature);
+  }
+
+  .lede {
+    margin: var(--space-24) 0 0;
+    max-width: 46ch;
+    color: var(--text-2);
+    font-size: var(--text-lede);
+    line-height: var(--leading-lede);
+  }
+
+  .direct {
+    display: grid;
+    gap: var(--space-8);
+    margin: var(--space-20) 0 0;
+    padding: 0;
+    list-style: none;
+    text-transform: none;
+  }
+
+  .direct a {
+    color: var(--text-2);
+    text-underline-offset: 0.2em;
+  }
+
+  .direct a:hover {
+    color: var(--text);
+  }
+
+  @media (max-width: 860px) {
+    .cta {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
