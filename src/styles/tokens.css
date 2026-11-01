@@ -49,6 +49,7 @@
   --tracking-feature: -0.05em;
   --tracking-label: 0.04em;
   --tracking-frame: 0.02em;
+  --tracking-project-firm: -0.062em; /* project name on hover, at weight 560 */
 
   /* Spacing (3.3): the steps in use, plus the fluid hero values */
   --space-8: 8px;
@@ -87,6 +88,8 @@
   /* Motion: short and functional only; zeroed under prefers-reduced-motion */
   --duration-fast: 120ms;
   --duration: 200ms;
+  --duration-morph: 340ms; /* a project name or frame carried across pages */
+  --duration-develop: 400ms; /* a lazy screenshot appearing in its frame */
   --ease-out: cubic-bezier(0.2, 0, 0, 1);
 }
 
@@ -94,6 +97,8 @@
   :root {
     --duration-fast: 0ms;
     --duration: 0ms;
+    --duration-morph: 0ms;
+    --duration-develop: 0ms;
   }
 }
 

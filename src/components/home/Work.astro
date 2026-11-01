@@ -24,7 +24,7 @@ const [featured, ...rest] = Astro.props.projects;
         {String(project.data.order).padStart(2, '0')}
       </span>
       <div>
-        <h3 id={`p-${project.data.slug}`}>
+        <h3 id={`p-${project.data.slug}`} style={`view-transition-name: name-${project.data.slug}`}>
           <a href={projectPath(project)}>{project.data.name}</a>
         </h3>
         <p class="desc">{project.data.summary}</p>
@@ -45,6 +45,7 @@ const [featured, ...rest] = Astro.props.projects;
         image={project.data.screenshot.src}
         alt={project.data.screenshot.alt}
         sizes="(max-width: 860px) calc(100vw - 2 * clamp(16px, 3vw, 40px) - 18px), (max-width: 1280px) 38vw, 514px"
+        transitionName={`frame-${project.data.slug}`}
       />
     </li>
   ))}
@@ -77,6 +78,8 @@ const [featured, ...rest] = Astro.props.projects;
   }
 
   .projects h3 {
+    /* Shrink to the name, so the view transition morphs the words and not the column */
+    width: fit-content;
     margin: 0 0 var(--space-20);
     font-size: var(--text-project);
     font-weight: var(--weight-medium);
@@ -86,9 +89,17 @@ const [featured, ...rest] = Astro.props.projects;
 
   .projects h3 a {
     text-decoration: none;
+    transition:
+      font-weight var(--duration) var(--ease-out),
+      letter-spacing var(--duration) var(--ease-out);
   }
 
-  .projects h3 a:hover {
+  /* The name firms up under the pointer: Geist's weight axis goes to 560, and tighter
+     tracking pays back the width the heavier strokes add, so the line never rewraps */
+  .projects h3 a:hover,
+  .projects h3 a:focus-visible {
+    font-weight: var(--weight-wordmark);
+    letter-spacing: var(--tracking-project-firm);
     text-decoration: underline;
     text-decoration-thickness: 2px;
     text-underline-offset: 0.12em;

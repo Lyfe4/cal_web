@@ -1,6 +1,8 @@
 ---
 import { areaLinks } from '../data/areas';
+import { build, formatBuildTime } from '../data/build';
 import { business, formattedAddress, nav } from '../data/site';
+import { WEIGHT_SLOT } from '../utils/pageWeight';
 ---
 
 <footer class="foot">
@@ -37,6 +39,23 @@ import { business, formattedAddress, nav } from '../data/site';
       </a>
       <span>ABN {business.abn}</span>
     </address>
+    <!-- Build log: only facts the build itself produces. The weight is measured from the
+         built files and filled in after the build (src/integrations/pageWeight.ts). -->
+    <p class="build-log mono">
+      <span>
+        Built <time datetime={build.at.toISOString()}>{formatBuildTime(build.at)}</time>
+        {build.commit && (
+          <>
+            {' '}
+            from{' '}
+            <a class="sha" href={build.commit.href}>
+              {build.commit.short}
+            </a>
+          </>
+        )}
+      </span>
+      <Fragment set:html={WEIGHT_SLOT} />
+    </p>
   </div>
 </footer>
 
@@ -100,9 +119,30 @@ import { business, formattedAddress, nav } from '../data/site';
     text-align: right;
   }
 
-  /* Addresses stay lowercase so they read as typed */
-  .email {
+  /* Addresses and hashes stay lowercase so they read as typed */
+  .email,
+  .sha {
     text-transform: none;
+  }
+
+  .build-log {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8) var(--space-24);
+    grid-column: 1 / -1;
+    margin: 0;
+    padding-top: var(--space-20);
+    border-top: var(--border);
+    color: var(--text-3);
+  }
+
+  .build-log a {
+    color: var(--text-2);
+    text-underline-offset: 0.2em;
+  }
+
+  .build-log a:hover {
+    color: var(--text);
   }
 
   @media (max-width: 860px) {

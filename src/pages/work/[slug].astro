@@ -69,6 +69,14 @@ const facts: Fact[] = [
 ];
 
 const pageUrl = new URL(projectPath(project), siteUrl).href;
+
+// Section map: one entry per numbered section, each tied to that section's view timeline
+const mapEntries = [
+  ...sections.map((section) => ({ id: section.id, title: section.title })),
+  ...(kindWords.length > 0 ? [{ id: 'what-they-said', title: 'What they said' }] : []),
+].map((entry, i) => ({ ...entry, n: String(i + 1).padStart(2, '0'), timeline: `--sec-${i + 1}` }));
+// Every name a map entry animates against has to be in scope on a shared ancestor
+const timelineScope = `timeline-scope: ${mapEntries.map((entry) => entry.timeline).join(', ')}`;
 ---
 
 <BaseLayout
@@ -98,9 +106,11 @@ const pageUrl = new URL(projectPath(project), siteUrl).href;
     ...(client ? { sourceOrganization: { '@type': 'Organization', name: client, url } } : {}),
   }}
 >
-  <article class="wrap" aria-labelledby="case-h">
+  <article class="wrap" aria-labelledby="case-h" style={timelineScope}>
     <header class="case-head">
-      <h1 id="case-h">{name}</h1>
+      <h1 id="case-h" style={`view-transition-name: name-${project.data.slug}`}>
+        {name}
+      </h1>
       <p class="mono meta">
         <span>{type}</span>
         {tags.map((tag) => (
@@ -124,6 +134,7 @@ const pageUrl = new URL(projectPath(project), siteUrl).href;
         alt={screenshot.alt}
         sizes="(max-width: 860px) calc(100vw - 2 * clamp(16px, 3vw, 40px) - 18px), (max-width: 1280px) 58vw, 750px"
         eager
+        transitionName={`frame-${project.data.slug}`}
       />
       <FactList facts={facts} label={`${name} details`} />
     </div>
@@ -131,7 +142,7 @@ const pageUrl = new URL(projectPath(project), siteUrl).href;
     {sections.map((section, i) => {
       const shots = galleryFor(section.id);
       return (
-        <Section id={section.id} n={i + 1} title={section.title}>
+        <Section id={section.id} n={i + 1} title={section.title} timeline={mapEntries[i]?.timeline}>
           <div class:list={['case-body', { 'has-shots': shots.length > 0 }]}>
             <div class="prose" set:html={section.html} />
             {shots.length > 0 && (
@@ -152,9 +163,29 @@ const pageUrl = new URL(projectPath(project), siteUrl).href;
     })}
 
     {kindWords.length > 0 && (
-      <Section id="what-they-said" n={sections.length + 1} title="What they said">
+      <Section
+        id="what-they-said"
+        n={sections.length + 1}
+        title="What they said"
+        timeline={mapEntries.at(-1)?.timeline}
+      >
         <Testimonials testimonials={kindWords} linkProject={false} />
       </Section>
+    )}
+    {/* Wide screens only, in the left margin: where you are in the case study */}
+    {mapEntries.length > 1 && (
+      <nav class="section-map mono" aria-label={`${name} sections`}>
+        <ol>
+          {mapEntries.map((entry) => (
+            <li style={`--timeline: ${entry.timeline}`}>
+              <a href={`#${entry.id}`}>
+                {entry.n}
+                <span class="visually-hidden"> {entry.title}</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </nav>
     )}
   </article>
 
@@ -164,7 +195,14 @@ const pageUrl = new URL(projectPath(project), siteUrl).href;
       title="Next project"
       note={`${String(next.data.order).padStart(2, '0')} of ${String(total).padStart(2, '0')}`}
     >
-      <p class="next">
+      <p
+        class="next"
+        style={
+          next.data.slug === project.data.slug
+            ? undefined
+            : `view-transition-name: name-${next.data.slug}`
+        }
+      >
         <a href={projectPath(next)}>{next.data.name}</a>
       </p>
       <p class="next-desc">{next.data.summary}</p>
@@ -185,6 +223,7 @@ const pageUrl = new URL(projectPath(project), siteUrl).href;
   }
 
   h1 {
+    width: fit-content;
     margin: 0;
     font-size: var(--text-project);
     font-weight: var(--weight-medium);
@@ -299,6 +338,7 @@ const pageUrl = new URL(projectPath(project), siteUrl).href;
   }
 
   .next {
+    width: fit-content;
     margin: 0 0 var(--space-20);
     font-size: var(--text-project);
     font-weight: var(--weight-medium);
@@ -321,6 +361,84 @@ const pageUrl = new URL(projectPath(project), siteUrl).href;
     max-width: 44ch;
     color: var(--text-2);
     font-size: var(--text-desc);
+  }
+
+  /* Section map: a column of numbered ticks in the left margin, which only exists when the
+     window is wider than the container. The tick for the section crossing the upper part of
+     the screen lights up (scroll-driven, no script). Without scroll-driven animations it's
+     a plain list of links. */
+  .section-map {
+    display: none;
+  }
+
+  @media (min-width: 1400px) {
+    .section-map {
+      position: fixed;
+      top: 50%;
+      left: calc((100vw - var(--container)) / 2 - 24px);
+      display: block;
+      translate: 0 -50%;
+    }
+  }
+
+  .section-map ol {
+    display: grid;
+    gap: var(--space-8);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .section-map a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+    padding: 2px 0;
+    color: var(--text-3);
+    text-decoration: none;
+  }
+
+  .section-map a:hover {
+    color: var(--text);
+  }
+
+  .section-map a::before {
+    content: '';
+    width: 8px;
+    height: 1px;
+    background: currentColor;
+    transform-origin: left;
+  }
+
+  @supports (animation-timeline: view()) {
+    .section-map a {
+      animation: map-current linear;
+      animation-timeline: var(--timeline);
+      /* Current while the section spans a line 40% down the screen */
+      animation-range: cover 60vh cover calc(100% - 40vh);
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .section-map a::before {
+        animation: map-tick linear;
+        animation-timeline: var(--timeline);
+        animation-range: cover 60vh cover calc(100% - 40vh);
+      }
+    }
+  }
+
+  @keyframes map-current {
+    from,
+    to {
+      color: var(--text);
+    }
+  }
+
+  @keyframes map-tick {
+    from,
+    to {
+      transform: scaleX(2);
+    }
   }
 
   @media (max-width: 860px) {

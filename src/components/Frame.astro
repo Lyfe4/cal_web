@@ -11,15 +11,20 @@ export interface Props {
   sizes: string;
   /** Load straight away at high priority; only for a frame in the first screen */
   eager?: boolean;
+  /** view-transition-name, so the frame carries over to the same project's frame on the next page */
+  transitionName?: string | undefined;
 }
 
 // Every capture fills the frame's width; crop the capture, not the frame.
-const { url, image, alt, sizes, eager = false } = Astro.props;
+const { url, image, alt, sizes, eager = false, transitionName } = Astro.props;
 
 const { avif, webp } = await responsiveSources(image);
 ---
 
-<figure class="frame">
+<figure
+  class="frame"
+  style={transitionName ? `view-transition-name: ${transitionName}` : undefined}
+>
   <div class="frame-bar" aria-hidden="true">
     {displayHost(url)}
   </div>
@@ -38,6 +43,22 @@ const { avif, webp } = await responsiveSources(image);
     />
   </picture>
 </figure>
+
+<script>
+  // A lazy screenshot fades in once it has loaded, inside a frame that's already there,
+  // instead of popping in mid-scroll. Only frames whose image hasn't loaded when this runs;
+  // the eager first-screen frame is left alone so it can paint as early as possible.
+  if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+    for (const img of document.querySelectorAll<HTMLImageElement>('.frame img[loading="lazy"]')) {
+      const frame = img.closest('.frame');
+      if (!frame || img.complete) continue;
+      frame.toggleAttribute('data-developing', true);
+      const done = () => frame.removeAttribute('data-developing');
+      img.addEventListener('load', done, { once: true });
+      img.addEventListener('error', done, { once: true });
+    }
+  }
+</script>
 
 <style>
   .frame {
@@ -73,5 +94,10 @@ const { avif, webp } = await responsiveSources(image);
 
   .frame :global(img) {
     width: 100%;
+    transition: opacity var(--duration-develop) var(--ease-out);
+  }
+
+  .frame[data-developing] :global(img) {
+    opacity: 0;
   }
 </style>

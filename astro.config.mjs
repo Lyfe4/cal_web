@@ -2,6 +2,7 @@
 import { execFileSync } from 'node:child_process';
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { pageWeight } from './src/integrations/pageWeight.ts';
 
 const site = 'https://calvinrdevelopment.com';
 
@@ -48,11 +49,14 @@ export default defineConfig({
   compressHTML: true,
   integrations: [
     sitemap({
+      // The motion lab is a working page, not part of the site
+      filter: (page) => new URL(page).pathname !== '/lab',
       serialize: (item) => {
         const lastmod = lastCommitDate(pageSources(new URL(item.url).pathname));
         return lastmod ? { ...item, lastmod } : item;
       },
     }),
+    pageWeight(),
   ],
   vite: {
     build: {

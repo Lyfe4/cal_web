@@ -1,0 +1,84 @@
+---
+export interface Props {
+  /** The text that goes on the clipboard */
+  text: string;
+  /** What it is, for screen readers: "Copy email address" */
+  label: string;
+}
+
+const { text, label } = Astro.props;
+---
+
+<!-- Hidden until the script finds a clipboard to write to; the link beside it still works -->
+<button class="copy mono" type="button" data-copy={text} aria-label={label} hidden>
+  <span data-copy-label>Copy</span>
+</button>
+<span class="visually-hidden" role="status" data-copy-status></span>
+
+<script>
+  const RESET_AFTER = 2000;
+
+  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-copy]')) {
+    if (!navigator.clipboard) continue;
+    const label = button.querySelector('[data-copy-label]');
+    const status = button.nextElementSibling;
+    let timer: number | undefined;
+
+    button.hidden = false;
+    button.addEventListener('click', async () => {
+      let message: string;
+      try {
+        await navigator.clipboard.writeText(button.dataset.copy ?? '');
+        message = 'Copied';
+      } catch {
+        // Blocked by the browser or a permission prompt that was dismissed
+        message = 'Copy failed';
+      }
+      if (label) label.textContent = message;
+      if (status) status.textContent = message;
+      button.toggleAttribute('data-done', true);
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        if (label) label.textContent = 'Copy';
+        if (status) status.textContent = '';
+        button.removeAttribute('data-done');
+      }, RESET_AFTER);
+    });
+  }
+</script>
+
+<style>
+  .copy {
+    margin-left: var(--space-12);
+    padding: 0;
+    background: none;
+    border: 0;
+    color: var(--text-3);
+    cursor: pointer;
+    text-underline-offset: 0.2em;
+  }
+
+  .copy:hover {
+    color: var(--text);
+    text-decoration: underline;
+  }
+
+  .copy[data-done] {
+    color: var(--text);
+  }
+
+  /* The new word drops in from just above, once */
+  @media (prefers-reduced-motion: no-preference) {
+    .copy[data-done] span {
+      display: inline-block;
+      animation: swap var(--duration) var(--ease-out);
+    }
+  }
+
+  @keyframes swap {
+    from {
+      opacity: 0;
+      translate: 0 -3px;
+    }
+  }
+</style>
