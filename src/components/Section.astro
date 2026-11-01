@@ -53,4 +53,16 @@ const heading = n === undefined ? title : `${String(n).padStart(2, '0')} / ${tit
       display: none;
     }
   }
+
+  /* Phones: less air at the end of each section, so the page reads as one run of content
+     rather than blocks separated by empty screens */
+  @media (max-width: 480px) {
+    .sec {
+      padding-bottom: var(--space-48);
+    }
+
+    .sec-head {
+      margin-bottom: var(--space-20);
+    }
+  }
 </style>

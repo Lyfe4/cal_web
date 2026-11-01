@@ -132,6 +132,7 @@ const timelineScope = `timeline-scope: ${mapEntries.map((entry) => entry.timelin
       <Frame
         url={url}
         image={screenshot.src}
+        mobile={screenshot.mobile}
         alt={screenshot.alt}
         sizes="(max-width: 860px) calc(100vw - 2 * clamp(16px, 3vw, 40px) - 18px), (max-width: 1280px) 58vw, 750px"
         eager
@@ -152,6 +153,7 @@ const timelineScope = `timeline-scope: ${mapEntries.map((entry) => entry.timelin
                   <Frame
                     url={url}
                     image={shot.src}
+                    mobile={shot.mobile}
                     alt={shot.alt}
                     sizes="(max-width: 860px) calc(100vw - 2 * clamp(16px, 3vw, 40px) - 18px), (max-width: 1280px) 42vw, 520px"
                   />
@@ -355,6 +357,22 @@ const timelineScope = `timeline-scope: ${mapEntries.map((entry) => entry.timelin
     .overview,
     .case-body.has-shots {
       grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  /* Phones: tighter steps between the head, the overview and the sections */
+  @media (max-width: 480px) {
+    .case-head {
+      padding-bottom: var(--space-32);
+    }
+
+    .overview {
+      row-gap: var(--space-24);
+      padding-bottom: var(--space-48);
+    }
+
+    .case-body.has-shots {
+      row-gap: var(--space-32);
     }
   }
 </style>

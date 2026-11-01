@@ -6,6 +6,9 @@ import { responsiveSources } from '../utils/images';
 export interface Props {
   url: string;
   image: ImageMetadata;
+  /** The same view captured at a phone width, shown instead of image on phones */
+  mobile?: ImageMetadata | undefined;
+  /** Must be true of the phone capture as well */
   alt: string;
   /** The image's rendered width per breakpoint, for srcset selection */
   sizes: string;
@@ -16,9 +19,19 @@ export interface Props {
 }
 
 // Every capture fills the frame's width; crop the capture, not the frame.
-const { url, image, alt, sizes, eager = false, transitionName } = Astro.props;
+const { url, image, mobile, alt, sizes, eager = false, transitionName } = Astro.props;
 
 const { avif, webp } = await responsiveSources(image);
+
+// Art direction: a desktop capture scaled into a phone-width frame is too small to read, so
+// phones get the phone capture. Each source carries its own dimensions, so the frame keeps
+// its height before the image loads (CLS 0). At this width the frame is the content column:
+// the 16px gutter each side, less the frame's border and side mat (18px).
+const phone = mobile && {
+  media: '(max-width: 480px)',
+  sizes: 'calc(100vw - 2 * 16px - 18px)',
+  ...(await responsiveSources(mobile, [400, 640])),
+};
 ---
 
 <figure
@@ -26,9 +39,29 @@ const { avif, webp } = await responsiveSources(image);
   style={transitionName ? `view-transition-name: ${transitionName}` : undefined}
 >
   <div class="frame-bar" aria-hidden="true">
-    {displayHost(url)}
+    <span>{displayHost(url)}</span>
   </div>
   <picture>
+    {phone && (
+      <>
+        <source
+          media={phone.media}
+          type="image/avif"
+          srcset={phone.avif.srcSet.attribute}
+          sizes={phone.sizes}
+          width={mobile.width}
+          height={mobile.height}
+        />
+        <source
+          media={phone.media}
+          type="image/webp"
+          srcset={phone.webp.srcSet.attribute}
+          sizes={phone.sizes}
+          width={mobile.width}
+          height={mobile.height}
+        />
+      </>
+    )}
     <source type="image/avif" srcset={avif.srcSet.attribute} sizes={sizes} />
     <img
       src={webp.src}
@@ -83,6 +116,13 @@ const { avif, webp } = await responsiveSources(image);
     font-size: var(--text-frame);
     letter-spacing: var(--tracking-frame);
     white-space: nowrap;
+  }
+
+  /* A long address shortens rather than spilling past a narrow frame */
+  .frame-bar span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   /* The three browser dots, drawn rather than marked up */

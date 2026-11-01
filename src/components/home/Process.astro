@@ -161,4 +161,14 @@ import { process } from '../../data/process';
       grid-column: 2;
     }
   }
+
+  /* Phones: a narrow number column and the title sitting straight on its description,
+     so each step is a compact block and the text gets most of the width */
+  @media (max-width: 480px) {
+    li {
+      grid-template-columns: 28px minmax(0, 1fr);
+      gap: 0 var(--space-12);
+      padding: var(--space-16) 0 var(--space-20);
+    }
+  }
 </style>

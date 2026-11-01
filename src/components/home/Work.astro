@@ -43,6 +43,7 @@ const [featured, ...rest] = Astro.props.projects;
       <Frame
         url={project.data.url}
         image={project.data.screenshot.src}
+        mobile={project.data.screenshot.mobile}
         alt={project.data.screenshot.alt}
         sizes="(max-width: 860px) calc(100vw - 2 * clamp(16px, 3vw, 40px) - 18px), (max-width: 1280px) 38vw, 514px"
         transitionName={`frame-${project.data.slug}`}
@@ -150,6 +151,12 @@ const [featured, ...rest] = Astro.props.projects;
 
     .n {
       padding-top: 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .featured {
+      padding-bottom: var(--space-40);
     }
   }
 </style>

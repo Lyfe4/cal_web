@@ -22,10 +22,12 @@ seo:
   description: The website I built for LenBuild, a family-run builder in Guyra, NSW. Six prerendered pages, local pages for Guyra and Armidale, and an enquiry form.
 screenshot:
   src: ../../assets/projects/lenbuild.webp
+  mobile: ../../assets/projects/lenbuild-mobile.webp
   alt: "LenBuild's Projects and Services page: the Custom Home Building section with photos of a finished home."
 gallery:
   - src: ../../assets/projects/lenbuild-contact.webp
-    alt: "LenBuild's Contact page: the Get In Touch form with name, email, optional phone, a Service Interested In dropdown and message fields, beside their contact details."
+    mobile: ../../assets/projects/lenbuild-contact-mobile.webp
+    alt: "LenBuild's Contact page: the Get In Touch form, with name, email, optional phone and Service Interested In fields."
     section: what-i-built
 ---
 

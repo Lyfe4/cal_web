@@ -23,6 +23,7 @@ seo:
   description: Patchbay, a side project of mine. Eleven developer tools that run entirely in the browser, wired into pipelines on a canvas, with no network access.
 screenshot:
   src: ../../assets/projects/patchbay.webp
+  mobile: ../../assets/projects/patchbay-mobile.webp
   alt: 'Patchbay start page: the headline Developer tools that cannot phone home, above a list of example pipelines.'
 gallery:
   - src: ../../assets/projects/patchbay-canvas.webp
