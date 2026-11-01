@@ -159,6 +159,12 @@ The scale is bimodal: big statements (42–104px) and small functional text (11�
 8. **Footer:**
    - On the left, a footer nav in the mono label + link style: two rows, each led by a `--text-3` label, with `--text-2` links that underline. "Site": Work, Services, About, Contact. "Areas": Armidale, Tamworth, New England. The labels share a column so the links line up; at 375px each row's links wrap within it.
    - On the right, mono meta in `--text-3`: business name · address; phone; email; ABN. Under 860px it stacks below the nav, left-aligned.
+9. **Testimonial quotation marks** ("Kind words" on the homepage, "What they said" on case studies):
+   - Real typographic quotes, “ and ” (in the Geist subset), in `--text-3`. Never the accent, and never an icon or graphic.
+   - Added in CSS (`::before` on the opening sentence, `::after` on the last paragraph), so the stored quote stays word for word. They use empty alt text (`content: '\201C' / ''`) so screen readers don't read them out; the `<blockquote>` already marks it as a quote.
+   - The opening “ is at the statement size. From 1320px, where the margin has room, it hangs into the margin and the first line's text lines up exactly with the column (hang = the mark's 0.393em advance at weight 480 plus the statement tracking). Narrower, it sits inline, with no overflow down to 320px.
+   - The closing ” ends the last sentence at that paragraph's normal text size.
+   - No animation.
 
 ### 3.6 Accent rules
 

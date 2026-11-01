@@ -63,6 +63,32 @@ const { testimonials, linkProject = true } = Astro.props;
     letter-spacing: var(--tracking-feature);
   }
 
+  /* Quotation marks: typographic “ ” in --text-3, added here so the stored quote stays word
+     for word. The "/ ''" alt text keeps screen readers from reading them out; the
+     blockquote already says it's a quote. No animation: punctuation doesn't move. */
+  .lead::before {
+    content: '\201C';
+    content: '\201C' / '';
+    color: var(--text-3);
+  }
+
+  /* The closing mark ends the last paragraph, at that paragraph's size */
+  blockquote > p:last-child::after {
+    content: '\201D';
+    content: '\201D' / '';
+    color: var(--text-3);
+  }
+
+  /* Hanging punctuation where the margin has room for it: the opening mark sits outside the
+     column and the first line's text lines up with the lines below. The hang is the mark's
+     advance in Geist at weight 480 (0.393em, measured) plus the statement's tracking.
+     Narrower windows keep it inline. */
+  @media (min-width: 1320px) {
+    .lead {
+      text-indent: calc(-0.393em - var(--tracking-feature));
+    }
+  }
+
   .rest {
     margin: var(--space-28) 0 0;
     max-width: 52ch;
