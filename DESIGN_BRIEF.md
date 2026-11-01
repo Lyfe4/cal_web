@@ -269,7 +269,7 @@ Study for *specific* things (listed next to each) — do not copy any site whole
 2. **Selected work** — the centrepiece. Three projects, each with its own case-study page:
    - **LenBuild** (lenbuild.com) — client website, custom home builder, Guyra NSW. Use an optimised screenshot, **not a live iframe**.
    - **Fuel Finder** (nsw-fuel-finder.netlify.app) — live NSW & ACT fuel prices, cheapest first, list + map, four months of price history. Shows the apps & integrations offer. Label it **"In progress"**.
-   - **Patchbay** (patchbay-tools.netlify.app) — browser-based developer toolbox that runs entirely client-side. Shown as a project only (see Section 7).
+   - **Patchbay** (patchbay-tools.netlify.app) — developer toolbox that runs entirely in your browser. Shown as a project only (see Section 7).
    Each: screenshot, type of work, problem → what was built → result. No invented metrics.
 3. **Services** — split into *Websites* and *Apps & integrations*. Keep current pricing unless told otherwise: Starter from $600, Professional from $1,125, Custom/contract quoted; extras $150/page, monthly support $80/mo, annual $800/yr.
 4. **How I work** — short numbered process. Emphasise working directly with the developer, no agency layers.

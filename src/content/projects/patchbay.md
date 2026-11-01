@@ -5,7 +5,7 @@ order: 3
 type: Developer tool
 status: live
 url: https://patchbay-tools.netlify.app
-summary: A browser-based developer toolbox that runs entirely client-side.
+summary: A developer toolbox that runs entirely in your browser.
 tags:
   - Side project
 year: 2026
