@@ -199,7 +199,7 @@ Motion is small, short and tells you something: where you are, what state a proj
 | Name weight | Large project names on the home page | On hover or focus the weight goes 500 to 560 and tracking tightens to `--tracking-project-firm`, so the width holds (within 0.3%) and the line never rewraps |
 
 Rules:
-- **`prefers-reduced-motion: reduce` turns everything off.** No page transitions, no dot animations, no drawing lines, no fades, no transitions on hover. Content and controls work exactly the same. Only state shown by colour stays (the section map's current section, hover colours), with no movement.
+- **`prefers-reduced-motion: reduce` turns everything off.** No page transitions, no dot animations, no drawing lines, no fades, no transitions on hover. Content and controls work exactly the same. State that isn't movement stays and changes instantly: the section map's current section, hover colours and the project-name weight.
 - **No entrance animation on the hero**, or on any content as the page loads. Nothing is hidden until JS runs.
 - **CLS stays 0.** Motion uses `transform`, `opacity` and colour only. Anything a script reveals is already in the layout (the copy button is rendered visible and only removed when there's no JS or clipboard).
 - **Scroll-driven CSS first, with a JS fallback.** Where the browser has scroll-driven animations (Chrome, Edge, Safari 26), the How I work lines and the section map run in CSS. Elsewhere (Firefox), a small IntersectionObserver script produces the same states. Route `animation-timeline` through a custom property: the CSS minifier otherwise folds it into the `animation` shorthand, which can't carry a timeline, and the browser drops the animation.

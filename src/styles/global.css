@@ -103,13 +103,15 @@ img {
   border-color: var(--text-3);
 }
 
-/* The arrow leans the way the button goes */
-.btn > [aria-hidden='true']:last-child {
-  transition: translate var(--duration) var(--ease-out);
-}
+/* The arrow leans the way the button goes; it stays put under reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+  .btn > [aria-hidden='true']:last-child {
+    transition: translate var(--duration) var(--ease-out);
+  }
 
-.btn:hover > [aria-hidden='true']:last-child {
-  translate: 3px 0;
+  .btn:hover > [aria-hidden='true']:last-child {
+    translate: 3px 0;
+  }
 }
 
 /* Status (3.5.6): a 7px dot plus a mono word */

@@ -167,13 +167,14 @@ async function run(base, name, motion, record) {
     `visible=${visible} label=${label} announced=${announced}`
   );
 
-  // Arrow lean
+  // Arrow lean: 3px on hover; doesn't move under reduced motion
   const button = page.locator('.btn-primary').first();
   await button.scrollIntoViewIfNeeded();
   await button.hover();
   await sleep(400);
   const lean = await button.evaluate((b) => getComputedStyle(b.lastElementChild).translate);
-  check('arrow lean', lean === '3px' || lean === '3px 0px', `translate=${lean}`);
+  const leaned = lean === '3px' || lean === '3px 0px';
+  check('arrow lean', moving ? leaned : lean === 'none', `translate=${lean}`);
 
   // Name weight: firms to 560 on hover without changing width by more than 1%
   const projectName = page.locator('.projects h3 a').first();
