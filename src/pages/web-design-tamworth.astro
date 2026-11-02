@@ -40,7 +40,12 @@ const steps = [
 ];
 ---
 
-<BaseLayout title={page.title} description={page.description} schema={localPageSchema(page)}>
+<BaseLayout
+  title={page.title}
+  description={page.description}
+  schema={localPageSchema(page)}
+  contactOnPage
+>
   <div class="wrap">
     <PageHead
       title={page.heading}
@@ -68,7 +73,7 @@ const steps = [
             site and looks after it afterwards.
           </p>
         </div>
-        <ol class="steps">
+        <ol class="steps" data-ruled>
           {steps.map((step, i) => (
             <li>
               <span class="mono n" aria-hidden="true">
@@ -143,7 +148,7 @@ const steps = [
     margin: 0;
     padding: 0;
     list-style: none;
-    border-bottom: var(--border);
+    border-bottom: var(--ruled-close, var(--border));
   }
 
   .steps li {

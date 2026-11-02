@@ -109,6 +109,11 @@ The scale is bimodal: big statements (42–104px) and small functional text (11�
   - Buttons: 44px tall, 18px side padding, 12px apart.
 - **Breakpoints:** 860px (single column, nav hidden, numbers move above names) and 480px (spec values wrap under their labels, leaders hidden).
 - **Rules:** all lines are 1px. Solid `--rule` for structure, dotted leader colour for spec leaders. No 2px rules, no shadows.
+  - One line where a ruled list ends a block, never two and never a gap, and a closing line is always the width of the list it closes.
+    - A list that spans the full width of its section (in practice: in one column, 860px and under) and is the last thing before another rule (the next section, the footer, the first project row, a ruled note) hands its closing rule over: the next rule moves up to sit directly under the last row, and the space moves below it. Last row, one 1px line, the full section gap, the next label or heading, the same distance as any other section break (93px at desktop, 69px on phones, from content end to label), because the block's trailing space (`--space-section-end`: 72px, 48px at 480 and under) is added to the next block's top instead.
+    - A list narrower than its section (a column, or a capped table like /about's Stack) never hands off. It keeps its own closing rule at its own width, then the normal section end, then the next section's normal full-width rule and label. That's every list on desktop.
+    - Never "rule, empty gap, rule" at the same width, "last row, empty gap, rule", or a closing line wider or narrower than its list.
+    - Lists mark themselves `data-ruled` and hand their closing rule over through `--ruled-close`; global.css does it for any list that ends its section in one column, and the featured project, the case-study overview and the Armidale note move their own space. /about's Stack table drops its 760px cap in one column so it fills the column like the rest. Lists with a rule above each row and no closing rule (the project rows, How I work) end on content and keep the normal section space.
 - **Radii:** 0 on everything rectangular: buttons, frames, panels. The only round shapes are the 7px status dots and the frame's three browser dots.
 - **Focus:** `outline: 2px solid var(--accent); outline-offset: 3px` on `:focus-visible`.
 
@@ -158,7 +163,9 @@ The scale is bimodal: big statements (42–104px) and small functional text (11�
    - On mobile the two lists stack, prices first. Never interleave the two lists. Under 480px the leaders hide and values wrap under their labels.
 8. **Footer:**
    - On the left, a footer nav in the mono label + link style: two rows, each led by a `--text-3` label, with `--text-2` links that underline. "Site": Work, Services, About, Contact. "Areas": Armidale, Tamworth, New England. The labels share a column so the links line up; at 375px each row's links wrap within it.
-   - On the right, mono meta in `--text-3`: business name · address; phone; email; ABN. Under 860px it stacks below the nav, left-aligned.
+   - On the right, mono meta in `--text-3`: business name · address, then ABN. Under 860px it stacks below the nav, left-aligned.
+   - Phone and email (with its Copy button) appear in the footer only on pages that don't already show them. Pages with a Contact section, and /contact with its own details, pass `contactOnPage` to `BaseLayout`, so the footer doesn't repeat them straight after; the 404 keeps them so they're on every page. The sitewide structured data (NAP) always carries them.
+   - Last, below a 1px rule across both columns: the build log (see 3.8).
 9. **Testimonial quotation marks** ("Kind words" on the homepage, "What they said" on case studies):
    - Real typographic quotes, “ and ” (in the Geist subset), in `--text-3`. Never the accent, and never an icon or graphic.
    - Added in CSS (`::before` on the opening sentence, `::after` on the last paragraph), so the stored quote stays word for word. They use empty alt text (`content: '\201C' / ''`) so screen readers don't read them out; the `<blockquote>` already marks it as a quote.
@@ -197,8 +204,8 @@ Motion is small, short and tells you something: where you are, what state a proj
 | Page transitions | Project names and frames (home rows, featured project, local pages) into their case study; Next project at the end of a case study | The name and screenshot move to their place on the next page (cross-document View Transitions, CSS only); everything else cross-fades quickly |
 | Build log | Last line of the footer, every page | Build time, commit (linked), and this page's compressed HTML and JS, measured from the built files after the build. Only facts the build produces |
 | Status dots | Every Live / In progress status | Each time a status comes on screen it plays once: Live pings 3 times, In progress blinks 4 times (4.8s each), then still. 1.5s cooldown before it can play again |
-| How I work lines | Home, How I work | As each step passes a reading line 60% down the screen its rule draws across in `--text-3` and its number brightens; scrolling back up undoes it |
-| Copy email | Beside the email in the contact blocks and the footer | A small bordered button (28px) copies the address, shows "Copied" and announces "Email address copied". The mailto link stays |
+| How I work lines | /services, How I work | As each step passes a reading line 60% down the screen its rule draws across in `--text-3` and its number brightens; scrolling back up undoes it |
+| Copy email | Beside the email in the Contact sections, and in the footer on pages without one (the 404) | A small bordered button (28px) copies the address, shows "Copied" and announces "Email address copied". The mailto link stays |
 | Arrow lean | Every button ending in → | The arrow moves 3px the way it points on hover |
 | Section map | Case studies, left margin | A fixed 8px tick, number and name per section ("01 The brief"); the current section is brighter text, nothing else changes. Shown only when it clears the content column by 24px (about 1600px+ windows) |
 | Screenshot fade | Lazy-loaded frames | On a slow connection the screenshot fades in (400ms) inside its frame once loaded. Never on a frame that's on screen when the page loads |
@@ -301,7 +308,7 @@ Study for *specific* things (listed next to each) — do not copy any site whole
 
 ## 6. Site structure and content
 
-**Homepage order:** hero, then numbered sections 01 Selected work, 02 Services, 03 How I work, 04 Kind words, 05 Contact. Numbers come from page order, so they renumber themselves when a section is added or removed (Kind words drops out, and Contact becomes 04, if there are no testimonials). The homepage has no Details (spec sheet) or About section: prices live on /services and the local pages, and About is its own page at /about.
+**Homepage order:** hero, then numbered sections 01 Selected work, 02 Services, 03 Kind words, 04 Contact. Numbers come from page order, so they renumber themselves when a section is added or removed (Kind words drops out, and Contact becomes 03, if there are no testimonials). The homepage has no How I work, Details (spec sheet) or About section: How I work and prices live on /services (prices also on the local pages), and About is its own page at /about. In-person wording ("in person in and around Armidale") lives on /services, /contact and the local pages; the homepage names Armidale once, in the hero lede.
 
 1. **Hero** — one plain sentence of what Calvin does + who for. e.g. *"Frontend developer in Armidale building fast websites and web apps for businesses across Australia."* Two CTAs: **See work** / **Get a quote**. Let type + one strong detail carry it. Hero content must render without JS and without an entrance animation.
 2. **Selected work** — the centrepiece. Three projects, each with its own case-study page:
@@ -310,7 +317,7 @@ Study for *specific* things (listed next to each) — do not copy any site whole
    - **Patchbay** (patchbay-tools.netlify.app) — developer toolbox that runs entirely in your browser. Shown as a project only (see Section 7).
    Each: screenshot, type of work, problem → what was built → result. No invented metrics.
 3. **Services** — split into *Websites* and *Apps & integrations*. Keep current pricing unless told otherwise: Starter from $600, Professional from $1,125, Custom/contract quoted; extras $150/page, monthly support $80/mo, annual $800/yr.
-4. **How I work** — short numbered process. Emphasise working directly with the developer, no agency layers.
+4. **How I work** (on /services, not the homepage) — short numbered process. Emphasise working directly with the developer, no agency layers.
 5. **About** (its own page, /about; not a homepage section) — real photo of Calvin, named in full as "Calvin Reinke" (also the `Person` name and `founder` in structured data; the business name stays "Calvin R Development" and the hero stays "I'm Calvin"), Armidale/New England, computer science at UNE as education only (`alumniOf` the University of New England in structured data; no current employer named anywhere, no `worksFor`), in-house frontend experience on production web apps without naming where, remote across Australia, stack shown subtly.
 6. **Kind words** (proof) — real testimonials only, word for word with a link to the source. One exists (Dan, LenBuild, Google review). The section is absent whenever the list is empty.
 7. **Contact** — form (Formspree, keep the existing validation from the hotfix), email, phone, service area (in person in and around Armidale, further around New England by arrangement; phone, video and email Australia-wide). Response promise: **"Replies within one business day"** — no Mon–Fri 9–5 hours anywhere, including schema.

@@ -8,8 +8,8 @@ export interface WebsitePackage {
   /** One sentence on what it is */
   summary: string;
   bestFor: string;
-  /** Shown above the list, e.g. "Everything in Starter, plus:" */
-  intro?: string;
+  /** Mono label above the list, e.g. "Everything in Starter, plus" */
+  intro: string;
   includes: string[];
 }
 
@@ -21,12 +21,12 @@ export const websitePackages: WebsitePackage[] = [
     from: pricing.starter.from,
     summary: 'A two-page website that gets a new business online properly.',
     bestFor: 'New businesses and sole traders',
+    intro: 'Includes',
     includes: [
-      'Two pages, designed around your business',
-      'Works on phones, tablets and desktops',
+      'Two pages, designed around your business, for phones, tablets and desktops',
       'Enquiry form that sends straight to your inbox',
       'Set up to be found on Google: page titles, descriptions and a sitemap',
-      "Hosting set up on Netlify's free plan, and the site launched",
+      "Hosted on Netlify's free plan and launched",
       'One round of revisions',
       'Two weeks of support after launch',
     ],
@@ -37,7 +37,7 @@ export const websitePackages: WebsitePackage[] = [
     from: pricing.professional.from,
     summary: 'A multi-page website with room to show your work, services and reviews.',
     bestFor: 'Established businesses',
-    intro: 'Everything in Starter, plus:',
+    intro: 'Everything in Starter, plus',
     includes: [
       'Up to seven pages',
       'A more detailed design built around your brand',
@@ -72,10 +72,14 @@ export const priceRows = [
   },
 ];
 
-/** Extras and support, for the dot-leader spec sheet. */
+/** Extras priced per item, for the dot-leader spec sheet on /services. */
 export const extras = [
   { label: pricing.extraPage.label, value: `${formatPrice(pricing.extraPage.each)} each` },
   { label: pricing.customFeature.label, value: pricing.customFeature.note },
+];
+
+/** Optional support after launch, priced by the month or the year. */
+export const support = [
   { label: 'Monthly support', value: `${formatPrice(pricing.support.monthly)}/mo` },
   { label: 'Annual support', value: `${formatPrice(pricing.support.yearly)}/yr` },
 ];

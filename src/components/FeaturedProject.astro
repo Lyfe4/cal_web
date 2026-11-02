@@ -19,6 +19,7 @@ const { slug, name, type, tags, url, screenshot, client, status } = project.data
   <Frame
     url={url}
     image={screenshot.src}
+    mobile={screenshot.mobile}
     alt={screenshot.alt}
     sizes="(max-width: 860px) calc(100vw - 2 * clamp(16px, 3vw, 40px) - 18px), (max-width: 1280px) 58vw, 750px"
     eager={eager}
@@ -92,6 +93,12 @@ const { slug, name, type, tags, url, screenshot, client, status } = project.data
   @media (max-width: 860px) {
     .feature {
       grid-template-columns: 1fr;
+    }
+
+    /* Stacked, the facts end the feature, and a rule always follows it (the project rows,
+       a note or the next section), so the table drops its closing rule */
+    .feature-facts {
+      --ruled-close: 0;
     }
   }
 </style>

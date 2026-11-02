@@ -4,6 +4,13 @@ import CopyButton from './CopyButton.astro';
 import { build, formatBuildTime } from '../data/build';
 import { business, formattedAddress, nav } from '../data/site';
 import { WEIGHT_SLOT } from '../utils/pageWeight';
+
+export interface Props {
+  /** Show the phone and email; off on pages that already show them (BaseLayout's contactOnPage) */
+  contact?: boolean;
+}
+
+const { contact = true } = Astro.props;
 ---
 
 <footer class="foot">
@@ -34,13 +41,21 @@ import { WEIGHT_SLOT } from '../utils/pageWeight';
       <span>
         {business.name} · {formattedAddress}
       </span>
-      <a href={business.phone.href}>{business.phone.display}</a>
-      <span class="email-row">
-        <a class="email" href={`mailto:${business.email}`}>
-          {business.email}
-        </a>
-        <CopyButton text={business.email} label="Copy email address" done="Email address copied" />
-      </span>
+      {contact && (
+        <>
+          <a href={business.phone.href}>{business.phone.display}</a>
+          <span class="email-row">
+            <a class="email" href={`mailto:${business.email}`}>
+              {business.email}
+            </a>
+            <CopyButton
+              text={business.email}
+              label="Copy email address"
+              done="Email address copied"
+            />
+          </span>
+        </>
+      )}
       <span>ABN {business.abn}</span>
     </address>
     <!-- Build log: only facts the build itself produces. The weight is measured from the

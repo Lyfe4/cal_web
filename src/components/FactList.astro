@@ -19,7 +19,7 @@ export interface Props {
 const { facts, label } = Astro.props;
 ---
 
-<dl class="facts mono" aria-label={label}>
+<dl class="facts mono" aria-label={label} data-ruled>
   {facts.map(({ label, value, href, status }) => (
     <div>
       <dt>{label}</dt>
@@ -42,6 +42,11 @@ const { facts, label } = Astro.props;
     gap: var(--space-12);
     padding: 10px 0;
     border-bottom: var(--border);
+  }
+
+  /* The closing rule; dropped where another rule follows (see global.css) */
+  div:last-child {
+    border-bottom: var(--ruled-close, var(--border));
   }
 
   dt {

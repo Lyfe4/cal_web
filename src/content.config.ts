@@ -42,7 +42,10 @@ const projects = defineCollection({
       }),
       screenshot: z.object({
         src: image(),
-        /** Describe what's on screen and the real data shown, not "screenshot of" */
+        /** The same view captured at a phone width (390px), shown on phones in place of src */
+        mobile: image().optional(),
+        /** Describe what's on screen and the real data shown, not "screenshot of". Must be
+            true of the phone capture too. */
         alt: z.string(),
       }),
       /** More real views, each framed beside the section it helps explain */
@@ -50,6 +53,7 @@ const projects = defineCollection({
         .array(
           z.object({
             src: image(),
+            mobile: image().optional(),
             alt: z.string(),
             section: z.enum(caseSections),
           })

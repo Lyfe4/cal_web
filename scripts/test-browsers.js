@@ -130,7 +130,9 @@ async function run(base, name, motion, record) {
     `first=${first} cleared=${cleared} again=${again}`
   );
 
-  // How I work: steps above the reading line filled, below empty; undone on the way up
+  // How I work (on /services): steps above the reading line filled, below empty; undone on
+  // the way up
+  await page.goto(`${base}/services`);
   const mode = await page.evaluate(
     () => document.querySelector('[data-steps]')?.getAttribute('data-progress') ?? 'off'
   );
@@ -150,11 +152,15 @@ async function run(base, name, motion, record) {
       : mode === 'off' && down.every((v) => v === null),
     `mode=${mode} down=${down} up=${up}`
   );
+  await page.goto(`${base}/`);
 
-  // Copy: visible beside the email in the contact block and the footer; copies and announces
-  const visible = await page
-    .locator('[data-copy]')
-    .evaluateAll((buttons) => buttons.filter((b) => b.offsetWidth > 0 && !b.hidden).length);
+  // Copy: visible beside the email in the contact block, and only there (the footer leaves
+  // out the email and phone a page already shows); copies and announces
+  const visibleCopies = () =>
+    page
+      .locator('[data-copy]')
+      .evaluateAll((buttons) => buttons.filter((b) => b.offsetWidth > 0 && !b.hidden).length);
+  const visible = await visibleCopies();
   const copy = page.locator('#contact [data-copy]');
   await copy.scrollIntoViewIfNeeded();
   await copy.click();
@@ -163,9 +169,21 @@ async function run(base, name, motion, record) {
   const announced = await copy.evaluate((b) => b.nextElementSibling?.textContent);
   check(
     'copy',
-    visible === 2 && label === 'Copied' && announced === 'Email address copied',
+    visible === 1 && label === 'Copied' && announced === 'Email address copied',
     `visible=${visible} label=${label} announced=${announced}`
   );
+
+  // Footer contact: a page without its own contact block (the 404) keeps the email, phone
+  // and copy button in the footer, so they're on every page
+  await page.goto(`${base}/404`);
+  const footerCopies = await visibleCopies();
+  const footerLinks = await page.locator('.foot a[href^="mailto:"], .foot a[href^="tel:"]').count();
+  check(
+    'footer contact',
+    footerCopies === 1 && footerLinks === 2,
+    `copies=${footerCopies} links=${footerLinks}`
+  );
+  await page.goto(`${base}/`);
 
   // Arrow lean: 3px on hover; doesn't move under reduced motion
   const button = page.locator('.btn-primary').first();

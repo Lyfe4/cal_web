@@ -32,7 +32,12 @@ const n = (id: string) =>
     .indexOf(id) + 1;
 ---
 
-<BaseLayout title={page.title} description={page.description} schema={localPageSchema(page)}>
+<BaseLayout
+  title={page.title}
+  description={page.description}
+  schema={localPageSchema(page)}
+  contactOnPage
+>
   <div class="wrap">
     <PageHead
       title={page.heading}
@@ -78,7 +83,7 @@ const n = (id: string) =>
             Australia.
           </p>
         </div>
-        <ul class="town-list" aria-label="Towns I work with">
+        <ul class="town-list" aria-label="Towns I work with" data-ruled>
           {newEnglandTowns.map((town) => {
             const href = townPages[town];
             const note = townNotes[town];
@@ -156,7 +161,7 @@ const n = (id: string) =>
     margin: 0;
     padding: 0;
     list-style: none;
-    border-bottom: var(--border);
+    border-bottom: var(--ruled-close, var(--border));
   }
 
   .town-list li {

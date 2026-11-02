@@ -225,3 +225,54 @@ img {
   color: var(--text);
   font-weight: var(--weight-medium);
 }
+
+/* One line where a ruled list ends a block, never two and never a gap (DESIGN_BRIEF 3.3).
+   A closing line is always the width of the list it closes. When a full-width ruled list
+   (marked data-ruled) is the last thing before another rule (the next section's, the
+   footer's, the project rows'), the list hands its closing rule (--ruled-close) to that next
+   rule and the space moves to the other side of it: the block's trailing space collapses, so
+   the rule sits directly under the last row, and the next block adds that space to its own
+   top. Last row, one line, the full section gap, the next label.
+   Only in one column (860px and under), where a list that ends its section is the last thing
+   on screen and fills the column. In two columns lists sit in a column or a capped table, so
+   they keep their own closing rule, then the normal section end and the next section's rule.
+   Components that end on a ruled list outside a section (the featured project, the
+   case-study overview, the Armidale note) move their own space. */
+@media (max-width: 860px) {
+  .sec > [data-ruled]:last-child,
+  .sec > :last-child > [data-ruled]:last-child,
+  .sec > :last-child > :last-child > [data-ruled]:last-child,
+  .sec > :last-child > :last-child > :last-child > [data-ruled]:last-child {
+    --ruled-close: 0;
+  }
+
+  .sec:has(
+    > [data-ruled]:last-child,
+    > :last-child > [data-ruled]:last-child,
+    > :last-child > :last-child > [data-ruled]:last-child,
+    > :last-child > :last-child > :last-child > [data-ruled]:last-child
+  ) {
+    padding-bottom: 0;
+  }
+
+  .sec:has(
+      > [data-ruled]:last-child,
+      > :last-child > [data-ruled]:last-child,
+      > :last-child > :last-child > [data-ruled]:last-child,
+      > :last-child > :last-child > :last-child > [data-ruled]:last-child
+    )
+    + .sec {
+    padding-top: calc(var(--space-20) + var(--space-section-end));
+  }
+
+  /* The last section on the page hands its line to the footer's rule */
+  body:has(
+      main .sec:last-child > [data-ruled]:last-child,
+      main .sec:last-child > :last-child > [data-ruled]:last-child,
+      main .sec:last-child > :last-child > :last-child > [data-ruled]:last-child,
+      main .sec:last-child > :last-child > :last-child > :last-child > [data-ruled]:last-child
+    )
+    .foot {
+    padding-top: calc(var(--space-40) + var(--space-section-end));
+  }
+}

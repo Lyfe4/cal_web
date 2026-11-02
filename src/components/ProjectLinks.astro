@@ -8,7 +8,7 @@ export interface Props {
 const { projects } = Astro.props;
 ---
 
-<ul class="links">
+<ul class="links" data-ruled>
   {projects.map((project) => (
     <li>
       <a href={projectPath(project)}>{project.data.name}</a>
@@ -22,7 +22,7 @@ const { projects } = Astro.props;
     margin: 0;
     padding: 0;
     list-style: none;
-    border-bottom: var(--border);
+    border-bottom: var(--ruled-close, var(--border));
   }
 
   li {

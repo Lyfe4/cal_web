@@ -9,9 +9,13 @@ import Analytics from '../components/Analytics.astro';
 import { business } from '../data/site';
 import { brandColors } from '../utils/brand';
 
-export type Props = SEOProps;
+export type Props = SEOProps & {
+  /** The page shows the email and phone itself (a Contact section or the contact page), so
+      the footer leaves them out rather than repeating them straight after */
+  contactOnPage?: boolean;
+};
 
-const seo = Astro.props;
+const { contactOnPage = false, ...seo } = Astro.props;
 ---
 
 <!doctype html>
@@ -68,7 +72,7 @@ const seo = Astro.props;
     <main id="main" tabindex="-1">
       <slot />
     </main>
-    <Footer />
+    <Footer contact={!contactOnPage} />
     <Analytics />
   </body>
 </html>

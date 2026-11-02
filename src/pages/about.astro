@@ -23,6 +23,7 @@ const ownProjects = (await getProjects()).filter((p) => !p.data.client);
 ---
 
 <BaseLayout
+  contactOnPage
   title={`About ${person.name}`}
   description={`${person.name}, frontend developer in ${shortLocation}. Studied computer science at UNE, worked in-house on production web apps, now builds for businesses Australia-wide.`}
   ogType="profile"
@@ -149,6 +150,15 @@ const ownProjects = (await getProjects()).filter((p) => !p.data.client);
 
   .stack {
     max-width: 760px;
+  }
+
+  /* Stacked, the table fills the column like every other list, so the next section's rule
+     closing its last row is the table's own width (global.css, "One line where a ruled list
+     ends a block") */
+  @media (max-width: 860px) {
+    .stack {
+      max-width: none;
+    }
   }
 
   .own {
