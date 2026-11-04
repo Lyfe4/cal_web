@@ -20,8 +20,8 @@
   --on-accent: var(--bg);
 
   /* Type (3.2) */
-  --sans: 'Geist', system-ui, sans-serif;
-  --mono: 'Geist Mono', ui-monospace, monospace;
+  --sans: 'Geist', 'Geist Fallback', 'Geist Fallback Roboto', system-ui, sans-serif;
+  --mono: 'Geist Mono', 'Geist Mono Fallback', ui-monospace, monospace;
 
   --weight-regular: 400;
   --weight-hero: 480;
@@ -50,6 +50,13 @@
   --tracking-label: 0.04em;
   --tracking-frame: 0.02em;
   --tracking-project-firm: -0.062em; /* project name on hover, at weight 560 */
+
+  /* Text measures: Geist's 1ch (the "0" advance, measured in Chrome and HarfBuzz) as an em
+     length. Plain ch resolves against whichever font is showing, and the fallback's "0" is
+     narrower, so a ch measure would rewrap text when Geist swaps in. Same widths as ch once
+     Geist has loaded: write calc(46 * var(--ch)) for 46ch. */
+  --ch: 0.663em; /* weight 400 */
+  --ch-hero: 0.671em; /* weight 480: hero, page and statement headings */
 
   /* Spacing (3.3): the steps in use, plus the fluid hero values */
   --space-8: 8px;

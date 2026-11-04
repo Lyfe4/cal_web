@@ -99,7 +99,7 @@ if (!fuelFinder || !lenbuild) throw new Error('The Armidale page needs Fuel Find
 
 <style>
   .prose {
-    max-width: 62ch;
+    max-width: calc(62 * var(--ch));
     color: var(--text-2);
     font-size: var(--text-desc);
   }
@@ -119,7 +119,7 @@ if (!fuelFinder || !lenbuild) throw new Error('The Armidale page needs Fuel Find
   .also {
     margin: var(--space-48) 0 0;
     padding-top: var(--space-20);
-    max-width: 62ch;
+    max-width: calc(62 * var(--ch));
     color: var(--text-2);
     font-size: var(--text-desc);
     border-top: var(--border);

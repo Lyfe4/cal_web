@@ -123,7 +123,7 @@ const ownProjects = (await getProjects()).filter((p) => !p.data.client);
   }
 
   .prose {
-    max-width: 62ch;
+    max-width: calc(62 * var(--ch));
     color: var(--text-2);
     font-size: var(--text-desc);
   }
@@ -170,7 +170,7 @@ const ownProjects = (await getProjects()).filter((p) => !p.data.client);
 
   .own-intro {
     margin: 0;
-    max-width: 40ch;
+    max-width: calc(40 * var(--ch));
     color: var(--text-2);
     font-size: var(--text-desc);
   }

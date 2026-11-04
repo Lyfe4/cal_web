@@ -16,6 +16,110 @@
   font-display: swap;
 }
 
+/*
+ * Metric-matched fallbacks, so text set in the fallback before Geist arrives takes the
+ * same space and nothing moves when it swaps in (CLS 0). Values come from the shipped
+ * subsets and the system fonts' files, not by eye:
+ *   size-adjust      Geist's width over Arial's (or Roboto's) for the site's own copy: every
+ *                    text run of the built pages, shaped with HarfBuzz (kerning on) at each
+ *                    weight in use. Geist widens with weight, so each weight gets its own face.
+ *   ascent/descent   Geist's hhea ascender 1005 / descender 295 per 1000 (typo metrics are
+ *                    the same), divided by size-adjust; Geist has no line gap.
+ * Arial, Helvetica, Liberation Sans and Arimo share Arial's advance widths; Android has
+ * none of them and falls through to the Roboto faces. Geist Mono and Courier New both
+ * advance 0.6em, so the mono fallback only needs the vertical metrics.
+ * Recompute these if the font subsets change (npm run fonts).
+ */
+@font-face {
+  font-family: 'Geist Fallback';
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans'), local('Arimo');
+  font-weight: 400;
+  size-adjust: 102.56%;
+  ascent-override: 97.99%;
+  descent-override: 28.76%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Geist Fallback';
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans'), local('Arimo');
+  font-weight: 480;
+  size-adjust: 104.54%;
+  ascent-override: 96.14%;
+  descent-override: 28.22%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Geist Fallback';
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans'), local('Arimo');
+  font-weight: 500;
+  size-adjust: 105.01%;
+  ascent-override: 95.71%;
+  descent-override: 28.09%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Geist Fallback';
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans'), local('Arimo');
+  font-weight: 560;
+  size-adjust: 106.42%;
+  ascent-override: 94.44%;
+  descent-override: 27.72%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Geist Fallback Roboto';
+  src: local('Roboto');
+  font-weight: 400;
+  size-adjust: 103.14%;
+  ascent-override: 97.44%;
+  descent-override: 28.6%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Geist Fallback Roboto';
+  src: local('Roboto');
+  font-weight: 480;
+  size-adjust: 105.13%;
+  ascent-override: 95.6%;
+  descent-override: 28.06%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Geist Fallback Roboto';
+  src: local('Roboto');
+  font-weight: 500;
+  size-adjust: 105.6%;
+  ascent-override: 95.17%;
+  descent-override: 27.94%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Geist Fallback Roboto';
+  src: local('Roboto');
+  font-weight: 560;
+  size-adjust: 107.02%;
+  ascent-override: 93.91%;
+  descent-override: 27.57%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Geist Mono Fallback';
+  src: local('Courier New'), local('Liberation Mono'), local('Cousine');
+  font-weight: 400;
+  size-adjust: 99.98%;
+  ascent-override: 100.52%;
+  descent-override: 29.5%;
+  line-gap-override: 0%;
+}
+
 *,
 *::before,
 *::after {
@@ -206,7 +310,7 @@ img {
 
 .page h1 {
   margin: 0;
-  max-width: 16ch;
+  max-width: calc(16 * var(--ch-hero));
   font-size: var(--text-hero);
   font-weight: var(--weight-hero);
   line-height: var(--leading-hero);
@@ -215,7 +319,7 @@ img {
 
 .page .lede {
   margin: var(--space-lede-top) 0 0;
-  max-width: 46ch;
+  max-width: calc(46 * var(--ch));
   font-size: var(--text-lede);
   line-height: var(--leading-lede);
   color: var(--text-2);

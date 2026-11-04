@@ -245,7 +245,7 @@ const timelineScope = `timeline-scope: ${mapEntries.map((entry) => entry.timelin
 
   .lede {
     margin: 0;
-    max-width: 46ch;
+    max-width: calc(46 * var(--ch));
     color: var(--text-2);
     font-size: var(--text-lede);
     line-height: var(--leading-lede);
@@ -274,7 +274,7 @@ const timelineScope = `timeline-scope: ${mapEntries.map((entry) => entry.timelin
 
   /* Rendered Markdown: sentences in sans, the one sub-label in mono */
   .prose {
-    max-width: 62ch;
+    max-width: calc(62 * var(--ch));
     color: var(--text-2);
     font-size: var(--text-desc);
   }
@@ -348,7 +348,7 @@ const timelineScope = `timeline-scope: ${mapEntries.map((entry) => entry.timelin
 
   .next-desc {
     margin: 0;
-    max-width: 44ch;
+    max-width: calc(44 * var(--ch));
     color: var(--text-2);
     font-size: var(--text-desc);
   }
