@@ -35,7 +35,7 @@ import { formatPrice, person, pricing, replyPromise, shortLocation } from '../..
 
   h1 {
     margin: 0;
-    max-width: 16ch;
+    max-width: calc(16 * var(--ch-hero));
     font-size: var(--text-hero);
     font-weight: var(--weight-hero);
     line-height: var(--leading-hero);
@@ -52,7 +52,7 @@ import { formatPrice, person, pricing, replyPromise, shortLocation } from '../..
 
   .lede {
     margin: 0;
-    max-width: 46ch;
+    max-width: calc(46 * var(--ch));
     color: var(--text-2);
     font-size: var(--text-lede);
     line-height: var(--leading-lede);

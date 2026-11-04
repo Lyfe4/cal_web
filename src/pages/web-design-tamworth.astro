@@ -131,7 +131,7 @@ const steps = [
   }
 
   .prose {
-    max-width: 52ch;
+    max-width: calc(52 * var(--ch));
     color: var(--text-2);
     font-size: var(--text-desc);
   }
@@ -172,7 +172,7 @@ const steps = [
 
   .steps p {
     margin: 0;
-    max-width: 52ch;
+    max-width: calc(52 * var(--ch));
     color: var(--text-2);
     font-size: var(--text-ui);
   }

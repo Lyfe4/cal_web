@@ -108,7 +108,7 @@ const [featured, ...rest] = Astro.props.projects;
 
   .projects .desc {
     margin: 0 0 var(--space-16);
-    max-width: 44ch;
+    max-width: calc(44 * var(--ch));
     color: var(--text-2);
     font-size: var(--text-desc);
   }

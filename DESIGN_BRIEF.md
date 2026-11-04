@@ -78,6 +78,7 @@ Warm graphite, three text tiers, one accent. Build in OKLCH; the hex values are 
 
 - **Families:** Geist (sans) and Geist Mono, self-hosted variable WOFF2 (SIL OFL). Subset for production.
 - **Weights in use:** Geist 400 (body), 480 (hero h1), 500 (project names, buttons, lede lead-in), 560 (wordmark). Geist Mono 400 only. No bold 700 anywhere.
+- **Fallbacks (CLS 0 on swap):** each stack goes Geist, then a metric-matched local fallback (`Geist Fallback` on Arial/Helvetica/Liberation Sans/Arimo, `Geist Fallback Roboto` for Android, `Geist Mono Fallback` on Courier New), with `size-adjust` and ascent/descent overrides computed from the font files (see the comment in `global.css`). Text measures are written as `calc(46 * var(--ch))` (Geist's 1ch as an em length), not `46ch`: `ch` follows whichever font is showing and the fallback's "0" is narrower, so a `ch` measure rewraps text when Geist arrives.
 - **Rule of thumb:** grotesk for claims, mono for facts. Labels, statuses, prices-as-metadata, section numbers and URLs are mono. Sentences are sans.
 
 | Role | Size | Weight | Line height | Tracking |

@@ -56,7 +56,7 @@ const { testimonials, linkProject = true } = Astro.props;
   /* The opening sentence carries the statement size; the rest reads at lede size */
   .lead {
     margin: 0;
-    max-width: 22ch;
+    max-width: calc(22 * var(--ch-hero));
     font-size: var(--text-feature);
     font-weight: var(--weight-hero);
     line-height: var(--leading-feature);
@@ -91,7 +91,7 @@ const { testimonials, linkProject = true } = Astro.props;
 
   .rest {
     margin: var(--space-28) 0 0;
-    max-width: 52ch;
+    max-width: calc(52 * var(--ch));
     color: var(--text-2);
     font-size: var(--text-lede);
     line-height: var(--leading-lede);
