@@ -47,7 +47,7 @@ export const services: Service[] = [
       href: '/work/fuel-finder',
       before: 'Like ',
       link: 'Fuel Finder',
-      after: ', built on live NSW FuelCheck data.',
+      after: ', built on live NSW and Queensland government fuel data.',
     },
     price: pricing.apps.note,
     link: { href: '/services#apps', label: 'More on apps and integrations' },

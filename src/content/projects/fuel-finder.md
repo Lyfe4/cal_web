@@ -3,12 +3,12 @@ slug: fuel-finder
 name: Fuel Finder
 order: 2
 type: Web app
-status: in progress
-upNext: 'Next: adding Queensland prices.'
-url: https://nsw-fuel-finder.netlify.app
-summary: Live NSW & ACT fuel prices, cheapest first, as a list or a map, with four months of price history.
+status: live
+upNext: 'NSW, ACT and Queensland. Next: more states.'
+url: https://fuel-finder-au.netlify.app
+summary: Live NSW, ACT & Queensland fuel prices, cheapest first, as a list or a map, with four months of price history.
 tags:
-  - NSW FuelCheck data
+  - NSW FuelCheck & Fuel Prices Qld data
 year: 2026
 stack:
   - React
@@ -17,10 +17,10 @@ stack:
   - TanStack Query
   - MapLibre GL
   - Netlify Functions and Blobs
-source: https://github.com/Lyfe4/nsw-fuel-finder
+source: https://github.com/Lyfe4/fuel-finder-au
 seo:
-  title: 'Fuel Finder: live NSW fuel prices, cheapest first'
-  description: Fuel Finder, a web app I'm building that shows live NSW and ACT fuel prices cheapest first, on a list and a map, with four months of price history.
+  title: 'Fuel Finder: NSW, ACT & Qld fuel prices'
+  description: Fuel Finder, my web app that shows live NSW, ACT and Queensland fuel prices cheapest first, on a list and a map, with four months of price history.
 screenshot:
   src: ../../assets/projects/fuel-finder.webp
   mobile: ../../assets/projects/fuel-finder-mobile.webp
@@ -54,6 +54,8 @@ A web app that answers one question: where's the cheapest fuel near me?
 ## How it's built
 
 Visitors never talk to the government's API. Every 30 minutes a scheduled job fetches every price in the state and stores a copy, and searches are answered from that copy. That keeps the app at about 1,500 calls a month however many people use it. The trade-off is that a price can be up to 30 minutes older than on FuelCheck, which matters little because most stations change their prices far less often.
+
+Queensland is now included too, from the Queensland Government's Fuel Prices Qld data, and each state's data runs independently.
 
 The API has no price history, so the app keeps its own daily records. The months before it launched come from FuelCheck's published monthly files, which list every price change but not the station codes the live data uses. Stations are matched by address, then by name within the postcode, and anything ambiguous is left out rather than guessed.
 
